@@ -7,22 +7,22 @@
     <title>BK - Shop</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="<?php echo base_url() ?>vendor/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo base_url() ?>lib/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="<?php echo base_url() ?>vendor/admin/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+    <link href="<?php echo base_url() ?>lib/admin/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="<?php echo base_url() ?>vendor/admin/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="<?php echo base_url() ?>lib/admin/dist/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="<?php echo base_url() ?>vendor/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo base_url() ?>lib/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- DataTables CSS -->
-    <link href="<?php echo base_url() ?>vendor/admin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="<?php echo base_url() ?>lib/admin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
 
     <!-- DataTables Responsive CSS -->
-    <link href="<?php echo base_url() ?>vendor/admin/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
+    <link href="<?php echo base_url() ?>lib/admin/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
 </head>
 
 <body>
@@ -80,11 +80,11 @@
                         </li>
 
                         <li>
-                            <a href="#"><i class="fa fa-dashboard fa-fw"></i> Thống kê</a>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Thống kê</a>
                         </li>
 
                         <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Danh mục<span class="fa arrow"></span></a>
+                            <a href="#"><i class="glyphicon glyphicon-tasks"></i> Danh mục<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="#">Tất cả danh mục</a>
@@ -97,7 +97,7 @@
                         </li>
 
                         <li>
-                            <a href="#"><i class="fa fa-cube fa-fw"></i> Sản phẩm<span class="fa arrow"></span></a>
+                            <a href="#"><i class="glyphicon glyphicon-briefcase"></i> Sản phẩm<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="#">Danh sách sản phẩm</a>
@@ -110,7 +110,7 @@
                         </li>
 
                         <li>
-                            <a href="#"><i class="fa fa-cube fa-fw"></i> Khuyến mãi<span class="fa arrow"></span></a>
+                            <a href="#"><i class="glyphicon glyphicon-gift"></i> Khuyến mãi<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="#">Danh sách khuyến mãi</a>
@@ -123,20 +123,15 @@
                         </li>
 
                         <li>
-                            <a href="#"><i class="fa fa-cube fa-fw"></i>Tin tức khuyến mãi<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="#">Danh sách tin tức</a>
-                                </li>
-                                <li>
-                                    <a href="#">Thêm mới tin tức</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
+                            <a href="#"><i class="glyphicon glyphicon-shopping-cart"></i> Đơn hàng</a>
                         </li>
 
                         <li>
-                            <a href="#"><i class="fa fa-cube fa-fw"></i>Quảng cáo<span class="fa arrow"></span></a>
+                            <a href="#"><i class="glyphicon glyphicon-comment"></i> Bình luận</span></a>
+                        </li>
+
+                        <li>
+                            <a href="#"><i class="glyphicon glyphicon-send"></i> Quảng cáo<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="#">Danh sách quảng cáo</a>
@@ -149,19 +144,29 @@
                         </li>
 
                         <li>
-                            <a href="#"><i class="fa fa-cube fa-fw"></i> Bình luận</span></a>
+                            <a href="#"><i class="glyphicon glyphicon-list-alt"></i> Tin tức<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="#">Danh sách tin tức</a>
+                                </li>
+                                <li>
+                                    <a href="#">Thêm mới tin tức</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
                         </li>
-
-                        <li>
-                            <a href="#"><i class="glyphicon glyphicon-shopping-cart"></i> Đơn hàng</a>
-                        </li>
-
+                        
                         <li>
                             <a href="#"><i class="fa fa-users fa-fw"></i> Tài khoản<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Danh sách tài khoản</a>
+                                    <a href="#">Tài khoản khách hàng</a>
                                 </li>
+
+                                <li>
+                                    <a href="#">Tài khoản nhân viên</a>
+                                </li>
+
                                 <li>
                                     <a href="#">Thêm mới tài khoản</a>
                                 </li>
@@ -170,7 +175,7 @@
                         </li>
 
                         <li>
-                            <a href="#"><i class="fa fa-cube fa-fw"></i> Thông tin shop</a>
+                            <a href="#"><i class="fa fa-info-circle"></i> Thông tin shop</a>
                         </li>
 
                     </ul>
