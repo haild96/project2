@@ -87,10 +87,10 @@
                             <a href="#"><i class="glyphicon glyphicon-tasks"></i> Danh mục<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Tất cả danh mục</a>
+                                    <a href="<?php echo base_url() ?>admin/Category">Tất cả danh mục</a>
                                 </li>
                                 <li>
-                                    <a href="#">Thêm mới danh mục</a>
+                                    <a href="<?php echo base_url() ?>admin/Category/add">Thêm mới danh mục</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
