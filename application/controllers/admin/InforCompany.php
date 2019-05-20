@@ -79,7 +79,7 @@ class InforCompany extends CI_Controller {
 
 		if(basename( $_FILES["logo"]["name"]) != "")
 		{
-			$logo = base_url() . 'uploads/LogoCompany/' . basename( $_FILES["logo"]["name"]);
+			$logo = 'uploads/LogoCompany/' . basename( $_FILES["logo"]["name"]);
 		}
 		else
 		{

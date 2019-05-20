@@ -11,16 +11,14 @@
             </div>
             <!-- /.col-lg-12 -->
             <div class="col-lg-7" style="padding-bottom:120px">
-                <?php if(isset($success)){ ?>
-                    <div class="alert alert-success">Thêm tin tức thành công</div>
-                    <?php session_destroy(); ?>
-                <?php } else {}  ?>
-        
-                <?php if(isset($fail)){ ?>
-                    <div class="alert alert-danger">Thêm tin tức thất bại</div>
-                    <?php session_destroy(); ?>
-                <?php } else {} ?>
-    
+
+                <?php if (isset($status)): ?>
+                    <div class="alert <?php echo $status ? 'alert-success' : 'alert-danger'?>">
+                      <?php echo $message ?> 
+                    </div>
+                    <?php $this->session->unset_userdata($status); ?>
+                <?php endif ?>
+
                 <form action="<?php echo base_url() ?>admin/PromotionNews/add" method="POST" enctype="multipart/form-data">  
                     <div class="form-group">
                         <label>Tiêu đề</label>

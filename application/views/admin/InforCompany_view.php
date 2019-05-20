@@ -31,7 +31,7 @@
                             <th class="text-center"><?php echo $value['name']; ?></th>
                             <th class="text-center"><?php echo $value['address']; ?></th>
                             <th style="max-width: 130px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis; class="text-center"><?php echo $value['phone']; ?></th>
-                            <th style="max-width: 130px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis; class="text-center"><?php echo $value['logo']; ?></th>
+                            <th class="text-center"><img src="<?php echo base_url() ?><?php echo $value['logo'] ?>" width="130px" alt=""></th>
                             <th style="max-width: 130px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis; class="text-center"><?php echo $value['email']; ?></th>
                             <th style="max-width: 130px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis; class="text-center"><?php echo $value['link_fb']; ?></th>
                             <th style="max-width: 130px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis; class="text-center"><?php echo $value['link_youtube']; ?></th>

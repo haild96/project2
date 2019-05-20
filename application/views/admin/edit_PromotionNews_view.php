@@ -11,17 +11,14 @@
             </div>
             <!-- /.col-lg-12 -->
             <div class="col-lg-7" style="padding-bottom:120px">
-                <?php if(isset($success)){ ?>
-                    <div class="alert alert-success">Thêm tin tức thành công</div>
-                    <?php session_destroy(); ?>
-                <?php } else {}  ?>
-        
-                <?php if(isset($fail)){ ?>
-                    <div class="alert alert-danger">Thêm tin tức thất bại</div>
-                    <?php session_destroy(); ?>
-                <?php } else {} ?>
+                <?php if (isset($status)): ?>
+                    <div class="alert <?php echo $status ? 'alert-success' : 'alert-danger'?>">
+                      <?php echo $message ?> 
+                    </div>
+                    <?php $this->session->unset_userdata($status); ?>
+                <?php endif ?>
 
-                <form action="<?php echo base_url() ?>admin/PromotionNews/add" method="POST" enctype="multipart/form-data">  
+                <form action="<?php echo base_url() ?>admin/PromotionNews/update/<?php echo $tintuc['id'] ?>" method="POST" enctype="multipart/form-data">  
                     <div class="form-group">
                         <label>Tiêu đề</label>
                         <input class="form-control" value="<?php echo $tintuc['title'] ?>" name="title" placeholder="Nhập tiêu đề" />
@@ -37,25 +34,25 @@
                     <div class="form-group">
                         <label>Hình ảnh</label>
                         <input type="hidden" value="<?php echo $tintuc['image'] ?>" name="image2" >
-                        <p><img src="<?php echo base_url() ?>uploads/ImagePromotionNews/<?php echo $tintuc['image'] ?>" alt=""></p>
+                        <p><img src="<?php echo base_url() ?><?php echo $tintuc['image'] ?>" width="200px" alt=""></p>
                         <input type="file" name="image" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Trạng thái</label>
                         <label class="radio-inline">
                             <input name="status" value="0" 
-                                <?php if($tintuc['status']==1){?> 
-                                    check="" <?php } ?>
+                                <?php if($tintuc['status']==0){ ?>
+                                checked="" <?php } ?>
                                 type="radio">Không hiển thị
                         </label>
                         <label class="radio-inline">
                             <input name="status" value="0" 
                                 <?php if($tintuc['status']==1){?> 
-                                    check="" <?php } ?>
+                                    checked="" <?php } ?>
                                 type="radio">Hiển thị                        
                         </label>
                     </div>
-                    <button type="submit" class="btn btn-default">Thêm</button>
+                    <button type="submit" class="btn btn-default">Sửa</button>
                     <button type="reset" class="btn btn-default">Làm mới</button>
                 <form>
             </div>
