@@ -102,7 +102,7 @@ class PromotionNews extends CI_Controller {
 	{
 		$tintucById = $this->PromotionNews_model->get($id);
 		$tintuc = array('tintuc' => $tintucById);
-		$this->load->view('edit_PromotionNews_view', $tintuc, FALSE);
+		$this->load->view('admin/edit_PromotionNews_view', $tintuc, FALSE);
 	}
 
 	//Update one item

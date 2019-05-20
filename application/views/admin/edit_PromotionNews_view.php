@@ -24,32 +24,35 @@
                 <form action="<?php echo base_url() ?>admin/PromotionNews/add" method="POST" enctype="multipart/form-data">  
                     <div class="form-group">
                         <label>Tiêu đề</label>
-                        <input class="form-control" value="$tintuc['title']" name="title" placeholder="Nhập tiêu đề" />
+                        <input class="form-control" value="<?php echo $tintuc['title'] ?>" name="title" placeholder="Nhập tiêu đề" />
                     </div>
                     <div class="form-group">
                         <label>Tóm tắt</label>
-                        <textarea id="demo" name="summary" class="form-control ckeditor" rows="3">$tintuc['summary']</textarea>
+                        <textarea id="demo" name="summary" class="form-control ckeditor" rows="3"><?php echo $tintuc['summary'] ?></textarea>
                     </div>
                     <div class="form-group">
                         <label>Nội dung</label>
-                        <textarea id="demo" name="content" class="form-control ckeditor" rows="5">$tintuc['content']</textarea>
+                        <textarea id="demo" name="content" class="form-control ckeditor" rows="5"><?php echo $tintuc['content'] ?></textarea>
                     </div>
                     <div class="form-group">
                         <label>Hình ảnh</label>
-                        <input type="hidden" value="" name="image2" >
-                        <p><img src="<?php echo base_url() ?>uploads/ImagePromotionNews/<?php echo $value['image'] ?>" alt=""></p>
+                        <input type="hidden" value="<?php echo $tintuc['image'] ?>" name="image2" >
+                        <p><img src="<?php echo base_url() ?>uploads/ImagePromotionNews/<?php echo $tintuc['image'] ?>" alt=""></p>
                         <input type="file" name="image" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Trạng thái</label>
                         <label class="radio-inline">
-                            <<input name="status" value="0" 
-                                <?php if($value['status']==1)?> 
-                                    check=""
+                            <input name="status" value="0" 
+                                <?php if($tintuc['status']==1){?> 
+                                    check="" <?php } ?>
                                 type="radio">Không hiển thị
                         </label>
                         <label class="radio-inline">
-                            <input name="status" value="1" type="radio">Hiển thị
+                            <input name="status" value="0" 
+                                <?php if($tintuc['status']==1){?> 
+                                    check="" <?php } ?>
+                                type="radio">Hiển thị                        
                         </label>
                     </div>
                     <button type="submit" class="btn btn-default">Thêm</button>
