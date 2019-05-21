@@ -15,7 +15,7 @@ class InforCompany extends CI_Controller {
 	{
 		$dl = $this->InforCompany_model->get();
 		$dl = array('dulieu' => $dl);
-		$this->load->view('admin/InforCompany_view', $dl, FALSE);
+		$this->load->view('admin/inforcompany/InforCompany_view', $dl, FALSE);
 	}
 
 	// Add a new item
@@ -27,8 +27,9 @@ class InforCompany extends CI_Controller {
 	public function edit()
 	{
 		$thongtincongty = $this->InforCompany_model->get();
+		
 		$thongtincongty = array('dulieu' => $thongtincongty);
-		$this->load->view('admin/edit_InforCompany_view', $thongtincongty, FALSE);
+		$this->load->view('admin/inforcompany/edit_InforCompany_view', $thongtincongty, FALSE);
 	}
 
 	//Update one item
@@ -100,11 +101,11 @@ class InforCompany extends CI_Controller {
 		$check = $this->InforCompany_model->update($thongtincongty);
 		if($check) 
 		{
-			$this->load->view('admin/edit_InforCompany_view', array('success' => true, 'dulieu' => $this->InforCompany_model->get() )); 
+			$this->load->view('admin/inforcompany/edit_InforCompany_view', array('success' => true, 'dulieu' => $this->InforCompany_model->get() )); 
 		} 
 		else
 		{
-			$this->load->view('admin/edit_InforCompany_view', array('fail' => false , 'dulieu' => $this->InforCompany_model->get()));
+			$this->load->view('admin/inforcompany/edit_InforCompany_view', array('fail' => false , 'dulieu' => $this->InforCompany_model->get()));
 		}
 	}
 

@@ -17,12 +17,12 @@ class PromotionNews extends CI_Controller {
 	{
 		$tintuc = $this->PromotionNews_model->get();
 		$tintuc = array('tintuc' => $tintuc);
-		$this->load->view('admin/PromotionNews_view', $tintuc, FALSE);
+		$this->load->view('admin/promotionNews/PromotionNews_view', $tintuc, FALSE);
 	}
 
 	public function addPromotionNews()
 	{
-		$this->load->view('admin/add_PromotionNews_view');
+		$this->load->view('admin/promotionNews/add_PromotionNews_view');
 	}
 
 	// Add a new item
@@ -84,11 +84,11 @@ class PromotionNews extends CI_Controller {
 		$check = $this->PromotionNews_model->insert($thongtincongty);
 		if($check) 
 		{
-			$this->load->view('admin/add_PromotionNews_view', array('status' => true, 'message' => 'Thêm tin tức thành công')); 
+			$this->load->view('admin/promotionNews/add_PromotionNews_view', array('status' => true, 'message' => 'Thêm tin tức thành công')); 
 		} 
 		else
 		{
-			$this->load->view('admin/add_PromotionNews_view', array('status' => false , 'message' => 'Thêm tin tức thành công'));
+			$this->load->view('admin/promotionNews/add_PromotionNews_view', array('status' => false , 'message' => 'Thêm tin tức thành công'));
 		}
 	}
 
@@ -96,7 +96,7 @@ class PromotionNews extends CI_Controller {
 	{
 		$tintucById = $this->PromotionNews_model->get($id);
 		$tintuc = array('tintuc' => $tintucById);
-		$this->load->view('admin/edit_PromotionNews_view', $tintuc, FALSE);
+		$this->load->view('admin/promotionNews/edit_PromotionNews_view', $tintuc, FALSE);
 	}
 
 	//Update one item
@@ -166,11 +166,11 @@ class PromotionNews extends CI_Controller {
 
 		if($check) 
 		{
-			$this->load->view('admin/edit_PromotionNews_view', array('status' => true, 'message' => 'Sửa tin tức thành công', 'tintuc' => $this->PromotionNews_model->get($id))); 
+			$this->load->view('admin/promotionNews/edit_PromotionNews_view', array('status' => true, 'message' => 'Sửa tin tức thành công', 'tintuc' => $this->PromotionNews_model->get($id))); 
 		} 
 		else
 		{
-			$this->load->view('admin/edit_PromotionNews_view', array('status' => false , 'message' => 'Sửa tin tức thành công', 'tintuc' => $this->PromotionNews_model->get($id)));
+			$this->load->view('admin/promotionNews/edit_PromotionNews_view', array('status' => false , 'message' => 'Sửa tin tức không thành công', 'tintuc' => $this->PromotionNews_model->get($id)));
 		}
 
 	}
@@ -181,7 +181,7 @@ class PromotionNews extends CI_Controller {
 		$this->PromotionNews_model->delete($id);
 		$tintuc = $this->PromotionNews_model->get();
 		$tintuc = array('tintuc' => $tintuc);
-		$this->load->view('admin/PromotionNews_view', $tintuc, FALSE);
+		$this->load->view('admin/promotionNews/PromotionNews_view', $tintuc, FALSE);
 	}
 }
 
