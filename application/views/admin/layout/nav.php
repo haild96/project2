@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BK - Shop</title>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo base_url() ?>lib/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -134,10 +139,10 @@
                             <a href="#"><i class="glyphicon glyphicon-send"></i> Quảng cáo<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Danh sách quảng cáo</a>
+                                    <a href="<?php echo base_url() ?>admin/Promotion">Danh sách quảng cáo</a>
                                 </li>
                                 <li>
-                                    <a href="#">Thêm mới quảng cáo</a>
+                                    <a href="<?php echo base_url() ?>admin/Promotion/addPromotion">Thêm mới quảng cáo</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
