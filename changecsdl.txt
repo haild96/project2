@@ -1,3 +1,8 @@
 * update database
 - category: + xóa cột link, icon
 			+ thêm cột sort
+
+- product: + change description colum -> text
+           + quantity_exp : defaul -> 0
+
+- promotion,product: add trigger           

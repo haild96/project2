@@ -48,7 +48,7 @@ class Promotion extends CI_Controller {
 		if (isset($id)) {
 			$promotion = $this->Promotion_model->get($id);
 			$promotion['time_start'] = date('Y-m-d', $promotion['time_start']);
-			$promotion['time_end'] = date('Y-m-d', $promotion['time_end']);
+			$promotion['time_end']   = date('Y-m-d', $promotion['time_end']);
 			$this->load->view('admin/promotion/edit', array('promotion' => $promotion));
 		} else {
 			$this->load->view('admin/promotion/add');			
@@ -60,7 +60,7 @@ class Promotion extends CI_Controller {
 		$data    = $this->getDataInput();
 		$message = 'Thêm mới khuyến mãi';
 		$check   = $this->Promotion_model->insert($data);
-
+		
 		if ($check) {
 			$this->load->view('admin/promotion/add', array('status' => true, 'message' => $message.' thành công'));
 		} else {
@@ -86,7 +86,6 @@ class Promotion extends CI_Controller {
 	//Delete one item
 	public function delete( $id = NULL )
 	{
-		$message     = 'Xóa danh mục';
 		$this->Promotion_model->delete($id);
 		$link = 'location:'.base_url().'admin/Promotion';
 		header($link);

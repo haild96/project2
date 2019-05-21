@@ -88,6 +88,44 @@ class Product_model extends CI_Model {
         $this->db->delete(self::TABLE_NAME, $where);
         return $this->db->affected_rows();
     }
+
+      public function countProduct($params) {
+        //get total product
+        if ($params['name']) {
+          $this->db->like('name', $params['name']);
+        }
+        if ($params['id_category']) {
+          $this->db->where('id_category', $params['id_category']);
+        }
+        if ($params['status']) {
+          $this->db->where('status', $params['status']);
+        }
+        $this->db->from("product");
+        return $this->db->count_all_results();
+    }
+
+    public function getProductByPage($limit, $offset, $params) {
+        $pagination = true;
+        $this->db->select('*');
+         if ($params['name']) {
+          $this->db->like('name', $params['name']);
+          $pagination = false;
+        }
+        if ($params['id_category']) {
+          $this->db->where('id_category', $params['id_category']);
+          $pagination = false;
+        }
+        if ($params['status']) {
+          $this->db->where('status', $params['status']);
+          $pagination = false;
+        }
+        if ($pagination) {
+          return $this->db->get('product', $limit, $offset)->result_array();
+        } else {
+          return $this->db->get('product')->result_array();
+        }
+        
+    }
 }
         
  ?>
