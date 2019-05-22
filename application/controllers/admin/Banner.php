@@ -16,12 +16,12 @@ class Banner extends CI_Controller {
 	{
 		$quangcao = $this->Banner_model->get();
 		$quangcao = array('quangcao' => $quangcao);
-		$this->load->view('admin/Banner_view', $quangcao, FALSE);
+		$this->load->view('admin/banner/Banner_view', $quangcao, FALSE);
 	}
 
 	public function addBanner()
 	{
-		$this->load->view('admin/add_Banner_view');
+		$this->load->view('admin/banner/add_Banner_view');
 	}
 
 	// Add a new item
@@ -85,11 +85,11 @@ class Banner extends CI_Controller {
 		$check = $this->Banner_model->insert($quangcao);
 		if($check) 
 		{
-			$this->load->view('admin/add_Banner_view', array('status' => true, 'message' => 'Thêm quảng cáo thành công')); 
+			$this->load->view('admin/banner/add_Banner_view', array('status' => true, 'message' => 'Thêm quảng cáo thành công')); 
 		} 
 		else
 		{
-			$this->load->view('admin/add_Banner_view', array('status' => false , 'message' => 'Thêm quảng cáo không thành công'));
+			$this->load->view('admin/banner/add_Banner_view', array('status' => false , 'message' => 'Thêm quảng cáo không thành công'));
 		}
 	}
 
@@ -97,7 +97,7 @@ class Banner extends CI_Controller {
 	{
 		$quangcao = $this->Banner_model->get($id);
 		$quangcao = array('quangcao' => $quangcao);
-		$this->load->view('admin/edit_Banner_view', $quangcao, FALSE);
+		$this->load->view('admin/banner/edit_Banner_view', $quangcao, FALSE);
 	}
 
 	//Update one item
@@ -167,11 +167,11 @@ class Banner extends CI_Controller {
 		$check = $this->Banner_model->update($quangcao, $id);
 		if($check) 
 		{
-			$this->load->view('admin/add_Banner_view', array('status' => true, 'message' => 'Thêm quảng cáo thành công')); 
+			$this->load->view('admin/banner/add_Banner_view', array('status' => true, 'message' => 'Sửa quảng cáo thành công')); 
 		} 
 		else
 		{
-			$this->load->view('admin/add_Banner_view', array('status' => false , 'message' => 'Thêm quảng cáo không thành công'));
+			$this->load->view('admin/banner/add_Banner_view', array('status' => false , 'message' => 'Sửa quảng cáo không thành công'));
 		}
 	}
 
@@ -180,7 +180,7 @@ class Banner extends CI_Controller {
 	{
 		if($this->Banner_model->delete($id))
 		{
-			$this->load->view('admin/Banner_view', array('quangcao' => $this->Banner_model->get()), FALSE);
+			$this->load->view('admin/banner/Banner_view', array('quangcao' => $this->Banner_model->get()), FALSE);
 		}
 	}
 }
