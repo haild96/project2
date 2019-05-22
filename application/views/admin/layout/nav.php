@@ -162,18 +162,18 @@
                         </li>
                         
                         <li>
-                            <a href="#"><i class="fa fa-users fa-fw"></i> Tài khoản<span class="fa arrow"></span></a>
+                            <a href="<?php echo base_url() ?>admin/User"><i class="fa fa-users fa-fw"></i> Tài khoản<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Tài khoản khách hàng</a>
+                                    <a href="<?php echo base_url() ?>admin/User/userKhachHang">Tài khoản khách hàng</a>
                                 </li>
 
                                 <li>
-                                    <a href="#">Tài khoản nhân viên</a>
+                                    <a href="<?php echo base_url() ?>admin/User/userNhanVien">Tài khoản nhân viên</a>
                                 </li>
 
                                 <li>
-                                    <a href="#">Thêm mới tài khoản</a>
+                                    <a href="<?php echo base_url() ?>admin/User/addUser">Thêm mới tài khoản</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
