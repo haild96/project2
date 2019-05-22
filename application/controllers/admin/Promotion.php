@@ -6,82 +6,99 @@ class Promotion extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		//Load Dependencies
 		$this->load->model('Promotion_model');
-
 	}
 
 	// List all your items
 	public function index( $offset = 0 )
 	{
-		$quangcao = $this->Promotion_model->get();
-		$quangcao = array('quangcao' => $quangcao);
-		$this->load->view('admin/Promotion_view', $quangcao, FALSE);
-	}
+		$limit     = 10;
+		$total     = $this->Promotion_model->countPromotion(); 
+		$promotion = $this->Promotion_model->getPromotionByPage($limit,$offset);
 
-	public function addPromotion()
-	{
-		$this->load->view('admin/add_Promotion_view');
+		$this->load->library('pagination');
+		$config['base_url']        = '/project2/admin/Promotion/index';
+		$config['total_rows']      = $total;
+		$config['per_page']        = $limit;
+		$config['uri_segment']     = 0;
+		$config['num_links']       = 1;
+		$config['full_tag_open']   = '<div class="phantrang"><p>';
+		$config['full_tag_close']  = '</p></div>';
+		$config['first_link']      = 'First';
+		$config['first_tag_open']  = '<div>';
+		$config['first_tag_close'] = '</div>';
+		$config['last_link']       = 'Last';
+		$config['last_tag_open']   = '<div>';
+		$config['last_tag_close']  = '</div>';
+		$config['next_link']       = '&raquo;';
+		$config['next_tag_open']   = '<div>';
+		$config['next_tag_close']  = '</div>';
+		$config['prev_link']       = '&laquo;';
+		$config['prev_tag_open']   = '<div>';
+		$config['prev_tag_close']  = '</div>';
+		$config['cur_tag_open']    = '<b>';
+		$config['cur_tag_close']   = '</b>';	
+		$this->pagination->initialize($config);	
+		$this->load->view('admin/promotion/list', array('promotion' => $promotion));
 	}
 
 	// Add a new item
-	public function add()
+	public function add($id = NULL)
 	{
-		$quangcao = array(
-			'name' => $this->input->post('name'),
-			'detail' => $this->input->post('detail'),
-			'status' => $this->input->post('status'),
-			'time_start' => strtotime($this->input->post('time_start')),
-			'time_end' => strtotime($this->input->post('time_end'))
-		);
-
-		$check = $this->Promotion_model->insert($quangcao);
-		if($check) 
-		{
-			$this->load->view('admin/add_Promotion_view', array('status' => true, 'message' => 'Thêm quảng cáo thành công')); 
-		} 
-		else
-		{
-			$this->load->view('admin/add_Promotion_view', array('status' => false , 'message' => 'Thêm quảng cáo thành công'));
+		if (isset($id)) {
+			$promotion = $this->Promotion_model->get($id);
+			$promotion['time_start'] = date('Y-m-d', $promotion['time_start']);
+			$promotion['time_end']   = date('Y-m-d', $promotion['time_end']);
+			$this->load->view('admin/promotion/edit', array('promotion' => $promotion));
+		} else {
+			$this->load->view('admin/promotion/add');			
 		}
 	}
 
-	public function editByID($id)
+	public function insert()
 	{
-		$quangcao = $this->Promotion_model->get($id);
-		$quangcao = array('quangcao' => $quangcao);
-		$this->load->view('admin/edit_Promotion_view', $quangcao, FALSE);
+		$data    = $this->getDataInput();
+		$message = 'Thêm mới khuyến mãi';
+		$check   = $this->Promotion_model->insert($data);
+		
+		if ($check) {
+			$this->load->view('admin/promotion/add', array('status' => true, 'message' => $message.' thành công'));
+		} else {
+			$this->load->view('admin/promotion/add', array('status' => false, 'message' => $message.' thất bại'));
+		}
 	}
 
 	//Update one item
 	public function update( $id = NULL )
 	{
-		$quangcao = array(
-			'name' => $this->input->post('name'),
-			'detail' => $this->input->post('detail'),
-			'status' => $this->input->post('status'),
-			'time_start' => strtotime($this->input->post('time_start')),
-			'time_end' => strtotime($this->input->post('time_end'))
-		);
+		$data     = $this->getDataInput();
+		$message  = 'Cập nhật khuyến mãi';
 
-		$check = $this->Promotion_model->update($quangcao, $id);
-		if($check) 
-		{
-			$this->load->view('admin/edit_Promotion_view', array('status' => true, 'message' => 'Sửa quảng cáo thành công', 'quangcao' => $this->Promotion_model->get($id) )); 
-		} 
-		else
-		{
-			$this->load->view('admin/edit_Promotion_view', array('status' => false , 'message' => 'Sửa quảng cáo không thành công', 'quangcao' => $this->Promotion_model->get($id)));
-		}
+		$this->Promotion_model->update($data, array('id' => $id));
+
+		$promotion = $this->Promotion_model->get($id);
+		$promotion['time_start'] = date('Y-m-d', $promotion['time_start']);
+		$promotion['time_end']   = date('Y-m-d', $promotion['time_end']);
+		
+		$this->load->view('admin/promotion/edit', array('status' => true, 'message' => $message.' thành công', 'promotion' => $promotion));
 	}
 
 	//Delete one item
 	public function delete( $id = NULL )
 	{
-		if($this->Promotion_model->delete($id))
-		{
-			$this->load->view('admin/Promotion_view', array('quangcao' => $this->Promotion_model->get()), FALSE);
-		}
+		$this->Promotion_model->delete($id);
+		$link = 'location:'.base_url().'admin/Promotion';
+		header($link);
+	}
+
+	public function getDataInput()
+	{
+		$data = array('name'       => $this->input->post('name'),
+					  'detail'     => $this->input->post('detail'),
+					  'time_start' => strtotime($this->input->post('timeStart')),
+					  'time_end'   => strtotime($this->input->post('timeEnd')),
+					  'status'     => $this->input->post('status'));
+		return $data;
 	}
 }
 

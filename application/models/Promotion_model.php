@@ -1,4 +1,5 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php 
+if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Promotion_model extends CI_Model {
 
@@ -86,5 +87,16 @@ class Promotion_model extends CI_Model {
         $this->db->delete(self::TABLE_NAME, $where);
         return $this->db->affected_rows();
     }
+
+    public function countPromotion() {
+		//get total product
+		return $this->db->count_all('promotion');
+	}
+
+	public function getPromotionByPage($limit, $offset) {
+		$this->db->select('*');
+		return $this->db->get('promotion', $limit, $offset)->result_array();
+	}
 }
-         ?>
+        
+ ?>

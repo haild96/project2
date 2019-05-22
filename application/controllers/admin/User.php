@@ -6,7 +6,6 @@ class User extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		//Load Dependencies
 		$this->load->model('User_model');
 
 	}
@@ -17,11 +16,12 @@ class User extends CI_Controller {
 
 	}
 
+
 	public function userKhachHang()
 	{
 		$khachhang = $this->User_model->getUserKhachHang();
 		$khachhang = array('user' => $khachhang);
-		$this->load->view('admin/User_view', $khachhang, FALSE);
+		$this->load->view('admin/user/User_view', $khachhang, FALSE);
 		
 	}
 
@@ -29,13 +29,13 @@ class User extends CI_Controller {
 	{
 		$nhanvien = $this->User_model->getUserNhanVien();
 		$nhanvien = array('user' => $nhanvien);
-		$this->load->view('admin/User_view', $nhanvien, FALSE);
+		$this->load->view('admin/user/User_view', $nhanvien, FALSE);
 		
 	}
 
 	public function addUser()
 	{
-		$this->load->view('admin/create_User_view');
+		$this->load->view('admin/user/create_User_view');
 	}
 
 	// Add a new item
@@ -57,21 +57,19 @@ class User extends CI_Controller {
 			$check = $this->User_model->insert($taikhoan);
 			if($check) 
 			{
-				$this->load->view('admin/create_User_view', array('status' => true, 'message' => 'Tạo tài khoản thành công')); 
+				$this->load->view('admin/user/create_User_view', array('status' => true, 'message' => 'Tạo tài khoản thành công')); 
 			} 
 			else
 			{
-				$this->load->view('admin/create_User_view', array('status' => false , 'message' => 'Tạo tài khoản không thành công'));
+				$this->load->view('admin/user/create_User_view', array('status' => false , 'message' => 'Tạo tài khoản không thành công'));
 			}
 		}
 		else
 		{
-			$this->load->view('admin/create_User_view', array('thongbao' => 'Xác nhận mật khẩu không chính xác'));
+			$this->load->view('admin/user/create_User_view', array('thongbao' => 'Xác nhận mật khẩu không chính xác'));
 		}
-		
+     }
 
-
-	}
 
 	//Update one item
 	public function update( $id = NULL )
@@ -86,11 +84,11 @@ class User extends CI_Controller {
 		$user = $this->User_model->get($id);
 		if($user['level'] == 0)
 		{
-			$this->load->view('admin/User_view', array('user' => $this->User_model->getUserNhanVien()));
+			$this->load->view('admin/user/User_view', array('user' => $this->User_model->getUserNhanVien()));
 		}
 		else if($user['level'] == 1)
 		{
-			$this->load->view('admin/User_view', array('user' => $this->User_model->getUserKhachHang()));
+			$this->load->view('admin/user/User_view', array('user' => $this->User_model->getUserKhachHang()));
 		}
  	}
 }
