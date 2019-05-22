@@ -26,7 +26,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php echo $i = 1; ?>
+                        <?php $i = 1; ?>
                         <?php foreach ($quangcao as $value): ?>                    
                             <tr class="odd gradeX" align="center">
                                 <th class="text-center"><?php echo $i ?></th>

@@ -15,8 +15,9 @@ class Banner extends CI_Controller {
 	public function index( $offset = 0 )
 	{
 		$quangcao = $this->Banner_model->get();
+		$quangcao = (!$quangcao) ? array() : $quangcao;
 		$quangcao = array('quangcao' => $quangcao);
-		$this->load->view('admin/banner/Banner_view', $quangcao, FALSE);
+		$this->load->view('admin/banner/Banner_view', $quangcao);
 	}
 
 	public function addBanner()
@@ -180,7 +181,9 @@ class Banner extends CI_Controller {
 	{
 		if($this->Banner_model->delete($id))
 		{
-			$this->load->view('admin/banner/Banner_view', array('quangcao' => $this->Banner_model->get()), FALSE);
+			$quangcao = $this->Banner_model->get();
+			$quangcao = (!$quangcao) ? array() : $quangcao;
+			$this->load->view('admin/banner/Banner_view', array('quangcao' => $quangcao), FALSE);
 		}
 	}
 }

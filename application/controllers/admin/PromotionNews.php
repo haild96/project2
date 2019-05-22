@@ -16,8 +16,9 @@ class PromotionNews extends CI_Controller {
 	public function index( $offset = 0 )
 	{
 		$tintuc = $this->PromotionNews_model->get();
+		$tintuc = (!$tintuc) ? array() : $tintuc;
 		$tintuc = array('tintuc' => $tintuc);
-		$this->load->view('admin/promotionNews/PromotionNews_view', $tintuc, FALSE);
+		$this->load->view('admin/promotionNews/PromotionNews_view', $tintuc);
 	}
 
 	public function addPromotionNews()
@@ -180,6 +181,7 @@ class PromotionNews extends CI_Controller {
 	{
 		$this->PromotionNews_model->delete($id);
 		$tintuc = $this->PromotionNews_model->get();
+		$tintuc = (!$tintuc) ? array() : $tintuc;
 		$tintuc = array('tintuc' => $tintuc);
 		$this->load->view('admin/promotionNews/PromotionNews_view', $tintuc, FALSE);
 	}
