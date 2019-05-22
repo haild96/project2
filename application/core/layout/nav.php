@@ -26,7 +26,12 @@
 
 <link rel="stylesheet" href="<?php echo base_url() ?>lib/admin/css/admin.css">
 </head>
-
+<?php
+    if ($this->session->has_userdata('username') && $this->session->has_userdata('password')) {
+    } else {
+        header('location:/project2/admin/User/login');
+    }
+?>
 <body>
 
 <div id="wrapper">
@@ -51,12 +56,14 @@
                 <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                </li>
-                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-user fa-fw"></i>
+                        <?php echo $this->session->userdata('fullname'); ?>
+                    </a>
                 </li>
                 <li class="divider"></li>
-                <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                <li><a href="<?php echo base_url() ?>admin/User/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                 </li>
             </ul>
             <!-- /.dropdown-user -->
@@ -148,9 +155,10 @@
                             <a href="<?php echo base_url() ?>admin/User/userNhanVien">Tài khoản nhân viên</a>
                         </li>
 
-                        <li>
+                          <li>
                             <a href="<?php echo base_url() ?>admin/User/addUser">Thêm mới tài khoản</a>
-                        </li>
+                          </li>
+                        
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
