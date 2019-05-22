@@ -38,3 +38,8 @@
 .phantrang p {
     display: inline-block;
 }
+
+.kHThi {
+    visibility: hidden;
+    opacity: 0;
+}

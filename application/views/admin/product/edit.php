@@ -93,11 +93,125 @@
     <!-- /.container-fluid -->
 </div>
 <!-- /#page-wrapper -->
+
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                 <h3 class="page-header">Bình luận
+                    <small>Danh sách</small>
+                </h3>
+            
+            </div>
+            <!-- /.col-lg-12 -->
+        
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">STT</th>
+                        <th class="text-center">Người dùng</th>
+                        <th class="text-center">Nội dung bình luận</th>
+                        <th class="text-center">Thời gian</th>
+                        <th class="text-center">Trạng thái</th>
+                        <th class="text-center">Sửa</th>
+                        <th class="text-center">Xóa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $i = 1; ?>
+                    <?php foreach ($listCmt as $key => $value):?>
+                    
+                    <tr class="odd gradeX" align="center">
+                        <td><?php echo $i ?></td>
+                        <td><?php echo $value['fullname'] ?></td>
+                        <td><?php echo $value['content'] ?></td>
+                        <td><?php echo date("d/m/Y", $value['time_created']); ?></td>
+                        <td>
+                            <?php $status = $value['status']==1 ?'Đã kiểm duyệt': 'Chưa kiểm duyệt' ?>
+                             <div class="status"><?php echo $status ?></div>
+                             <div class="change_status kHThi">
+                                <select class="form-control contentStatus">
+                                    <option value="1">Đã kiểm duyệt</option>
+                                    <option value="2">Chưa kiểm duyệt</option>
+                                </select>
+                                <i class="btn btn-success btn-sm glyphicon glyphicon-ok done pull-left"></i>
+                                <input type="hidden" value="<?php echo $value['id'] ?>" class="idOrder">
+                             </div>
+                        </td>
+                        <td class="center change"> 
+                            <button class="btn btn-info btn-sm"><i class="fa fa-pencil fa-fw"></i></button>
+                        </td>
+
+                        <td class="center" id="removeCmt"> 
+                             <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o  fa-fw"></i></button>
+                        </td>
+                        <input type="hidden" value="<?php echo $value['id'] ?>">
+                        
+                    </tr>
+                    <?php $i= $i+1 ?>
+
+                    <?php endforeach ?>
+                    
+                </tbody>
+            </table>
+            
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
 <?php include($_SERVER['DOCUMENT_ROOT'].'/project2/application/core/layout/footer.php'); ?>
 
 <script>
     CKEDITOR.replace( 'description' );
 </script>  
 
+<script>
+        document.addEventListener("DOMContentLoaded",function(){
+      //change status cmt 
+        $('body').on('click','.change',function () {
+            $(this).prev().find('.change_status').removeClass('kHThi');
+            $(this).prev().find('.status').addClass('kHThi');
+
+        });
+        $('body').on('click','.done',function () {   
+            $(this).parent().addClass('kHThi');
+            $(this).parent().prev().removeClass('kHThi');
+            status = $(this).prev().val();
+            id=$(this).next().val();
+            nd=(status==1)?'Đã kiểm duyệt':'Chưa kiểm duyệt';
+            $(this).parent().prev('.status').html(nd);
+            $.ajax({
+                url: '/project2/admin/Comment/update',
+                type: 'POST',
+                data: {status: status,id:id}
+            })
+            .done(function() {
+            })
+            .fail(function() {
+            })
+            .always(function() {
+            });
+        });
+        // remove cmt
+        $('body').on('click','#removeCmt',function () {
+        var ndXoa = $(this).parent();
+            id    = $(this).next().val(); 
+         $.ajax({
+                url: '/project2/admin/Comment/delete',
+                type: 'POST',
+                data: {id:id}
+            })
+            .done(function() {
+            })
+            .fail(function() {
+            })
+            .always(function(data) {
+                ndXoa.remove();
+            });
+        });
+
+        },false);
+        
+    </script>
 
 

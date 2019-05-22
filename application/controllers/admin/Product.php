@@ -9,6 +9,7 @@ class Product extends CI_Controller {
 		$this->load->model('Category_model');
 		$this->load->model('Promotion_model');
 		$this->load->model('Product_model');
+		$this->load->model('Comment_model');
 	}
 
 	// List all your items
@@ -58,7 +59,9 @@ class Product extends CI_Controller {
 		
 		if (isset($id)) {
 			$product = $this->Product_model->get($id);
-			$this->load->view('admin/product/edit', array('category' => $category, 'promotion' => $promotion, 'product' => $product));
+			$listCmt = $this->Comment_model->getAllCmt($id);
+	
+			$this->load->view('admin/product/edit', array('category' => $category, 'promotion' => $promotion, 'product' => $product, 'listCmt' => $listCmt));
 		} else {
 			$this->load->view('admin/product/add', array('category' => $category, 'promotion' => $promotion));			
 		}
@@ -106,21 +109,24 @@ class Product extends CI_Controller {
 			$this->load->library('upload', $config);
 
 			$product = $this->Product_model->get($id);
+			$listCmt = $this->Comment_model->getAllCmt($id);
 
 			if ( ! $this->upload->do_upload('image')){
 			$error = array('error' => $this->upload->display_errors());
-			$this->load->view('admin/product/edit', array('status' => false, 'message' => $message.' thất bại', 'category' => $category, 'promotion' => $promotion, 'product' => $product));
+			$this->load->view('admin/product/edit', array('status' => false, 'message' => $message.' thất bại', 'category' => $category, 'promotion' => $promotion, 'product' => $product, 'listCmt' => $listCmt));
 			} else {
 			$data  =  $this->upload->data();
 			$dataUpdate['image'] = $data['file_name'];
 			$this->Product_model->update($dataUpdate, array('id' => $id));
 			$product = $this->Product_model->get($id);
-			$this->load->view('admin/product/edit', array('status' => true, 'message' => $message.' thành công', 'category' => $category, 'promotion' => $promotion, 'product' => $product));
+			$this->load->view('admin/product/edit', array('status' => true, 'message' => $message.' thành công', 'category' => $category, 'promotion' => $promotion, 'product' => $product, 'listCmt' => $listCmt));
 			}
 		} else {
 			$this->Product_model->update($dataUpdate, array('id' => $id));
 			$product = $this->Product_model->get($id);
-			$this->load->view('admin/product/edit', array('status' => true, 'message' => $message.' thành công', 'category' => $category, 'promotion' => $promotion, 'product' => $product));
+			$listCmt = $this->Comment_model->getAllCmt($id);
+
+			$this->load->view('admin/product/edit', array('status' => true, 'message' => $message.' thành công', 'category' => $category, 'promotion' => $promotion, 'product' => $product, 'listCmt' => $listCmt));
 		}
 		
 	}
