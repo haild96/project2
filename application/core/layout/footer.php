@@ -15,6 +15,7 @@
 <!-- DataTables JavaScript -->
 <script src="<?php echo base_url() ?>lib/admin/bower_components/DataTables/media/js/jquery.dataTables.min.js"></script>
 <script src="<?php echo base_url() ?>lib/admin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>ckeditor/ckeditor.js"></script> 
 
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script>

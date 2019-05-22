@@ -90,10 +90,10 @@
                     <a href="#"><i class="glyphicon glyphicon-briefcase"></i> Sản phẩm<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="#">Danh sách sản phẩm</a>
+                            <a href="<?php echo base_url() ?>admin/Product">Danh sách sản phẩm</a>
                         </li>
                         <li>
-                            <a href="#">Thêm mới sản phẩm</a>
+                            <a href="<?php echo base_url() ?>admin/Product/add">Thêm mới sản phẩm</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
