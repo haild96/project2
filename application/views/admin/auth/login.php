@@ -4,10 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Khóa Học Lập Trình Laravel Framework 5.x Tại Khoa Phạm">
     <meta name="author" content="">
 
-    <title>Admin - Khoa Phạm</title>
+    <title>Đăng nhập vào trang quản trị</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo base_url() ?>lib/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -25,6 +24,20 @@
 
 <body>
 
+    <?php if ($this->session->has_userdata('username')&&$this->session->has_userdata('password')) {
+        header('location:/project2/admin/Product');
+    } ?>
+
+    <div class="row" style="margin-left: 20px;margin-right: 20px;">
+        <?php if (isset($status)): ?>
+
+            <div class="alert <?php echo $status ? 'alert-success' : 'alert-danger'?>">
+                <?php echo $message ?> 
+            </div>
+       
+        <?php endif ?>
+    </div>
+
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
@@ -33,13 +46,13 @@
                         <h3 class="panel-title">Please Sign In</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form" action="" method="POST">
+                        <form role="form" action="<?php echo base_url() ?>admin/User/authenUser" method="POST">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                                    <input class="form-control" placeholder="Username" name="username" required>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                    <input class="form-control" placeholder="Password" name="password" type="password">
                                 </div>
                                 <button type="submit" class="btn btn-lg btn-success btn-block">Login</button>
                             </fieldset>

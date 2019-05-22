@@ -91,6 +91,53 @@ class User extends CI_Controller {
 			$this->load->view('admin/user/User_view', array('user' => $this->User_model->getUserKhachHang()));
 		}
  	}
+
+ 	public function login()
+ 	{
+ 	$this->load->view('admin/auth/login');
+ 	}
+
+ 	public function logout() {
+		$this->session->unset_userdata('username');
+		$this->session->unset_userdata('password');
+		$this->session->unset_userdata('level');
+		$this->session->unset_userdata('fullname');
+		$this->session->unset_userdata('email');
+		$this->session->unset_userdata('phone');
+		$this->session->unset_userdata('address');
+		$this->session->unset_userdata('id');
+		$this->session->sess_destroy();
+		header('location:/project2/admin/User/login');
+	}
+
+ 	public function authenUser()
+ 	{
+ 		$username = $this->input->post('username');
+		$password = md5($this->input->post('password'));
+		$data = $this->User_model->confirm_account($username, $password);
+		if ($data == 0) {
+			$this->load->view('admin/auth/login', array('status' => false, 'message' => 'Tài khoản hoặc mật khẩu không đúng'));
+		} else {
+			$level    = $data[0]['level'];
+			$fullname = $data[0]['fullname'];
+			$email    = $data[0]['email'];
+			$phone    = $data[0]['phone'];
+			$address  = $data[0]['address'];
+			$username = $data[0]['username'];
+			$id       = $data[0]['id'];
+			$password = $data[0]['password'];
+			$account = array('username' => $username,
+							 'password' => $password,
+							 'level'    => $level,
+							 'fullname' => $fullname,
+							 'email'    => $email,
+							 'phone'    => $phone,
+							 'address'  => $address,
+							 'id'       => $id);
+			$this->session->set_userdata($account);
+			header('location:/project2/admin/Category');
+		}
+ 	}
 }
 
 /* End of file User.php */

@@ -104,5 +104,16 @@ class User_model extends CI_Model {
         $this->db->delete(self::TABLE_NAME, $where);
         return $this->db->affected_rows();
     }
+
+    public function confirm_account($user,$pass){
+      $this->db->select('*');
+      $this->db->from('user');
+      $this->db->where('username', $user);
+      $this->db->where('password', $pass);
+      $this->db->where('status', 1);
+      $data=$this->db->get()->result_array();
+      $data=(count($data)!=0)?$data:0;
+      return $data;
+    }
 }
 ?>
