@@ -44,6 +44,24 @@ class User_model extends CI_Model {
         }
     }
 
+    public function getUserKhachHang()
+    {
+        $this->db->select('*');
+        $this->db->where('level', '0');
+        $this->db->from(self::TABLE_NAME);
+        $result = $this->db->get()->result_array();
+        return $result;
+    }
+
+    public function getUserNhanVien()
+    {
+        $this->db->select('*');
+        $this->db->where('level', '1');
+        $this->db->from(self::TABLE_NAME);
+        $result = $this->db->get()->result_array();
+        return $result;
+    }
+
     /**
      * Inserts new data into database
      *

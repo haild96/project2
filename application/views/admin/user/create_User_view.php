@@ -1,4 +1,4 @@
-<?php include 'layout/nav.php'; ?>
+<?php include($_SERVER['DOCUMENT_ROOT'].'/project2/application/core/layout/nav.php'); ?>
 
 <!-- Page Content -->
 <div id="page-wrapper">
@@ -18,6 +18,12 @@
                     </div>
                     <?php $this->session->unset_userdata($status); ?>
                 <?php endif ?>
+                <?php if (isset($thongbao)): ?>
+                    <div class="alert alert-danger">
+                      <?php echo $thongbao ?> 
+                    </div>
+                    <?php $this->session->unset_userdata($status); ?>
+                <?php endif ?>
 
                 <form action="<?php echo base_url() ?>admin/User/add" method="POST" enctype="multipart/form-data">  
                     <div class="form-group">
@@ -30,7 +36,7 @@
                     </div>
                     <div class="form-group">
                         <label>Xác nhận mật khẩu</label>
-                        <input class="form-control" type="password_again" value="" name="password_again" placeholder="Nhập lại mật khẩu" />
+                        <input class="form-control" type="password" value="" name="password_again" placeholder="Nhập lại mật khẩu" />
                     </div>
                     <div class="form-group">
                         <label>Tên người dùng</label>
@@ -51,10 +57,22 @@
                     <div class="form-group">
                         <label>Quyền</label>
                         <label class="radio-inline">
-                            <input name="status" value="0" checked="" type="radio">Khách hàng
+                            <input name="level" value="0" checked="" type="radio">Khách hàng
                         </label>
                         <label class="radio-inline">
-                            <input name="status" value="1" type="radio">Nhân viên
+                            <input name="level" value="1" type="radio">Nhân viên
+                        </label>
+                        <label class="radio-inline">
+                            <input name="level" value="2" type="radio">Quản trị
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Trạng thái</label>
+                        <label class="radio-inline">
+                            <input name="status" value="0" checked="" type="radio">Đang hoạt động
+                        </label>
+                        <label class="radio-inline">
+                            <input name="status" value="1" type="radio">Tạm ngừng hoạt động
                         </label>
                     </div>
                     
@@ -69,4 +87,4 @@
 </div>
 <!-- /#page-wrapper -->
 
-<?php include 'layout/footer.php'; ?>
+<?php include($_SERVER['DOCUMENT_ROOT'].'/project2/application/core/layout/footer.php'); ?>
