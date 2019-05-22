@@ -117,10 +117,6 @@
                 </li>
 
                 <li>
-                    <a href="#"><i class="glyphicon glyphicon-comment"></i> Bình luận</span></a>
-                </li>
-
-                <li>
                     <a href="#"><i class="glyphicon glyphicon-send"></i> Quảng cáo<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
