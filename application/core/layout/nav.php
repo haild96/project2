@@ -137,13 +137,12 @@
                     <a href="#"><i class="glyphicon glyphicon-list-alt"></i> Tin tức<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="#">Danh sách tin tức</a>
+                            <a href="<?php echo base_url() ?>admin/PromotionNews">Danh sách tin tức</a>
                         </li>
                         <li>
-                            <a href="#">Thêm mới tin tức</a>
+                            <a href="<?php echo base_url() ?>admin/PromotionNews/addPromotionNews">Thêm mới tin tức</a>
                         </li>
                     </ul>
-                    <!-- /.nav-second-level -->
                 </li>
                 
                 <li>
@@ -165,7 +164,17 @@
                 </li>
 
                 <li>
-                    <a href="#"><i class="fa fa-info-circle"></i> Thông tin shop</a>
+                    <a href="#"><i class="fa fa-users fa-fw"></i> Thông tin shop<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="<?php echo base_url() ?>admin/InforCompany">Xem thông tin</a>
+                        </li>
+
+                        <li>
+                            <a href="<?php echo base_url() ?>admin/InforCompany/edit">Sửa thông tin</a>
+                        </li>
+
+                    </ul>
                 </li>
 
             </ul>
