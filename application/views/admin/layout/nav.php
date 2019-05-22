@@ -139,10 +139,10 @@
                             <a href="#"><i class="glyphicon glyphicon-send"></i> Quảng cáo<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="<?php echo base_url() ?>admin/Promotion">Danh sách quảng cáo</a>
+                                    <a href="<?php echo base_url() ?>admin/Banner">Danh sách quảng cáo</a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo base_url() ?>admin/Promotion/addPromotion">Thêm mới quảng cáo</a>
+                                    <a href="<?php echo base_url() ?>admin/Banner/addBanner">Thêm mới quảng cáo</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
