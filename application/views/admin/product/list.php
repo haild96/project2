@@ -62,10 +62,11 @@
                 <thead>
                     <tr>
                         <th class="text-center">STT</th>
-                        <th class="text-center">Tên sản phẩm</th>
+                        <th class="text-center" style="max-width: 150px;">Tên sản phẩm</th>
                         <th class="text-center">Hình ảnh</th>
                         <th class="text-center">Tên danh mục</th>
                         <th class="text-center">Số lượng</th>
+                        <th class="text-center">Đã bán</th>
                         <th class="text-center">Trạng thái</th>
                         <th class="text-center">Sửa</th>
                         <th class="text-center">Xóa</th>
@@ -77,9 +78,9 @@
                     
                     <tr class="odd gradeX" align="center">
                         <td><?php echo $i ?></td>
-                        <td><?php echo $value['name'] ?></td>
+                        <td style="max-width: 150px;"><?php echo $value['name'] ?></td>
                         <td>
-                            <img class="responsive-image" width="50px" src="<?php echo base_url().'uploads/product/'.$value['image'] ?>" alt="Error">
+                            <img class="responsive-image" width="80px" src="<?php echo base_url().'uploads/product/'.$value['image'] ?>" alt="Error">
                         </td>
                         <td>
                             <?php foreach ($category as $key => $cate): ?>
@@ -87,6 +88,7 @@
                             <?php endforeach ?>
                         </td>
                         <td><?php echo $value['quantity'] ?></td>
+                        <td><?php echo $value['quantity_exp'] ?></td>
                         <td>
                             <?php if ($value['status'] == 1) {
                             echo "Hiển thị";

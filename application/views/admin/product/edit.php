@@ -43,7 +43,7 @@
                 <div class="form-group">
                     <label>Ảnh đại diện</label><br>
                     <input type="hidden" class="form-control" name="image_old" value="<?php echo $product['image'] ?>" >
-                    <img width="150px" src="<?php echo base_url();?>uploads/product/<?php echo $product['image'] ?>" alt="Lỗi">
+                    <img width="200px" src="<?php echo base_url();?>uploads/product/<?php echo $product['image'] ?>" alt="Lỗi">
                     <input type="file" class="form-control" name="image" placeholder="Ảnh sản phẩm">
                 </div>
 

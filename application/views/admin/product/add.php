@@ -52,7 +52,7 @@
 
                 <div class="form-group">
                     <label >Giá khuyến mại</label>
-                    <input type="number" class="form-control" name="price_sales" placeholder="Giá khuyến mại" required>
+                    <input type="number" class="form-control" name="price_sales" placeholder="Giá khuyến mại">
                 </div>
 
                 <div class="form-group">
