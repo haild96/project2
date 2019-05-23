@@ -1,11 +1,13 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php 
 
-class User_model extends CI_Model {
+if (!defined('BASEPATH')) exit('No direct script access allowed');
+
+class OrderProduct_model extends CI_Model {
 
     /**
      * @name string TABLE_NAME Holds the name of the table in use by this model
      */
-    const TABLE_NAME = 'user';
+    const TABLE_NAME = 'order_product';
 
     /**
      * @name string PRI_INDEX Holds the name of the tables' primary index used in this model
@@ -32,7 +34,7 @@ class User_model extends CI_Model {
                 $this->db->where(self::PRI_INDEX, $where);
             }
         }
-        $result = $this->db->get()->result_array();
+        $result = $this->db->get()->result();
         if ($result) {
             if ($where !== NULL) {
                 return array_shift($result);
@@ -42,24 +44,6 @@ class User_model extends CI_Model {
         } else {
             return false;
         }
-    }
-
-    public function getUserKhachHang()
-    {
-        $this->db->select('*');
-        $this->db->where('level', '0');
-        $this->db->from(self::TABLE_NAME);
-        $result = $this->db->get()->result_array();
-        return $result;
-    }
-
-    public function getUserNhanVien()
-    {
-        $this->db->select('*');
-        $this->db->where('level', '1');
-        $this->db->from(self::TABLE_NAME);
-        $result = $this->db->get()->result_array();
-        return $result;
     }
 
     /**
@@ -105,16 +89,16 @@ class User_model extends CI_Model {
         return $this->db->affected_rows();
     }
 
-    public function confirm_account($user,$pass){
-      $this->db->select('*');
-      $this->db->from('user');
-      $this->db->where('username', $user);
-      $this->db->where('password', $pass);
-      $this->db->where('status', 1);
-      $this->db->where('level <=', 1);
-      $data=$this->db->get()->result_array();
-      $data=(count($data)!=0)?$data:0;
-      return $data;
-    }
+    public function getDetailOrder($id){
+		$this->db->select('product.name, product.image, product.price_origin, product.price_sales, order_product.quantity, promotion.name AS promotion, order_product.order_id');
+		$this->db->from('order_product');
+		$this->db->where('order_id', $id);
+		$this->db->join('product', 'product.id = order_product.product_id', 'left');
+		$this->db->join('promotion', 'promotion.id = product.id_promotion', 'left');
+		$data=$this->db->get()->result_array();
+		return $data;
+	}
 }
-?>
+        
+
+ ?>

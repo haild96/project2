@@ -1,11 +1,13 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php 
 
-class User_model extends CI_Model {
+if (!defined('BASEPATH')) exit('No direct script access allowed');
+
+class Order_model extends CI_Model {
 
     /**
      * @name string TABLE_NAME Holds the name of the table in use by this model
      */
-    const TABLE_NAME = 'user';
+    const TABLE_NAME = 'order';
 
     /**
      * @name string PRI_INDEX Holds the name of the tables' primary index used in this model
@@ -32,7 +34,7 @@ class User_model extends CI_Model {
                 $this->db->where(self::PRI_INDEX, $where);
             }
         }
-        $result = $this->db->get()->result_array();
+        $result = $this->db->get()->result();
         if ($result) {
             if ($where !== NULL) {
                 return array_shift($result);
@@ -42,24 +44,6 @@ class User_model extends CI_Model {
         } else {
             return false;
         }
-    }
-
-    public function getUserKhachHang()
-    {
-        $this->db->select('*');
-        $this->db->where('level', '0');
-        $this->db->from(self::TABLE_NAME);
-        $result = $this->db->get()->result_array();
-        return $result;
-    }
-
-    public function getUserNhanVien()
-    {
-        $this->db->select('*');
-        $this->db->where('level', '1');
-        $this->db->from(self::TABLE_NAME);
-        $result = $this->db->get()->result_array();
-        return $result;
     }
 
     /**
@@ -98,23 +82,54 @@ class User_model extends CI_Model {
      * @return int Number of rows affected by the delete query
      */
     public function delete($where = array()) {
-        if (!is_array($where)) {
+        if (!is_array()) {
             $where = array(self::PRI_INDEX => $where);
         }
         $this->db->delete(self::TABLE_NAME, $where);
         return $this->db->affected_rows();
     }
 
-    public function confirm_account($user,$pass){
-      $this->db->select('*');
-      $this->db->from('user');
-      $this->db->where('username', $user);
-      $this->db->where('password', $pass);
-      $this->db->where('status', 1);
-      $this->db->where('level <=', 1);
-      $data=$this->db->get()->result_array();
-      $data=(count($data)!=0)?$data:0;
-      return $data;
+    public function countOrder($params) {
+        if ($params['timeStart'] && $params['timeEnd']) {
+        	$this->db->where('time_created >=', $params['timeStart']);
+			$this->db->where('time_created <=', $params['timeEnd']);
+        }
+        
+        if ($params['status']) {
+          $this->db->where('status', $params['status']);
+        }
+        $this->db->from("order");
+        return $this->db->count_all_results();
+    }
+
+    public function getOrderByPage($limit, $offset, $params) {
+        $pagination = true;
+        $this->db->select('*');
+         if ($params['timeStart']) {
+        	$this->db->where('time_created >=', $params['timeStart']);
+			 $pagination = false;
+        }
+
+        if ($params['timeEnd']) {
+          $this->db->where('time_created <=', $params['timeEnd']);
+             $pagination = false;
+        }
+        
+        if ($params['status']) {
+          $this->db->where('status', $params['status']);
+			$pagination = false;
+        }
+
+        $this->db->order_by("time_created", "desc");
+
+        if ($pagination) {
+          return $this->db->get('order', $limit, $offset)->result_array();
+        } else {
+          return $this->db->get('order')->result_array();
+        }
+        
     }
 }
-?>
+        
+
+ ?>
