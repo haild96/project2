@@ -14,6 +14,7 @@ class InforCompany extends CI_Controller {
 	public function index( $offset = 0 )
 	{
 		$dl = $this->InforCompany_model->get();
+		$dl = (!$dl) ? array() : $dl;
 		$dl = array('dulieu' => $dl);
 		$this->load->view('admin/inforcompany/InforCompany_view', $dl, FALSE);
 	}
@@ -27,6 +28,7 @@ class InforCompany extends CI_Controller {
 	public function edit()
 	{
 		$thongtincongty = $this->InforCompany_model->get();
+		$thongtincongty = (!$thongtincongty) ? array() : $thongtincongty;
 		
 		$thongtincongty = array('dulieu' => $thongtincongty);
 		$this->load->view('admin/inforcompany/edit_InforCompany_view', $thongtincongty, FALSE);
