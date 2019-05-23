@@ -27,7 +27,7 @@
 <link rel="stylesheet" href="<?php echo base_url() ?>lib/admin/css/admin.css">
 </head>
 <?php
-    if ($this->session->has_userdata('username') && $this->session->has_userdata('password')) {
+    if ($this->session->has_userdata('username') && $this->session->has_userdata('password') && $this->session->has_userdata('level') <=1) {
     } else {
         header('location:/project2/admin/User/login');
     }

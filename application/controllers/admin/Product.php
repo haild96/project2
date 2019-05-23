@@ -55,7 +55,7 @@ class Product extends CI_Controller {
 	public function add( $id = NULL )
 	{
 		$category       = $this->Category_model->get();
-		$promotion      = $this->Promotion_model->get();
+		$promotion      = $this->Promotion_model->getPromotionActive();
 		
 		if (isset($id)) {
 			$product = $this->Product_model->get($id);
@@ -71,7 +71,7 @@ class Product extends CI_Controller {
 	public function insert()
 	{
 		$category   = $this->Category_model->get();
-		$promotion  = $this->Promotion_model->get();
+		$promotion  = $this->Promotion_model->getPromotionActive();
 
 		$dataInsert = $this->getDataInput();
 		$message    = 'Thêm mới sản phẩm';
@@ -98,7 +98,7 @@ class Product extends CI_Controller {
 	{
 		$message    = 'Cập nhật sản phẩm';
 		$category   = $this->Category_model->get();
-		$promotion  = $this->Promotion_model->get();
+		$promotion  = $this->Promotion_model->getPromotionActive();
 		$dataUpdate = $this->getDataInput();
 		$image      = $_FILES['image']['name'];
 
