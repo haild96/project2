@@ -286,7 +286,7 @@ class User extends CI_Controller {
 							 'id'       => $id,
 							 'status'   => $status);
 			$this->session->set_userdata($account);
-			header('location:/project2/admin/Category');
+			header('location:/project2/admin/Product');
 		}
  	}
 }
