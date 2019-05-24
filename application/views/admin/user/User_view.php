@@ -16,7 +16,6 @@
                         <tr align="center">
                             <th class="text-center">ID</th>
                             <th class="text-center">Tên tài khoản</th>
-                            <th class="text-center">Mật khẩu</th>
                             <th class="text-center">Tên người dùng</th>
                             <th class="text-center">Email</th>
                             <th class="text-center">Điện thoại</th>
@@ -33,7 +32,6 @@
                             <tr class="odd gradeX" align="center">
                                 <th class="text-center"><?php echo $value['id']; ?></th>
                                 <th class="text-center"><?php echo $value['username']; ?></th>
-                                <th class="text-center"><?php echo $value['password']; ?></th>
                                 <th class="text-center"><?php echo $value['fullname']; ?></th>
                                 <th style="max-width: 130px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="text-center"><?php echo $value['email']; ?></th>
                                 <th style="max-width: 130px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="text-center"><?php echo $value['phone']; ?></th>
@@ -42,13 +40,23 @@
                                     <?php if($value['level'] == 0) echo "Khách hàng"; ?>
                                     <?php if($value['level'] == 1) echo "Nhân viên"; ?>
                                 </th>
-                                <th style="max-width: 130px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="text-center">
-                                    <?php if($value['status'] == 0) echo "Đang hoạt động"; ?>
-                                    <?php if($value['status'] == 1) echo "Tạm ngừng hoạt động"; ?>
+                                <th style="max-width: 100px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="text-center">
+                                    <?php if($value['status'] == 1) echo "Đang hoạt động"; ?>
+                                    <?php if($value['status'] == 0) echo "Tạm ngừng hoạt động"; ?>
                                 </th>
                                 <th style="max-width: 130px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="text-center"><?php echo date('m/d/Y H:i:s A', $value['time_created']); ?></th>
-                                <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="<?php echo base_url() ?>admin/User/editByID/<?php echo $value['id'] ?>">Edit</a></td>
-                                <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="<?php echo base_url() ?>admin/User/delete/<?php echo $value['id'] ?>">Delete</a></td>
+                                <td class="center"><i class="fa fa-pencil fa-fw"></i> <a 
+                                    <?php if($this->session->userdata('level') != 2){?>
+                                        style="pointer-events: none;"
+                                    <?php } ?>
+                                     href="<?php echo base_url() ?>admin/User/editByID/<?php echo $value['id'] ?>">Edit</a>
+                                </td>
+                                <td class="center"><i class="fa fa-pencil fa-fw"></i> <a 
+                                    <?php if($this->session->userdata('level') != 2){?>
+                                        style="pointer-events: none;"
+                                    <?php } ?>
+                                     href="<?php echo base_url() ?>admin/User/delete/<?php echo $value['id'] ?>">Delete</a>
+                                </td>
                             </tr>
                         <?php endforeach ?>
                     </tbody>

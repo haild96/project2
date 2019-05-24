@@ -57,7 +57,7 @@
             </a>
             <ul class="dropdown-menu dropdown-user">
                 <li>
-                    <a href="#">
+                    <a href="<?php echo base_url() ?>admin/User/InfoUser">
                         <i class="fa fa-user fa-fw"></i>
                         <?php echo $this->session->userdata('fullname'); ?>
                     </a>
