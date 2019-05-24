@@ -76,6 +76,17 @@ class User_model extends CI_Model {
         }
     }
 
+    public function checkExistAccount($username)
+    {
+        $this->db->select('username');
+        $this->db->from('user');
+        $this->db->where('username', $username);
+        $user = $this->db->get()->result_array();
+        $countUser = count($user);
+        echo $countUser;
+        return $countUser;
+    }
+
     /**
      * Updates selected record in the database
      *
