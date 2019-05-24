@@ -45,6 +45,15 @@ class Promotion_model extends CI_Model {
         }
     }
 
+    public function getPromotionActive()
+    {
+     $this->db->select('*');
+     $timeNow =  strtotime(date("Y-m-d",time()));
+     $this->db->where('status', 1);
+     $this->db->where('time_end >', $timeNow);
+     return  $this->db->get('promotion')->result_array();
+    }
+
     /**
      * Inserts new data into database
      *

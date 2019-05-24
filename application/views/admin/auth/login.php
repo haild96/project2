@@ -24,7 +24,7 @@
 
 <body>
 
-    <?php if ($this->session->has_userdata('username')&&$this->session->has_userdata('password')) {
+    <?php if ($this->session->has_userdata('username') && $this->session->has_userdata('password') && $this->session->has_userdata('level') <=1) {
         header('location:/project2/admin/Product');
     } ?>
 

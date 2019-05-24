@@ -27,7 +27,7 @@
 <link rel="stylesheet" href="<?php echo base_url() ?>lib/admin/css/admin.css">
 </head>
 <?php
-    if ($this->session->has_userdata('username') && $this->session->has_userdata('password')) {
+    if ($this->session->has_userdata('username') && $this->session->has_userdata('password') && $this->session->has_userdata('level') <=1) {
     } else {
         header('location:/project2/admin/User/login');
     }
@@ -77,10 +77,6 @@
             <ul class="nav" id="side-menu">
 
                 <li>
-                    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Thống kê</a>
-                </li>
-
-                <li>
                     <a href="#"><i class="glyphicon glyphicon-tasks"></i> Danh mục<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
@@ -117,6 +113,10 @@
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
+                </li>
+
+                 <li>
+                    <a href="<?php echo base_url() ?>admin/Order"><i class="glyphicon glyphicon-shopping-cart"></i><span class="fa arrow"></span> Đơn hàng</a>
                 </li>
 
                 <li>
@@ -164,7 +164,7 @@
                 </li>
 
                 <li>
-                    <a href="#"><i class="fa fa-users fa-fw"></i> Thông tin shop<span class="fa arrow"></span></a>
+                    <a href="#"><i class="glyphicon glyphicon-info-sign"></i> Thông tin shop<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
                             <a href="<?php echo base_url() ?>admin/InforCompany">Xem thông tin</a>
