@@ -1,35 +1,34 @@
-<!-- Xóa trường link -->
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class PromotionNews extends CI_Controller {
+class Banner extends CI_Controller {
 
 	public function __construct()
 	{
 		parent::__construct();
 		//Load Dependencies
-		$this->load->model('PromotionNews_model');
+		$this->load->model('Banner_model');
 
 	}
 
 	// List all your items
 	public function index( $offset = 0 )
 	{
-		$tintuc = $this->PromotionNews_model->get();
-		$tintuc = (!$tintuc) ? array() : $tintuc;
-		$tintuc = array('tintuc' => $tintuc);
-		$this->load->view('admin/promotionNews/PromotionNews_view', $tintuc);
+		$quangcao = $this->Banner_model->get();
+		$quangcao = (!$quangcao) ? array() : $quangcao;
+		$quangcao = array('quangcao' => $quangcao);
+		$this->load->view('admin/banner/Banner_view', $quangcao);
 	}
 
-	public function addPromotionNews()
+	public function addBanner()
 	{
-		$this->load->view('admin/promotionNews/add_PromotionNews_view');
+		$this->load->view('admin/banner/add_Banner_view');
 	}
 
 	// Add a new item
 	public function add()
 	{
-		$target_dir = "uploads/ImagePromotionNews/";
+		$target_dir = "uploads/ImageBanner/";
 		$target_file = $target_dir . basename($_FILES["image"]["name"]);
 		$uploadOk = 1;
 		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
@@ -72,38 +71,40 @@ class PromotionNews extends CI_Controller {
 		    }
 		}
 
-		$image = 'uploads/ImagePromotionNews/' . basename( $_FILES["image"]["name"]);
+		$image = 'uploads/ImageBanner/' . basename( $_FILES["image"]["name"]);
 
-		$thongtincongty = array(
-			'title' => $this->input->post('title'),
-			'summary' => $this->input->post('summary'),
+		$quangcao = array(
+			'name' => $this->input->post('name'),
+			'image' => $image,
 			'content' => $this->input->post('content'),
+			'link' => $this->input->post('link'),
+			'type' => $this->input->post('type'),
 			'status' => $this->input->post('status'),
-			'image' => $image
+			
 		);
 
-		$check = $this->PromotionNews_model->insert($thongtincongty);
+		$check = $this->Banner_model->insert($quangcao);
 		if($check) 
 		{
-			$this->load->view('admin/promotionNews/add_PromotionNews_view', array('status' => true, 'message' => 'Thêm tin tức thành công')); 
+			$this->load->view('admin/banner/add_Banner_view', array('status' => true, 'message' => 'Thêm quảng cáo thành công')); 
 		} 
 		else
 		{
-			$this->load->view('admin/promotionNews/add_PromotionNews_view', array('status' => false , 'message' => 'Thêm tin tức thành công'));
+			$this->load->view('admin/banner/add_Banner_view', array('status' => false , 'message' => 'Thêm quảng cáo không thành công'));
 		}
 	}
 
-	public function editById($id)
+	public function editByID($id)
 	{
-		$tintucById = $this->PromotionNews_model->get($id);
-		$tintuc = array('tintuc' => $tintucById);
-		$this->load->view('admin/promotionNews/edit_PromotionNews_view', $tintuc, FALSE);
+		$quangcao = $this->Banner_model->get($id);
+		$quangcao = array('quangcao' => $quangcao);
+		$this->load->view('admin/banner/edit_Banner_view', $quangcao, FALSE);
 	}
 
 	//Update one item
 	public function update( $id = NULL )
 	{
-		$target_dir = "uploads/ImagePromotionNews/";
+		$target_dir = "uploads/ImageBanner/";
 		$target_file = $target_dir . basename($_FILES["image"]["name"]);
 		$uploadOk = 1;
 		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
@@ -145,47 +146,47 @@ class PromotionNews extends CI_Controller {
 		        //echo "Sorry, there was an error uploading your file.";
 		    }
 		}
-
-		if(basename( $_FILES["image"]["name"]) != "")
+		if(basename( $_FILES["image"]["name"]) !="")
 		{
-			$image = 'uploads/ImagePromotionNews/' . basename( $_FILES["image"]["name"]);
+			$image = 'uploads/ImageBanner/' . basename( $_FILES["image"]["name"]);
 		}
 		else
 		{
 			$image = $this->input->post('image2');
 		}
 
-		$thongtincongty = array(
-			'title' => $this->input->post('title'),
-			'summary' => $this->input->post('summary'),
+		$quangcao = array(
+			'name' => $this->input->post('name'),
+			'image' => $image,
 			'content' => $this->input->post('content'),
+			'link' => $this->input->post('link'),
+			'type' => $this->input->post('type'),
 			'status' => $this->input->post('status'),
-			'image' => $image
+			
 		);
 
-		$check = $this->PromotionNews_model->update($thongtincongty, $id);
-
+		$check = $this->Banner_model->update($quangcao, $id);
 		if($check) 
 		{
-			$this->load->view('admin/promotionNews/edit_PromotionNews_view', array('status' => true, 'message' => 'Sửa tin tức thành công', 'tintuc' => $this->PromotionNews_model->get($id))); 
+			$this->load->view('admin/banner/add_Banner_view', array('status' => true, 'message' => 'Sửa quảng cáo thành công')); 
 		} 
 		else
 		{
-			$this->load->view('admin/promotionNews/edit_PromotionNews_view', array('status' => false , 'message' => 'Sửa tin tức không thành công', 'tintuc' => $this->PromotionNews_model->get($id)));
+			$this->load->view('admin/banner/add_Banner_view', array('status' => false , 'message' => 'Sửa quảng cáo không thành công'));
 		}
-
 	}
 
 	//Delete one item
 	public function delete( $id = NULL )
 	{
-		$this->PromotionNews_model->delete($id);
-		$tintuc = $this->PromotionNews_model->get();
-		$tintuc = (!$tintuc) ? array() : $tintuc;
-		$tintuc = array('tintuc' => $tintuc);
-		$this->load->view('admin/promotionNews/PromotionNews_view', $tintuc, FALSE);
+		if($this->Banner_model->delete($id))
+		{
+			$quangcao = $this->Banner_model->get();
+			$quangcao = (!$quangcao) ? array() : $quangcao;
+			$this->load->view('admin/banner/Banner_view', array('quangcao' => $quangcao), FALSE);
+		}
 	}
 }
 
-/* End of file PromotionNews.php */
-/* Location: ./application/controllers/admin/PromotionNews.php */
+/* End of file Banner.php */
+/* Location: ./application/controllers/admin/Banner.php */

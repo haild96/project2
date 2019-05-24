@@ -19,6 +19,9 @@
 
 <script type="text/javascript" language="javascript" src="<?php echo base_url() ?>lib/admin/ckeditor/ckeditor.js" ></script>
 
+<script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script>
 $(document).ready(function() {

@@ -4,7 +4,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="page-header">Sửa thông tin sản phẩm</h3>
+                <h1 class="page-header">Sản phẩm
+                    <small>Sửa</small>
+                </h1>
                 <?php if (isset($status)): ?>
 
                 <div class="alert <?php echo $status ? 'alert-success' : 'alert-danger'?>">
