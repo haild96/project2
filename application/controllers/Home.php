@@ -9,6 +9,8 @@ class Home extends CI_Controller {
 		$this->load->model('Category_model');
 		$this->load->model('Product_model');
 		$this->load->model('User_model');
+		$this->load->model('Promption_model');
+		$this->load->model('PromotionNews_model');
 	}
 
 	public function index() {
@@ -24,6 +26,11 @@ class Home extends CI_Controller {
 		$new     = $this->Product_model->getProductByNew();
 		$data    = array('category'=> $category, 'phone' => $phone, 'tablet' => $tablet, 'laptop' => $laptop, 'phukien' => $phukien, 'new' => $new);
 		$this->load->view('Home_view', $data, FALSE);
+	}
+
+	public function TinTuc()
+	{
+		$this->load->view('Tintuc_view');
 	}
 
 	public function singleProduct($id_category, $id) {
