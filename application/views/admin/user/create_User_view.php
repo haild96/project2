@@ -1,5 +1,8 @@
 <?php include($_SERVER['DOCUMENT_ROOT'].'/project2/application/core/layout/nav.php'); ?>
 
+<?php if ((int)$this->session->userdata('level') < 2) {
+        header('location:/project2/admin/User/userKhachHang');
+    } ?>
 <!-- Page Content -->
 <div id="page-wrapper">
     <div class="container-fluid">

@@ -20,7 +20,7 @@ if ($cart == NULL) {
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand logo" href="/project2/Home"><img width="80px" src="/project2/image/logo/logo.png" alt=""></a>
+				<a class="navbar-brand logo" href="/project2/Home"><img width="80px" src="/project2/uploads/logo/logo.png" alt=""></a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -32,15 +32,15 @@ if ($cart == NULL) {
 				</form>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="/project2/Home/showProduct/1">Phone<i class="icon glyphicon glyphicon-phone"></i></a></li>
-					<li><a href="/project2/Home/showProduct/7">Tablet<i class="icon fas fa-tablet-alt"></i></a></li>
-					<li><a href="/project2/Home/showProduct/8">Laptop<i class="icon fas fa-laptop"></i></a></li>
-					<li><a href="/project2/Home/showProduct/9">Phụ kiện<i class="icon fas fa-headphones"></i></a></li>
+					<li><a href="/project2/Home/showProduct/62">Tablet<i class="icon fas fa-tablet-alt"></i></a></li>
+					<li><a href="/project2/Home/showProduct/63">Laptop<i class="icon fas fa-laptop"></i></a></li>
+					<li><a href="/project2/Home/showProduct/70">Phụ kiện<i class="icon fas fa-headphones"></i></a></li>
 					<li><a href="/project2/Home/TinTuc">Tin tức<i class="icon glyphicon glyphicon-list-alt"></i></a></li>
 					<li class="action giohang">
 					 <a href="/project2/Home/Cart">Giỏ hàng<i class="icon cart fas fa-project2ping-cart"></i><span class="quantity" id="sl"><?php echo $quantity ?></span></a></li>
 					<?php if ($this->session->has_userdata('fullname') && $this->session->has_userdata('password') && $this->session->has_userdata('email')) {?>
 					<li class="action"><a><?php echo $this->session->userdata('fullname') ?></a></li>
-					<li class="action"><a href="/project2/Home/huySessionMember">Thoát</a></li>
+					<li class="action"><a href="/project2/Home/logout">Thoát</a></li>
 					<?php } else {?>
 					<li class="action"><a class="dky" href="#">Đăng ký</a></li>
 					<li class="action"><a class="dNhap" href="#">Đăng nhập</a></li>
@@ -69,21 +69,42 @@ if ($cart == NULL) {
 	<i class="fas fa-angle-double-up"></i>
 </div>
 <div class="dkyMember KHthi">
+	<div class="row"></div>
 	<div class="form_content">
 		<div class="title">Đăng ký tài khoản</div>
 		<div class="closeDky"><i class="fas fa-times"></i></div>
+		<div class="row">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 			<div class="form-group">
-				<label for="">Email</label>
-				<input type="email" class="form-control" id="email" placeholder="Email">
+				<label for="">Tên đăng nhập</label>
+				<input type="text" class="form-control" id="username" placeholder="Username" required>
 			</div>
 			<div class="form-group">
 				<label for="">Mật khẩu</label>
-				<input type="password" class="form-control" id="password" placeholder="Mật khẩu">
+				<input type="password" class="form-control" id="password" placeholder="Mật khẩu" required>
 			</div>
 			<div class="form-group">
-				<label for="">Họ tên</label>
-				<input type="text" class="form-control" id="fullname" placeholder="Họ tên">
+				<label for="">Số điện thoại</label>
+				<input type="text" class="form-control" id="phone" placeholder="Số điện thoại" required>
+			</div>	
 			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="form-group">
+				<label for="">Họ tên</label>
+				<input type="text" class="form-control" id="fullname" placeholder="Họ tên" required>
+			</div>
+			<div class="form-group">
+				<label for="">Nhập lại mật khẩu</label>
+				<input type="password" class="form-control" id="repassword" placeholder="Nhập lại mật khẩu" required>
+			</div>
+			<div class="form-group">
+				<label for="">Email</label>
+				<input type="email" class="form-control" id="email" placeholder="Địa chỉ email">
+			</div>
+			</div>
+		</div>
+			
+			
 			<button type="submit" class="btn btn-primary confirm">Đăng ký</button>
 	</div>
 </div>
@@ -92,8 +113,8 @@ if ($cart == NULL) {
 		<div class="title">Đăng nhập tài khoản</div>
 		<div class="closeDNhap"><i class="fas fa-times"></i></div>
 			<div class="form-group">
-				<label for="">Email</label>
-				<input type="email" class="form-control" id="emailLogin" placeholder="Email">
+				<label for="">Tài khoản</label>
+				<input type="text" class="form-control" id="usernameLogin" placeholder="Username">
 			</div>
 			<div class="form-group">
 				<label for="">Mật khẩu</label>
@@ -150,29 +171,34 @@ $('.dkyMember').addClass('KHthi');
 $('.confirm').click(function() {
 	var email=$('#email').val();
 	var password=$('#password').val();
+	var rePassword=$('#repassword').val();
 	var fullname=$('#fullname').val();
-	if(email==''){
-		alert('Vui lòng nhập địa chỉ email');
+	var username=$('#username').val();
+	var phone=$('#phone').val();
+	if(password != rePassword){
+		alert('Mật khẩu không hợp lệ !');
 	}else if(!isEmail(email)){
 		alert('Địa chỉ email không hợp lệ');
 	}else if(password==''){
 		alert('Vui lòng nhập mật khẩu');
 	}else if(fullname==''){
 		alert('Vui lòng nhập họ tên');
+	}else if (phone.length == 0) {
+		alert('Vui lòng nhập số điện thoại');
 	}else{
 		$.ajax({
-			url: '/project2/Home/xacnhanDK',
+			url: '/project2/Home/signUp',
 			type: 'POST',
-			data: {email:email,password:password,fullname:fullname}
+			data: {email:email,password:password,fullname:fullname,username:username,phone:phone}
 		})
 		.always(function(data) {
 			if (data=='isset') {
-			 alert('Email bạn nhập vào đã được dùng để đăng ký tài khoản rồi!');
+			 alert('Tài khoản đã tồn tại !');
 			}else{
 				$.ajax({
-					url: '/project2/Home/createSessionMember',
+					url: '/project2/Home/createSession',
 					type: 'POST',
-					data: {email: email,password:password,fullname:fullname}
+					data: {email:email,password:password,fullname:fullname,username:username,phone:phone}
 				})
 				.always(function() {
 					location.href='/project2/Home';
@@ -199,19 +225,15 @@ $('.closeDNhap').click(function() {
 });
 // confirm
 $('.login').click(function() {
-  var email=$('#emailLogin').val();
+  var username=$('#usernameLogin').val();
   var password=$('#passwordLogin').val();
-  if (email=='') {
-  	alert('Vui lòng nhập địa chỉ email');
-  }else if(!isEmail(email)){
-  	alert('Địa chỉ email không hợp lệ');
-  }else if(password==''){
-  	alert('Vui lòng nhập mật khẩu');
+  if (username =='' ||password=='') {
+  	alert('Vui lòng nhập đầy đủ thông tin ');
   }else{
   	$.ajax({
-  		url: '/project2/Home/loginMember',
+  		url: '/project2/Home/login',
   		type: 'POST',
-  		data: {email: email,password:password}
+  		data: {username: username,password:password}
   	})
   	.always(function(data) {
   		if (data=='notfound') {

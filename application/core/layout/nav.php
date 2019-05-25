@@ -27,7 +27,7 @@
 <link rel="stylesheet" href="<?php echo base_url() ?>lib/admin/css/admin.css">
 </head>
 <?php
-    if ($this->session->has_userdata('username') && $this->session->has_userdata('password') && $this->session->has_userdata('level') <=1) {
+    if ($this->session->userdata('level') >=1 && $this->session->has_userdata('username') && $this->session->has_userdata('password')) {
     } else {
         header('location:/project2/admin/User/login');
     }
@@ -152,12 +152,14 @@
                         </li>
 
                         <li>
-                            <a href="<?php echo base_url() ?>admin/User/userNhanVien">Tài khoản nhân viên</a>
+                            <a href="<?php echo base_url() ?>admin/User/userNhanVien">Tài khoản quản lý</a>
                         </li>
 
-                          <li>
+                        <?php if ($this->session->userdata('level') >1): ?>
+                            <li>
                             <a href="<?php echo base_url() ?>admin/User/addUser">Thêm mới tài khoản</a>
                           </li>
+                        <?php endif ?>
                         
                     </ul>
                     <!-- /.nav-second-level -->

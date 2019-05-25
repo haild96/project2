@@ -179,6 +179,34 @@ class Product_model extends CI_Model {
         $data = $this->db->get()->result_array();
         return $data;
   }
+
+  public function TimkiemAjax($key) {
+    $this->db->select('*');
+    $this->db->like('name', $key);
+    $data = $this->db->get('product', 6, 0)->result_array();
+    return $data;
+  }
+
+  public function Timkiem($key) {
+    $this->db->select('product.*, promotion.name AS promotion');
+    $this->db->like('product.name', $key);
+    $this->db->join('promotion', 'promotion.id = product.id_promotion', 'left');
+    $data = $this->db->get('product')->result_array();
+    return $data;
+  }
+
+  public function getLoadMore($id, $offset) {
+    $this->db->select('product.*, promotion.name AS promotion');
+    $this->db->where('id_category', $id);
+    $this->db->group_start();
+    $this->db->or_where('product.status', 1);
+    $this->db->or_where('product.status', 3);
+    $this->db->group_end();
+    $this->db->join('promotion', 'promotion.id = product.id_promotion', 'left');
+    $data = $this->db->get('product', 8, $offset)->result_array();
+    return $data;
+
+  }
   
 }
         
