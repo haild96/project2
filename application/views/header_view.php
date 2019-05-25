@@ -238,6 +238,7 @@ $('.login').click(function() {
   		data: {username: username,password:password}
   	})
   	.always(function(data) {
+  		data = JSON.parse(data);
   		if (data=='notfound') {
   			alert('Tài khoản hoặc mật khẩu không đúng');
   		}else{

@@ -192,6 +192,7 @@
 
 		})
 		.always(function(data) {
+			data = JSON.parse(data);
 			if (data=='expired'){
 				$('.expired').addClass('hThi');
 				 setTimeout(function(){

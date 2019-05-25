@@ -64,10 +64,14 @@
 					.fail(function() {
 					})
 					.always(function(data) {
-						if (data!="NULL") {
-							$('.products').append(data);
-						}else{
+						data = JSON.parse(data);
+						if (data.status =='NULL') {
 							$('.viewMore').html('<b class="endProduct" >Đã hết sản phẩm</b>');
+						}else{
+
+
+							console.log(data.data);
+						$('.products').append(data.data);
 						}
 					});
 				});

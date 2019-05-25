@@ -44,22 +44,22 @@ class Home extends CI_Controller {
 			$quantityInCart = $this->session->userdata['cart'][$id][0];
 			$all = $quantityInCart + $slAdd;
 			if ($all > 5) {
-				echo "limit";
+				echo json_encode('limit');
 			} else {
 				if ($this->Product_model->checkQuantity($id, $all)) {
 					$this->session->userdata['cart'][$id][0] = $all;
-					echo "done";
+					echo json_encode('done');
 				} else {
-					echo "expired";
+					echo json_encode('expired');
 				}
 			}
 		} else {
 			if ($this->Product_model->checkQuantity($id, $slAdd)) {
 				$temp = array($slAdd + 0, 0);
 				$this->session->userdata['cart'][$id] = $temp;
-				echo "done";
+				echo json_encode('done');
 			} else {
-				echo "expired";
+				echo json_encode('expired');
 			}
 		}
 	}
@@ -126,7 +126,7 @@ class Home extends CI_Controller {
 			}
 		}
 		$status = ($val > 0) ? 'done' : 'fail';
-		echo $status;
+		echo json_encode($status);
 	}
 
 	public function TimkiemAjax() {
@@ -150,16 +150,40 @@ class Home extends CI_Controller {
 	}
 
 	public function loadMore() {
-		// get data by ajax
 		$id_category = $this->input->post('idCartegory');
 		$offset = $this->input->post('offset');
 		$data = $this->Product_model->getLoadMore($id_category, $offset);
+		$res['status'] = '';
+		$res['data']   = '';
 		if (count($data) == 0) {
-			echo "NULL";
+			$res['status'] = 'NULL';
 		} else {
-			$data = array('products' => $data);
-			$this->load->view('loadMore_view', $data, FALSE);
+			$res['status'] = 'success';
+			$htmlAdd = '';
+			
+			foreach ($data as $key => $value) {
+				$htmlAdd .= '<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><div class="product"><a href="/project2/Home/singleProduct/'.$value['id_category'].'/'.$value['id'].'">';
+				 $htmlAdd.='<img width="100%" src="/project2/uploads/product/'.$value['image'].'" alt="Lỗi"></a>';
+				 $htmlAdd.=	'<a href="/project2/Home/singleProduct/'.$value['id_category'].'/'.$value['id'].'">';
+				 $htmlAdd.='<div class="name">'.$value['name'].'</div></a>';
+				 if ($value['price_sales']) {
+				 $htmlAdd.='<div class="prices">';
+				 $htmlAdd.= '<div class="span-group">';
+				 $htmlAdd.= '<span class="price">'.number_format($value['price_origin'],0,".", ".").'₫</span>';
+				 $htmlAdd.= '<span class="priceSale">'.number_format($value['price_sales'],0,".", ".").'₫</span>';
+				 $htmlAdd.= '</div>';
+				 $htmlAdd.= '</div>';
+				 } else {
+					$htmlAdd.='<div class="price">'.number_format($value['price_origin'],0,".", ".").'₫</div>';	
+				 }
+				 $htmlAdd.='<div class="note">'.$value['promotion'].'</div>';
+				 $htmlAdd.='<div class="addToCart"><button class="btn btn-danger" value="'.$value['id'].'">Thêm vào giỏ hàng</button></div>';		
+				 $htmlAdd.='</div>';
+				 $htmlAdd.='</div>';
+				 }
+				 $res['data']   = $htmlAdd;
 		}
+		echo json_encode($res);
 	}
 
 	public function signUp() {
@@ -202,7 +226,7 @@ class Home extends CI_Controller {
 		$username = $this->input->post('username');
 		$password = md5($this->input->post('password'));
 		if ($this->User_model->confirmMember($username, $password) == 0) {
-			echo "notfound";
+			echo json_encode('notfound');
 		} else {
 			$data     = $this->User_model->confirmMember($username, $password);
 			$email    = $data[0]['email'];
@@ -214,7 +238,7 @@ class Home extends CI_Controller {
 			$id       = $data[0]['id'];
 			$account  = array('fullname' => $fullname, 'password' => $password, 'email' => $email, 'username' => $username, 'phone' => $phone, 'level' => $level, 'id' => $id);
 			$this->session->set_userdata($account);
-			echo "success";
+			echo json_encode('success');
 		}
 	}
 
@@ -268,7 +292,7 @@ class Home extends CI_Controller {
 		if (count($cart) == 0) {
 			$this->session->unset_userdata('cart');
 		}
-		echo 'success';
+		echo json_encode('success');
 	}
 
 	public function checkLogin()
