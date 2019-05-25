@@ -28,7 +28,6 @@
                     <?php $this->session->unset_userdata($status); ?>
                 <?php endif ?>
  
-                <!-- <form action="<?php echo base_url() ?>admin/User/update/<?php echo $user['id'] ?>" method="POST" enctype="multipart/form-data">   -->
                 <div class="form-group">
                     <label>Tên tài khoản</label>
                     <input style="pointer-events: none;" class="form-control" value="<?php echo $user['username'] ?>" name="username" placeholder="Nhập tên tài khoản" />
