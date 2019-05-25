@@ -11,9 +11,10 @@ class Home extends CI_Controller {
 		$this->load->model('Order_model');
 		$this->load->model('User_model');
 		$this->load->model('OrderProduct_model');
+		$this->load->model('Comment_model');
 	}
 
-	public function index() {
+	public function index() {	
 		$category = $this->Category_model->getAllCategory();
 		$id = array();
 		for ($i = 0; $i < count($category); $i++) {
@@ -167,13 +168,17 @@ class Home extends CI_Controller {
 		$fullname = $this->input->post('fullname');
 		$username = $this->input->post('username');
 		$phone    = $this->input->post('phone');
+		$data['status'] = '';
+		$data['idAcc']  = 0;
 		if ($this->User_model->checkAccountExits($username)) {
 			$accountNew = array('username'  => $username, 'password' => $password, 'fullname' => $fullname, 'phone'    =>$phone, 'email' => $email);
-			$this->User_model->insert($accountNew);
-			echo "success";
+			$idAcc = $this->User_model->insert($accountNew);
+			$data['status'] = 'success';
+			$data['idAcc']  =  $idAcc;
 		} else {
-			echo "isset";
+			$data['status'] = 'isset';
 		}
+		 echo json_encode($data);
 	}
 
 	public function createSession() {
@@ -182,7 +187,8 @@ class Home extends CI_Controller {
 		$fullname = $this->input->post('fullname');
 		$username = $this->input->post('username');
 		$phone    = $this->input->post('phone');
-		$account  = array('fullname' => $fullname, 'password' => $password, 'email' => $email, 'username' => $username, 'phone' => $phone, 'level' =>0);
+		$idUser   = $this->input->post('idUser');
+		$account  = array('fullname' => $fullname, 'password' => $password, 'email' => $email, 'username' => $username, 'phone' => $phone, 'level' =>0, 'id' => $idUser);
 		$this->session->set_userdata($account);
 	}
 
@@ -205,7 +211,8 @@ class Home extends CI_Controller {
 			$phone    = $data[0]['phone'];
 			$username = $data[0]['username'];
 			$level    = $data[0]['level'];
-			$account  = array('fullname' => $fullname, 'password' => $password, 'email' => $email, 'username' => $username, 'phone' => $phone, 'level' => $level);
+			$id       = $data[0]['id'];
+			$account  = array('fullname' => $fullname, 'password' => $password, 'email' => $email, 'username' => $username, 'phone' => $phone, 'level' => $level, 'id' => $id);
 			$this->session->set_userdata($account);
 			echo "success";
 		}
@@ -262,6 +269,24 @@ class Home extends CI_Controller {
 			$this->session->unset_userdata('cart');
 		}
 		echo 'success';
+	}
+
+	public function checkLogin()
+	{
+		if($this->session->has_userdata('username') && $this->session->has_userdata('password')){
+			echo json_encode('logintrue');
+		} else {
+			echo  json_encode('loginfailse');
+		}
+	}
+
+	public function addCmtProduct()
+	{
+		$productId = $this->input->post('idProduct');
+		$contentCmt = $this->input->post('contentCmt');
+		$userId     = $this->session->userdata('id');;
+	    $this->Comment_model->insert(array('user_id' => $userId, 'product_id' => $productId, 'content' => $contentCmt));
+	    echo json_encode('cmttsuccess');
 	}
 
 

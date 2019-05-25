@@ -208,3 +208,36 @@
     margin-left: 90px;
 }
 }
+
+.col-xs-8.col-sm-8.col-md-8.col-lg-8.cmtProduct {
+    background: #F3F3F3;
+    border: 1px solid #e3dcdc;
+    margin-bottom: 50px;
+}
+
+.cmtProduct .title {
+    font-size: 20px;
+    padding: 10px;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+.itemCmt {
+    padding: 10px;
+    line-height: 30px;
+    /* background: #FFF; */
+    border-bottom: 1px solid #dfdfda;
+}
+
+.loadMorecmt.text-center {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.txtarea{
+    border-right: #646464 ;
+    border-top: #646464;
+    border-left: #646464;
+    border-bottom: #646464;
+    width:100%;
+    background: #ffffcc;
+}

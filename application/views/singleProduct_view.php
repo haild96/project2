@@ -56,6 +56,73 @@
 						</ul>
 					</div>
 				</div>
+
+				<div class="row">
+					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 cmtProduct">
+						<div class="title" style="font-size: 18px;">
+							Hỏi đáp về Honor 10 Lite 64GB
+						</div>
+						<div class="contentCmtMe">
+							<textarea style="resize: vertical;" name="cmtMe" cols="106" rows="5"  style="resize:none" id="cmtMe" ></textarea>
+						</div>
+					
+						<div class="sendCmt pull-right" style="margin-bottom: 10px;">
+							<button class="btn btn-danger" id="sendCmt">Gửi câu hỏi</button>
+						</div>
+						
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 cmtProduct">
+						<div class="title">
+							Đánh giá & Nhận xét Honor 10 Lite 64GB
+						</div>
+						<div class="itemCmt">
+							<div class="nameCmt">
+								Bởi: <strong>Khiêm</strong> 11 ngày trước
+							</div>
+							<div class="contentCmt">
+								Hợp lý chụp ảnh đẹp
+							</div>
+						</div><div class="itemCmt">
+							<div class="nameCmt">
+								Bởi: <strong>Khiêm</strong> 11 ngày trước
+							</div>
+							<div class="contentCmt">
+								Hợp lý chụp ảnh đẹp
+							</div>
+						</div><div class="itemCmt">
+							<div class="nameCmt">
+								Bởi: <strong>Khiêm</strong> 11 ngày trước
+							</div>
+							<div class="contentCmt">
+								Hợp lý chụp ảnh đẹp
+							</div>
+						</div><div class="itemCmt">
+							<div class="nameCmt">
+								Bởi: <strong>Khiêm</strong> 11 ngày trước
+							</div>
+							<div class="contentCmt">
+								Hợp lý chụp ảnh đẹp
+							</div>
+						</div>
+						<div class="itemCmt">
+							<div class="nameCmt">
+								Bởi: <strong>Khiêm</strong> 11 ngày trước
+							</div>
+							<div class="contentCmt">
+								Hợp lý chụp ảnh đẹp
+							</div>
+						</div>
+						<div class="loadMorecmt text-center">
+							<button class="btn btn-default">Xem thêm bình luận</button>
+						</div>
+						
+					</div>
+				</div>
+
+				
 			<?php endforeach ?>
 		</div> 
 	</div> 
@@ -154,7 +221,68 @@
 		});
 
 	});
+
+	$('#cmtMe').click(function() {
+		$.ajax({
+        		url: '/project2/Home/checkLogin'
+        	}) 
+        	.always(function(data) {
+        		data = JSON.parse(data);
+        	if (data=='loginfailse') {
+        		// login required
+        		$('.loginMember').removeClass('KHthi');
+				$( window ).scroll(function() {
+				  var y = $(window).scrollTop();
+				  y=y+'px';
+				  $(".loginMember").css("top",y);
+				});
+        	}
+        	});
+	});
+
+	$('#sendCmt').click(function() {
+		$.ajax({
+        		url: '/project2/Home/checkLogin'
+        	}) 
+        	.always(function(data) {
+        		data = JSON.parse(data);
+        	if (data=='loginfailse') {
+        		// login required
+        		$('.loginMember').removeClass('KHthi');
+				$( window ).scroll(function() {
+				  var y = $(window).scrollTop();
+				  y=y+'px';
+				  $(".loginMember").css("top",y);
+				});
+        	}
+        	});
+        	contentCmt = $('#cmtMe').val();
+        	idProduct  =parseInt($('#idProduct').val());
+        	$.ajax({
+			url: '/project2/Home/addCmtProduct',
+			type: 'POST',
+			data: {idProduct:idProduct,contentCmt:contentCmt}
+		})
+		.done(function() {
+		})
+		.fail(function() {
+
+		})
+		.always(function(data) {
+				data = JSON.parse(data);
+			if (data=='cmttsuccess' && contentCmt != '') {
+			alert('Bình luận của bạn đã được ghi nhận !');
+			$('#cmtMe').val('');
+			} else {
+				alert('Có lỗi xảy ra, vui lòng thử lại !');
+			}
+			
+		});
+        	  	
+	    });
 	},false);
+
+
 </script>
 </body>
 </html>
