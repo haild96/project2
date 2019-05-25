@@ -42,10 +42,10 @@
                     <label >Trạng thái đơn hàng</label>
                         <select name="status" class="form-control" >
                         <option value="0">-- Chọn trạng thái --</option>
-                        <option value="1">Chưa xác nhận</option>
-				 		<option value="2">Đã xác nhận</option>
-				 		<option value="3">Hoàn thành</option>
-				 		<option value="4">Từ chối đơn hàng</option>
+                        <option value="1">Đơn hàng mới, chưa xác nhận</option>
+				 		<option value="2">Đã xác nhận, đang giao hàng</option>
+				 		<option value="3">Giao hàng thành công</option>
+				 		<option value="4">Hủy đơn hàng</option>
                         </select>
                      </div>
                 </div>
@@ -64,7 +64,7 @@
 						<th>Thông tin khách hàng</th>
 						<th>Ngày đặt</th>
 						<th>Trạng thái</th>
-						<th>Nhân viên Sales</th>
+						<th>Người xử lý</th>
 						<th>Chi tiết đơn hàng</th>
 						<th>Hành động</th>
 					</tr>
@@ -90,24 +90,27 @@
 						</td>
 						<td><?php echo date('d/m/Y',$value['time_created']) ?></td>
 						
-						<td>
+						<td style="max-width: 140px;">
 							<?php
+							$status = 'Đơn hàng mới,chưa xác nhận';
 							if ($value['status'] == 1) {
-							 	$status = "Chưa xác nhận";
+							 	$status = "Đơn hàng mới,chưa xác nhận";
 							 } elseif ($value['status'] == 2) {
-							 	$status = "Đã xác nhận";
+							 	$status = "Đã xác nhận, đang giao hàng";
 							 } elseif ($value['status'] == 3) {
-							 	$status = "Hoàn thành";
-							 } else if($value['status'] == 4) {$status = "Từ chối đơn hàng";}
+							 	$status = "Giao hàng thành công";
+							 } else if($value['status'] == 4) {
+							 	$status = "Hủy đơn hàng";
+							 }
 							 ?>
 						 <div class="status"><?php echo $status ?></div>
 						 <div class="change_status kHThi">
 						 	<select class="form-control contentStatus">
-						 		<option value="1">Chưa xác nhận</option>
-						 		<option value="2">Đã xác nhận</option>
-						 		<option value="3">Hoàn thành</option>
-						 		<option value="4">Từ chối đơn hàng</option>
-						 	</select>
+						 		<option value="1">Đơn hàng mới, chưa xác nhận</option>
+						 		<option value="2">Đã xác nhận, đang giao hàng</option>
+						 		<option value="3">Giao hàng thành công</option>
+						 		<option value="4">Hủy đơn hàng</option>
+								 	</select>
 						 	<i class="btn btn-success btn-sm glyphicon glyphicon-ok done"></i>
 						 	<input type="hidden" value="<?php echo $value['id'] ?>">
 						 	<input type="hidden" value="<?php echo $this->session->userdata('username') ?>">
@@ -125,8 +128,13 @@
 							<a href="<?php echo base_url() ?>admin/Order/viewDetail/<?php echo $value['id'] ?>">Xem chi tiết</a>
 						</td>
 						<td class="text-center">
-							<div class="center change" style="margin-bottom: 10px;"> 
-                              <button class="btn btn-info btn-xs"><i class="fa fa-pencil fa-fw"></i></button>
+							<?php if ($value['status'] ==3 ||$value['status'] ==4): ?>
+							<div class="center" style="margin-bottom: 10px;">
+							 	<button class="btn btn-info btn-xs" disabled><i class="fa fa-pencil fa-fw"></i></button>
+							 	<?php else: ?>
+							 	<div class="center change" style="margin-bottom: 10px;">
+							 	<button class="btn btn-info btn-xs"><i class="fa fa-pencil fa-fw"></i></button>
+							   <?php endif ?> 
                        		</div>
 
 	                        <div class="center" id="removeOrder"> 
@@ -162,20 +170,19 @@
 	    $(this).parent().addClass('kHThi');
 	    $(this).parent().prev().removeClass('kHThi');
 	    status = $(this).prev().val();
+	    addContent = $(this).parent().prev('.status');
+	    addUser    = $(this).parent().parent().next('.sales');
 	    if (status == 1) {
-		    content = "Chưa xác nhận";
+		    content = "Đơn hàng mới, chưa xác nhận";
 		} else if (status == 2) {
-		 	content = "Đã xác nhận";
+		 	content = "Đã xác nhận, đang giao hàng";
 		 } else if (status == 3) {
-		 	content = "Hoàn thành";
+		 	content = "Giao hàng thành công";
 		 } else {
-		 	content = "Từ chối đơn hàng";
+		 	content = "Hủy đơn hàng";
 		 }
 	    id   = $(this).next().val();
 	    user = $(this).next().next().val();
-
-	    $(this).parent().prev('.status').html(content);
-	    $(this).parent().parent().next('.sales').html(user);
 	    $.ajax({
 	        url: '/project2/admin/Order/update',
 	        type: 'POST',
@@ -185,15 +192,21 @@
 	    })
 	    .fail(function() {
 	    })
-	    .always(function() {
+	    .always(function(data) {
+	    	if (data == 'errorUpdateStatus') {
+	    		alert('Cập nhật trạng thái không đúng');
+	    	}else{
+			addContent.html(content);
+	    	addUser.html(user);
+	    	}
 	    });
 	});
 	// remove order
 	$('body').on('click','#removeOrder',function () {
-	var ndXoa = $(this).parent().parent();
+		var ndXoa = $(this).parent().parent();
 	    id    = $(this).next().val();
-	 $.ajax({
-	        url: '/project2/admin/Order/delete',
+		 $.ajax({
+	        url: '/project2/admin/Order/checkStatusOrder',
 	        type: 'POST',
 	        data: {id:id}
 	    })
@@ -202,8 +215,24 @@
 	    .fail(function() {
 	    })
 	    .always(function(data) {
-	        ndXoa.remove();
+	    	if (data < 3) {
+	    	alert('Bạn chỉ có thể xóa đơn hàng đã giao thành công hoặc ở trạng thái hủy');
+	    	} else {
+	    		 $.ajax({
+	        url: '/project2/admin/Order/delete',
+	        type: 'POST',
+	        data: {id:id}
+		    })
+		    .done(function() {
+		    })
+		    .fail(function() {
+		    })
+		    .always(function(data) {
+		        ndXoa.remove();
+		    });
+	    	}
 	    });
+	
 	});
 
 	},false);
