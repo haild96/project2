@@ -86,7 +86,7 @@ class User extends CI_Controller {
 			'username' => $this->session->userdata('username'),
 			'password' => $this->session->userdata('password'),
 			'fullname' => $this->session->userdata('fullname'),
-			'email' => $this->session->userdata('email'),
+			'email'    => $this->session->userdata('email'),
 			'phone' => $this->session->userdata('phone'),
 			'address' => $this->session->userdata('address'),
 			'level' => $this->session->userdata('level'),
@@ -150,15 +150,7 @@ class User extends CI_Controller {
     {
     	$user = array(
     		'id' => $this->session->userdata('id'),
-			'username' => $this->session->userdata('username'),
-			'password' => $this->session->userdata('password'),
-			'fullname' => $this->session->userdata('fullname'),
-			'email' => $this->session->userdata('email'),
-			'phone' => $this->session->userdata('phone'),
-			'address' => $this->session->userdata('address'),
-			'level' => $this->session->userdata('level'),
-			'status' => $this->session->userdata('status')
-		);
+			'username' => $this->session->userdata('username'));
 		$user = array('user' => $user);
     	$this->load->view('admin/user/changePassword_User_view', $user, FALSE);
     }
@@ -169,14 +161,7 @@ class User extends CI_Controller {
     	{
     		$taikhoan = array(
 				'username' => $this->input->post('username'),
-				'password' => md5($this->input->post('password')),
-				'fullname' => $this->input->post('fullname'),
-				'email' => $this->input->post('email'),
-				'phone' => $this->input->post('phone'),
-				'address' => $this->input->post('address'),
-				'level' => $this->input->post('level'),
-				'status' => $this->input->post('status')
-			);
+				'password' => md5($this->input->post('password')));
 			$check = $this->User_model->update($taikhoan, $id);
 			if($check) 
 			{
@@ -275,18 +260,18 @@ class User extends CI_Controller {
 			$username = $data[0]['username'];
 			$id       = $data[0]['id'];
 			$password = $data[0]['password'];
-			$status = $data[0]['status'];
-			$account = array('username' => $username,
-							 'password' => $password,
-							 'level'    => $level,
-							 'fullname' => $fullname,
-							 'email'    => $email,
-							 'phone'    => $phone,
-							 'address'  => $address,
-							 'id'       => $id,
-							 'status'   => $status);
+			$status   = $data[0]['status'];
+			$account  = array('username' => $username,
+							  'password' => $password,
+							  'level'    => $level,
+							  'fullname' => $fullname,
+							  'email'    => $email,
+							  'phone'    => $phone,
+							  'address'  => $address,
+							  'id'       => $id,
+							  'status'   => $status);
 			$this->session->set_userdata($account);
-			header('location:/project2/admin/Category');
+			header('location:/project2/admin/Product');
 		}
  	}
 }

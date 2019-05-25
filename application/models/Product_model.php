@@ -126,6 +126,88 @@ class Product_model extends CI_Model {
         }
         
     }
+
+    public function getProductByCategory($id) {
+        $this->db->select('product.*, promotion.name AS promotion');
+        $this->db->from('product');
+        $this->db->where('id_category', $id);
+        $this->db->where('product.status', 1);
+        $this->db->join('promotion', 'promotion.id = product.id_promotion', 'left');
+        return $this->db->get()->result_array();
+    }
+
+    public function getProductByNew() {
+        $this->db->select('product.*, promotion.name AS promotion');
+        $this->db->where('product.status', 3);
+        $this->db->join('promotion', 'promotion.id = product.id_promotion', 'left');
+        return $this->db->get('product', 4, 0)->result_array();
+    }
+
+    public function getSingleProduct($id, $id_category) {
+        $this->db->select('product.*, promotion.name AS promotion');
+        $this->db->from('product');
+        $this->db->where('product.id', $id);
+        $this->db->join('promotion', 'promotion.id = product.id_promotion', 'left');
+        $data = $this->db->get()->result_array();
+        return $data;
+    }
+
+    public function getProductSame($id, $id_category) {
+        $this->db->select('product.*, promotion.name AS promotion');
+        $this->db->where('id_category', $id_category);
+        $this->db->where_not_in('product.id', $id);
+        $this->db->join('promotion', 'promotion.id = product.id_promotion', 'left');
+        $data = $this->db->get('product', 5, 0)->result_array();
+        return $data;
+    }
+
+    public function checkQuantity($id,$sl) {
+        $this->db->select('quantity');
+        $this->db->where('id', $id);
+        $this->db->where('quantity >=', $sl);
+        $data=$this->db->get('product')->result_array();
+        if (count($data)) return 1;
+        else return 0;      
+  }
+
+  public function getProductByCart($where) {
+        $this->db->select('*');
+        $this->db->from('product');
+        for ($i = 0; $i < count($where); $i++) {
+          $this->db->or_where('id', $where[$i]);
+        }
+        $data = $this->db->get()->result_array();
+        return $data;
+  }
+
+  public function TimkiemAjax($key) {
+    $this->db->select('*');
+    $this->db->like('name', $key);
+    $data = $this->db->get('product', 6, 0)->result_array();
+    return $data;
+  }
+
+  public function Timkiem($key) {
+    $this->db->select('product.*, promotion.name AS promotion');
+    $this->db->like('product.name', $key);
+    $this->db->join('promotion', 'promotion.id = product.id_promotion', 'left');
+    $data = $this->db->get('product')->result_array();
+    return $data;
+  }
+
+  public function getLoadMore($id, $offset) {
+    $this->db->select('product.*, promotion.name AS promotion');
+    $this->db->where('id_category', $id);
+    $this->db->group_start();
+    $this->db->or_where('product.status', 1);
+    $this->db->or_where('product.status', 3);
+    $this->db->group_end();
+    $this->db->join('promotion', 'promotion.id = product.id_promotion', 'left');
+    $data = $this->db->get('product', 8, $offset)->result_array();
+    return $data;
+
+  }
+  
 }
         
  ?>

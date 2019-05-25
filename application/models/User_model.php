@@ -57,6 +57,7 @@ class User_model extends CI_Model {
     {
         $this->db->select('*');
         $this->db->where('level', '1');
+        $this->db->or_where('level', '2');
         $this->db->from(self::TABLE_NAME);
         $result = $this->db->get()->result_array();
         return $result;
@@ -83,7 +84,6 @@ class User_model extends CI_Model {
         $this->db->where('username', $username);
         $user = $this->db->get()->result_array();
         $countUser = count($user);
-        echo $countUser;
         return $countUser;
     }
 
@@ -122,7 +122,29 @@ class User_model extends CI_Model {
       $this->db->where('username', $user);
       $this->db->where('password', $pass);
       $this->db->where('status', 1);
-      $this->db->where('level <=', 1);
+      $this->db->where('level >=', 1);
+      $data=$this->db->get()->result_array();
+      $data=(count($data)!=0)?$data:0;
+      return $data;
+    }
+
+    public function checkAccountExits($username) {
+        $this->db->select('*');
+        $this->db->where('username', $username);
+        $data = $this->db->get('user')->result_array();
+        if (count($data) == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function confirmMember($user, $pass) {
+      $this->db->select('*');
+      $this->db->from('user');
+      $this->db->where('username', $user);
+      $this->db->where('password', $pass);
+      $this->db->where('status', 1);
       $data=$this->db->get()->result_array();
       $data=(count($data)!=0)?$data:0;
       return $data;

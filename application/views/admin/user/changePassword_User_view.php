@@ -25,7 +25,7 @@
                     <?php $this->session->unset_userdata($status); ?>
                 <?php endif ?>
  
-                <form action="<?php echo base_url() ?>admin/User/updateNewPassword/<?php echo $user['id'] ?>" method="POST" enctype="multipart/form-data">  
+                <form action="<?php echo base_url() ?>admin/User/updateNewPassword/<?php echo $user['id'] ?>" method="POST">  
                     <div class="form-group">
                         <label>Tên tài khoản</label>
                         <input style="pointer-events: none;" class="form-control" value="<?php echo $user['username'] ?>" name="username" placeholder="Nhập tên tài khoản" />
@@ -37,38 +37,6 @@
                     <div class="form-group">
                         <label>Xác nhận mật khẩu</label>
                         <input class="form-control" value="" name="password_again" placeholder="Nhập mật khẩu" />
-                    </div>
-                    <div class="form-group hidden">
-                        <label>Tên người dùng</label>
-                        <input class="form-control" value="<?php echo $user['fullname'] ?>" name="fullname" placeholder="Nhập tên người dùng" />
-                    </div>
-                    <div class="form-group hidden">
-                        <label>Email</label>
-                        <input class="form-control" type="email" value="<?php echo $user['email'] ?>" name="email" placeholder="Nhập email" />
-                    </div>
-                    <div class="form-group hidden">
-                        <label>Số điện thoại</label>
-                        <input class="form-control" type="text" value="<?php echo $user['phone'] ?>" name="phone" placeholder="Nhập số điện thoại" />
-                    </div>
-                    <div class="form-group hidden">
-                        <label>Địa chỉ</label>
-                        <input class="form-control" type="text" value="<?php echo $user['address'] ?>" name="address" placeholder="Nhập địa chỉ" />
-                    </div>
-
-                    <div class="form-group hidden">
-                        <label>Trạng thái</label>
-                        <label class="radio-inline">
-                            <input name="status" value="1" 
-                                <?php if($user['status']==1){ ?>
-                                checked="" <?php } ?>
-                                type="radio">Đang hoạt động
-                        </label>
-                        <label class="radio-inline">
-                            <input name="status" value="0" 
-                                <?php if($user['status']==0){?> 
-                                    checked="" <?php } ?>
-                                type="radio">Tạm ngừng hoạt động                  
-                        </label>
                     </div>
                     <div class="row">
                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">

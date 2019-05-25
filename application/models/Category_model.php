@@ -88,6 +88,13 @@ class Category_model extends CI_Model {
         $this->db->delete(self::TABLE_NAME, $where);
         return $this->db->affected_rows();
     }
+
+    public function getAllCategory()
+    {
+        $this->db->select('*');
+        $this->db->order_by("sort", "asc");
+        return $this->db->get('category')->result_array();
+    }
 }
         
  ?>
