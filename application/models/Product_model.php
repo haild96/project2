@@ -207,6 +207,19 @@ class Product_model extends CI_Model {
     return $data;
 
   }
+
+  public function getQuantityById($id){
+    $this->db->select('*');
+    $this->db->where('id', $id);
+    $data=$this->db->get('product')->result_array();
+    return $data[0]['quantity'];
+  }
+
+  public function updateQuantity($id,$quantity){
+    $data=array('quantity'=>$quantity);
+    $this->db->where('id', $id);
+    $this->db->update('product', $data);
+  }
   
 }
         

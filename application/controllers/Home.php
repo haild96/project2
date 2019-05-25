@@ -8,7 +8,9 @@ class Home extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Category_model');
 		$this->load->model('Product_model');
+		$this->load->model('Order_model');
 		$this->load->model('User_model');
+		$this->load->model('OrderProduct_model');
 	}
 
 	public function index() {
@@ -126,30 +128,6 @@ class Home extends CI_Controller {
 		echo $status;
 	}
 
-	// public function addBill() {
-	// 	$sex = $this->input->post('sex');
-	// 	$name = $this->input->post('name');
-	// 	$phone = $this->input->post('phone');
-	// 	$email = $this->input->post('email');
-	// 	$address = $this->input->post('address');
-	// 	$note = $this->input->post('note');
-	// 	$idForm = $this->OrderProduct_model->insertForm($sex, $name, $phone, $email, $address, $note);
-	// 	$cart = $this->session->userdata['cart'];
-	// 	foreach ($cart as $key => $value) {
-	// 		if ($value[1]) {
-	// 			$this->Cart_model->insertBill($idForm, $key, $value[0]);
-	// 			$sl = $this->Cart_model->getQuantityById($key);
-	// 			$sl = $sl - $value[0];
-	// 			$this->Cart_model->updateSL($key, $sl);
-	// 			unset($this->session->userdata['cart'][$key]);
-	// 		}
-	// 	}
-	// 	$cart = $this->session->userdata['cart'];
-	// 	if (count($cart) == 0) {
-	// 		$this->session->unset_userdata('cart');
-	// 	}
-	// }
-
 	public function TimkiemAjax() {
 		$key = $this->input->post('key');
 		$data = $this->Product_model->TimkiemAjax($key);
@@ -234,6 +212,9 @@ class Home extends CI_Controller {
 	}
 
 	public function verifyOrder() {
+		$data = [];
+		$data['status'] = 'faillogin';
+		$data['data']   =  NULL;
 		if ($this->session->has_userdata('username') && $this->session->has_userdata('password')) {
 			$cart = $this->session->userdata['cart'];
 		   $val = 0;
@@ -243,12 +224,44 @@ class Home extends CI_Controller {
 					break;
 				}
 			}
-			$status = ($val > 0) ? 'done' : 'fail';
-			echo $status;
+			if ($val > 0) {
+				$data['status'] = 'done';
+				$data['data']   =  $this->session->userdata;
+				echo json_encode($data);
+			} else {
+				$data['status'] = 'fail';
+				echo json_encode($data);
+				
+			}
 		}else{
-			echo "faillogin";
+			echo json_encode($data);
 		}
 		
+	}
+
+	public function addOrder() {
+		$userId  = $this->input->post('userId');
+		$phone   = $this->input->post('phone');
+		$email   = $this->input->post('email');
+		$address = $this->input->post('address');
+		$note    = $this->input->post('note');
+		$idOrder = $this->Order_model->insertOrder($userId, $phone, $email, $address, $note);
+
+		$cart = $this->session->userdata['cart'];
+		foreach ($cart as $key => $value) {
+			if ($value[1]) {
+				$this->OrderProduct_model->insertOrderProduct($idOrder, $key, $value[0]);
+				$sl = $this->Product_model->getQuantityById($key);
+				$sl = $sl - $value[0];
+				$this->Product_model->updateQuantity($key, $sl);
+				unset($this->session->userdata['cart'][$key]);
+			}
+		}
+		$cart = $this->session->userdata['cart'];
+		if (count($cart) == 0) {
+			$this->session->unset_userdata('cart');
+		}
+		echo 'success';
 	}
 
 

@@ -98,6 +98,19 @@ class OrderProduct_model extends CI_Model {
 		$data=$this->db->get()->result_array();
 		return $data;
 	}
+
+    public function insertOrderProduct($order_id,$product_id,$quantity){
+        $data=array('order_id'=>$order_id,'product_id'=>$product_id,'quantity'=>$quantity);
+        $this->db->insert('order_product', $data);
+    }
+
+    public function getProductByOder($idOrder)
+    {
+        $this->db->select('*');
+        $this->db->from('order_product');
+        $this->db->where('order_id', $idOrder);
+        return $this->db->get()->result_array();
+    }
 }
         
 
