@@ -124,7 +124,7 @@
       </div>
        <div class="row">
 			<div class="viewMore">
-				<a class="btn btn-danger" href="/project2/Home/showProduct/7">Xem thêm máy tính bảng</a>
+				<a class="btn btn-danger" href="/project2/Home/showProduct/62">Xem thêm máy tính bảng</a>
 			</div>
 	   </div>
 	</div>
@@ -166,7 +166,7 @@
       </div>
        <div class="row">
 		<div class="viewMore">
-			<a class="btn btn-danger" href="/project2/Home/showProduct/8">Xem thêm Laptop</a>
+			<a class="btn btn-danger" href="/project2/Home/showProduct/63">Xem thêm Laptop</a>
 		</div>
 	</div>
 	</div>
@@ -210,7 +210,7 @@
       </div>
        <div class="row">
 		<div class="viewMore">
-			<a class="btn btn-danger" href="/project2/Home/showProduct/9">Xem thêm phụ kiện</a>
+			<a class="btn btn-danger" href="/project2/Home/showProduct/70">Xem thêm phụ kiện</a>
 		</div>
 	</div>
 	</div>

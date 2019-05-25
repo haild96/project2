@@ -12,7 +12,7 @@
         <!-- /.col-lg-12 -->
    <div class="row">
    	 <div class="alert alert-info">
-	 	<div class="title">Đơn hàng #BS24</div>
+	 	<div class="title">Đơn hàng #BKS<?php echo $listOrder[0]['order_id'] ?></div>
 	</div>
    </div>
         <table class="table table-hover table-bordered">
