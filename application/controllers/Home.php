@@ -31,9 +31,10 @@ class Home extends CI_Controller {
 
 	public function singleProduct($id_category, $id) {
 		// detail product
-		$data = $this->Product_model->getSingleProduct($id, $id_category);
+		$data    = $this->Product_model->getSingleProduct($id, $id_category);
 		$sp_same = $this->Product_model->getProductSame($id, $id_category);
-		$data = array('data' => $data, 'spSame' => $sp_same);
+		$listCmt = $this->Comment_model->getCmtByProduct($id, 0);
+		$data    = array('data' => $data, 'spSame' => $sp_same, 'listCmt' => $listCmt);
 		$this->load->view('singleProduct_view', $data, FALSE);
 	}
 
@@ -311,6 +312,37 @@ class Home extends CI_Controller {
 		$userId     = $this->session->userdata('id');;
 	    $this->Comment_model->insert(array('user_id' => $userId, 'product_id' => $productId, 'content' => $contentCmt));
 	    echo json_encode('cmttsuccess');
+	}
+
+	public function loadMoreCmt()
+	{
+		$productId = $this->input->post('productId');
+		$offset    = $this->input->post('offset');
+		$data      = $this->Comment_model->getCmtByProduct($productId, $offset);
+		$res['status'] = '';
+		$res['data']   = '';
+		if (count($data) == 0) {
+			$res['status'] = 'NULL';
+		} else {
+			$res['status'] = 'success';
+			$htmlAdd = '';
+			
+			foreach ($data as $key => $value) {
+				$htmlAdd.='<div class="itemCmt">';
+				$htmlAdd.='<div class="nameCmt">';
+				$htmlAdd.='Bởi: <strong>'.$value['fullname'].'</strong>';
+				if ($value['level'] == 1 || $value['level'] ==  2) {
+					$htmlAdd.='<span class="qtvCmt">';
+					$htmlAdd.='QTV';
+					$htmlAdd.='</span>';
+				}
+				$htmlAdd.='<span class="timecmt" style="font-size: 13px;color: #9b9b9b;margin-left: 8px;">';
+				$htmlAdd.= date('d/m/Y',$value['time_created']);
+				$htmlAdd.='</span></div><div class="contentCmt">'.$value['content'].'</div></div>';
+				 }
+				 $res['data']   = $htmlAdd;
+		}
+		echo json_encode($res);
 	}
 
 

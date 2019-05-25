@@ -68,9 +68,6 @@
 						if (data.status =='NULL') {
 							$('.viewMore').html('<b class="endProduct" >Đã hết sản phẩm</b>');
 						}else{
-
-
-							console.log(data.data);
 						$('.products').append(data.data);
 						}
 					});

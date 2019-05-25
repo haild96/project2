@@ -216,7 +216,7 @@
 }
 
 .cmtProduct .title {
-    font-size: 20px;
+    font-size: 18px;
     padding: 10px;
     border-bottom: 1px solid #e3e3e3;
 }
@@ -240,4 +240,14 @@
     border-bottom: #646464;
     width:100%;
     background: #ffffcc;
+}
+
+.qtvCmt {
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: normal;
+    font-size: 12px;
+    background: #d0011b;
+    padding: 1px 6px;
+    margin-left: 8px;
 }
