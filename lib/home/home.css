@@ -175,6 +175,7 @@ span.price {
 
 .viewMore {
     text-align:  center;
+    margin-left: 165px;
 }
 
 .viewMore a.btn.btn-danger {
@@ -459,4 +460,63 @@ span.price {
     height: 300px;
 }
 
+}
+
+.tintuc_older h3.title {
+    margin-top: 0px;
+}
+
+.firstRow li {
+    list-style-type: none;
+}
+
+.firstRow a {
+    color: black;
+}
+.tintuc_older li {
+    list-style-type: none;
+}
+
+.tintuc_older a {
+    color: black;
+}
+
+.tintuc_khuyenmai h4 {
+    padding-left: 39px;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+div.stt {
+    width: 30px;
+    height: 30px;
+    background: #dcdada;
+    color: black;
+    border-radius: 20%;
+}
+.stt p {
+    padding-top: 5px;
+    padding-left: 11px;
+}
+a:hover{
+    text-decoration: none;
+}
+
+a.tenkhuyenmai {
+    position: absolute;
+    top: -3px;
+    left: 35px;
+    bottom: auto;
+}
+
+.tintuc_khuyenmai li {
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.titleNewProduct {
+    width: 259px;
+    text-align: center;
+    margin-left: 50px;
+    font-size: 18px;
 }
