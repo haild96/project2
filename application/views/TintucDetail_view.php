@@ -10,9 +10,11 @@
     <!-- Page Content -->
     <div style="padding-top: 100px;" class="container">
         <div class="col-lg-8 col-lg-push-2">
-            <h1><?php echo $tintuc['title'] ?></h1>
-            <img src="/project2/<?php echo $tintuc['image'] ?>" alt="">
-            <?php echo $tintuc['content'] ?>
+            <h2><?php echo $tintuc['title'] ?></h2>
+            <small class="timeDetail"><?php echo date('d/m/Y H:i:s A', $tintuc['time_created']) ?></small>
+            <div class="content" style="line-height: 30px;">
+             <?php echo $tintuc['content'] ?>
+            </div>
         </div>
     </div>
     <!-- end Page Content -->

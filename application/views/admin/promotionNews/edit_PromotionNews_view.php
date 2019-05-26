@@ -6,11 +6,11 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Tin Tức
-                    <small>Thêm</small>
+                    <small>Cập nhật</small>
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
-            <div class="col-lg-7" style="padding-bottom:120px">
+            <div class="col-lg-12" style="padding-bottom:120px">
                 <?php if (isset($status)): ?>
                     <div class="alert <?php echo $status ? 'alert-success' : 'alert-danger'?>">
                       <?php echo $message ?> 
@@ -21,20 +21,19 @@
                 <form action="<?php echo base_url() ?>admin/PromotionNews/update/<?php echo $tintuc['id'] ?>" method="POST" enctype="multipart/form-data">  
                     <div class="form-group">
                         <label>Tiêu đề</label>
-                        <input class="form-control" value="<?php echo $tintuc['title'] ?>" name="title" placeholder="Nhập tiêu đề" />
+                        <input class="form-control" value="<?php echo $tintuc['title'] ?>" name="title" placeholder="Nhập tiêu đề" required/>
                     </div>
                     <div class="form-group">
                         <label>Tóm tắt</label>
-                        <textarea id="demo" name="summary" class="form-control ckeditor" rows="3"><?php echo $tintuc['summary'] ?></textarea>
+                        <textarea id="demo" name="summary" class="form-control ckeditor" rows="3" required><?php echo $tintuc['summary'] ?></textarea>
                     </div>
                     <div class="form-group">
                         <label>Nội dung</label>
-                        <textarea id="demo" name="content" class="form-control ckeditor" rows="5"><?php echo $tintuc['content'] ?></textarea>
+                        <textarea id="demo" name="content" class="form-control ckeditor" rows="5" required><?php echo $tintuc['content'] ?></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Hình ảnh</label>
-                        <input type="hidden" value="<?php echo $tintuc['image'] ?>" name="image2" >
-                        <p><img src="<?php echo base_url() ?><?php echo $tintuc['image'] ?>" width="200px" alt=""></p>
+                        <label>Ảnh tiêu biểu</label>
+                        <p><img src="<?php echo base_url().'uploads/ImagePromotionNews/'.$tintuc['image'] ?>" width="200px"></p>
                         <input type="file" name="image" class="form-control">
                     </div>
                     <div class="form-group">
@@ -52,8 +51,7 @@
                                 type="radio">Hiển thị                        
                         </label>
                     </div>
-                    <button type="submit" class="btn btn-default">Sửa</button>
-                    <button type="reset" class="btn btn-default">Làm mới</button>
+                    <button type="submit" class="btn btn-danger">Cập nhật</button>
                 <form>
             </div>
         </div>

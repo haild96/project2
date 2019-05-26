@@ -30,14 +30,12 @@ class Home extends CI_Controller {
 
 	public function TinTuc()
 	{
-		$khuyenmai = $this->Promotion_model->get();
-		$tintuc = $this->PromotionNews_model->get();
+		$listNews   = $this->PromotionNews_model->getListNews();
+		$productNew = $this->Product_model->getProductByNew();
+		$listNews = (!$listNews) ? array() : $listNews;
 		$data = array(
-			'tintuc1' => $tintuc,
-			'tintuc2' => $tintuc,
-			'tintuc3' => $tintuc,
-			'khuyenmai' => $khuyenmai
-		);
+			'listNews' => $listNews,
+			'product'  => $productNew);
 		$this->load->view('Tintuc_view',$data, FALSE);
 	}
 
@@ -66,7 +64,7 @@ class Home extends CI_Controller {
 				$htmlAdd.='<span class="row">';
 				$htmlAdd.= '<div class="span-group">';
 				$htmlAdd.= ' <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">';
-				$htmlAdd.= '<img width="200px" src="'.base_url().$tintuc3['image'].'" alt="" class="anhtintuccu">';
+				$htmlAdd.= '<img width="200px" src="'.base_url().'uploads/ImagePromotionNews/'.$tintuc3['image'].'" alt="" class="anhtintuccu">';
 				$htmlAdd.= ' </div>';
 				$htmlAdd.= '<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">';
 				$htmlAdd.=' <h3 class="title">'.$tintuc3['title'].'</h3>';
