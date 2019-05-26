@@ -194,7 +194,7 @@
 	    })
 	    .always(function(data) {
 	    	if (data == 'errorUpdateStatus') {
-	    		alert('Cập nhật trạng thái không đúng');
+	    		alert('Đơn hàng đã cập nhật trạng thái cuối, bạn không thể cập nhật lại!');
 	    	}else{
 			addContent.html(content);
 	    	addUser.html(user);

@@ -100,6 +100,18 @@ class Comment_model extends CI_Model {
 		$data = $this->db->get()->result_array();
 		return $data;
     }
+
+    public function getCmtByProduct($idProduct, $offset)
+    {
+       $this->db->select('comment.id, comment.content, comment.time_created, comment.status, comment.product_id,user.fullname, user.username, user.level');
+        $this->db->join('product', 'product.id = comment.product_id', 'left');
+        $this->db->join('user', 'user.id = comment.user_id', 'left');
+        $this->db->where('product_id', $idProduct);
+        $this->db->where('comment.status', 1);
+        
+        $data = $this->db->get('comment', 5, $offset)->result_array();
+        return $data;
+    }
 }
         
 
