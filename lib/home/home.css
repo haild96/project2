@@ -366,6 +366,7 @@ span.price {
 
 .footer .social {
     display:  block;
+    padding-left: 100px;
 }
 
 .footer .social ul {
@@ -443,7 +444,7 @@ span.price {
 *{}
 
 .footer .social h4 {
-    margin-left: -156px;
+    margin-left: -114px;
 }
 
 .addToCart {
