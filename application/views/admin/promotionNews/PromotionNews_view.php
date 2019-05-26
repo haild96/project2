@@ -29,7 +29,7 @@
                             <tr class="odd gradeX" align="center">
                                 <th class="text-center"><?php echo $value['id']; ?></th>
                                 <th class="text-center"><?php echo $value['title']; ?></th>
-                                <th class="text-center"><?php echo $value['summary']; ?></th>
+                                <th style="max-width: 130px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="text-center"><?php echo $value['summary']; ?></th>
                                 <th class="text-center"><img src="<?php echo base_url() ?><?php echo $value['image'] ?>" width="130px" alt=""></th>
                                 <th style="max-width: 130px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;"class="text-center"><?php echo $value['content']; ?></th>
                                 <th style="max-width: 130px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="text-center"><?php echo date('m/d/Y H:i:s', $value['time_created']); ?></th>

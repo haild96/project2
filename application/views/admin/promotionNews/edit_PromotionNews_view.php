@@ -46,7 +46,7 @@
                                 type="radio">Không hiển thị
                         </label>
                         <label class="radio-inline">
-                            <input name="status" value="0" 
+                            <input name="status" value="1" 
                                 <?php if($tintuc['status']==1){?> 
                                     checked="" <?php } ?>
                                 type="radio">Hiển thị                        
