@@ -130,9 +130,9 @@ class Order_model extends CI_Model {
         
     }
 
-     public function insertForm($sex,$name,$phone,$email,$address,$note){
-        $data=array('fullname'=>$name,'address'=>$address,'phone'=>$phone,'email'=>$email,'note'=>$note,'status'=>0);
-        $this->db->insert('order_product', $data);
+     public function insertOrder($idUser,$phone,$email,$address,$note){
+        $data=array('user_id'=>$idUser,'address'=>$address,'phone'=>$phone,'email'=>$email,'note'=>$note);
+        $this->db->insert('order', $data);
         return $this->db->insert_id();
     }
 }

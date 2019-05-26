@@ -56,6 +56,66 @@
 						</ul>
 					</div>
 				</div>
+
+				<div class="row">
+					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 cmtProduct">
+						<div class="title" style="font-size: 18px;">
+							Hỏi đáp của bạn về <?php echo $data[0]['name'] ?>
+						</div>
+						<div class="contentCmtMe">
+							<textarea style="resize: vertical;" name="cmtMe" cols="106" rows="5"  style="resize:none" id="cmtMe" ></textarea>
+						</div>
+					
+						<div class="sendCmt pull-right" style="margin-bottom: 10px;">
+							<button class="btn btn-danger" id="sendCmt">Gửi câu hỏi</button>
+						</div>
+						
+					</div>
+				</div>
+
+				<div class="row">
+					<?php if (count($listCmt) == 0): ?>
+						<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 cmtProduct">
+							<div class="title" style="font-size: 16px;">
+								Chưa có bình luận nào về <?php echo $data['0']['name'] ?>
+							</div>
+						</div>
+					<?php else: ?>
+					<input type="hidden" id="productCmt" value="<?php echo $listCmt[0]['product_id'] ?>">
+					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 cmtProduct">
+						<div class="title">
+							Nhận xét của mọi người về <?php echo $data['0']['name'] ?>
+						</div>
+						<div class="listcomment">
+						<?php foreach ($listCmt as $key => $value): ?>
+							<div class="itemCmt">
+							<div class="nameCmt">
+								Bởi: <strong><?php echo $value['fullname'] ?></strong>
+								<?php if ($value['level'] == 1 || $value['level'] ==  2): ?>
+									<span class="qtvCmt">
+									QTV
+									</span>
+								<?php endif ?>
+								<span class="timecmt" style="font-size: 13px;color: #9b9b9b;margin-left: 8px;">
+									<?php echo date('d/m/Y',$value['time_created']) ?>
+								</span> 
+							</div>
+							<div class="contentCmt">
+								<?php echo $value['content'] ?>
+							</div>
+						</div>
+						<?php endforeach ?>
+						</div>
+						<div class="loadMorecmt text-center">
+							<input type="hidden" id="quantityCmt" value="5" >
+							<button class="btn btn-default">Xem thêm bình luận</button>
+						</div>
+						
+					</div>
+				<?php endif ?>
+				</div>
+
+				
 			<?php endforeach ?>
 		</div> 
 	</div> 
@@ -83,7 +143,7 @@
 			 	<?php }else{ ?>
 			 		<div class="price"><?php echo number_format($value['price_origin'],0,".", "."); ?> ₫</div>	
 			 	<?php } ?>	
-			 	<div class="note">KM</div>
+			 	<div class="note"><?php echo $value['promotion'] ?></div>
 			 	<div class="addToCart"><button class="btn btn-danger" value="<?php echo $value['id'] ?>">Thêm vào giỏ hàng</button></div>		
 			 </div>		
 			</div> <!-- end 1sp -->
@@ -125,6 +185,7 @@
 
 		})
 		.always(function(data) {
+			data = JSON.parse(data);
 			if (data=='expired'){
 				$('.expired').addClass('hThi');
 				 setTimeout(function(){
@@ -154,7 +215,95 @@
 		});
 
 	});
+
+	$('#cmtMe').click(function() {
+		$.ajax({
+        		url: '/project2/Home/checkLogin'
+        	}) 
+        	.always(function(data) {
+        		data = JSON.parse(data);
+        	if (data=='loginfailse') {
+        		// login required
+        		$('.loginMember').removeClass('KHthi');
+				$( window ).scroll(function() {
+				  var y = $(window).scrollTop();
+				  y=y+'px';
+				  $(".loginMember").css("top",y);
+				});
+        	}
+        	});
+	});
+
+	$('#sendCmt').click(function() {
+		$.ajax({
+        		url: '/project2/Home/checkLogin'
+        	}) 
+        	.always(function(data) {
+        		data = JSON.parse(data);
+        	if (data=='loginfailse') {
+        		// login required
+        		$('.loginMember').removeClass('KHthi');
+				$( window ).scroll(function() {
+				  var y = $(window).scrollTop();
+				  y=y+'px';
+				  $(".loginMember").css("top",y);
+				});
+        	} else {
+        	contentCmt = $('#cmtMe').val();
+        	idProduct  =parseInt($('#idProduct').val());
+        	$.ajax({
+			url: '/project2/Home/addCmtProduct',
+			type: 'POST',
+			data: {idProduct:idProduct,contentCmt:contentCmt}
+		})
+		.done(function() {
+		})
+		.fail(function() {
+
+		})
+		.always(function(data) {
+				data = JSON.parse(data);
+			if (data=='cmttsuccess' && contentCmt != '') {
+			alert('Bình luận của bạn đã được ghi nhận !');
+			$('#cmtMe').val('');
+			} else {
+				alert('Có lỗi xảy ra, vui lòng thử lại !');
+			}
+		});
+    	}
+    	});  	
+	    });
+
+	$('.loadMorecmt').click(function() {
+			var productId =$('#productCmt').val();
+			var quantity  = $('#quantityCmt').val();
+			quantity=parseInt(quantity);
+			$('#quantityCmt').val(quantity+5);
+
+					$.ajax({
+						url: '/project2/Home/loadMoreCmt',
+						type: 'POST',
+						data: {productId:productId,offset:quantity}
+					})
+					.done(function() {
+					})
+					.fail(function() {
+					})
+					.always(function(data) {
+						data = JSON.parse(data);
+						if (data.status =='NULL') {
+							$('.loadMorecmt').html('<hr>');
+						}else{
+						$('.listcomment').append(data.data);
+						}
+					});
+				});
+
+
+
 	},false);
+
+
 </script>
 </body>
 </html>

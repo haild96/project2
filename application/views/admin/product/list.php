@@ -64,7 +64,7 @@
                         <th class="text-center">STT</th>
                         <th class="text-center" style="max-width: 150px;">Tên sản phẩm</th>
                         <th class="text-center">Hình ảnh</th>
-                        <th class="text-center">Tên danh mục</th>
+                        <th class="text-center">Danh mục</th>
                         <th class="text-center">Số lượng</th>
                         <th class="text-center">Đã bán</th>
                         <th class="text-center">Trạng thái</th>

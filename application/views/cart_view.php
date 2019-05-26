@@ -169,15 +169,11 @@
  			<div class="row dong"><i class="fas fa-times"></i></div>
  			<div class="row vien"></div>
  			<div class="row tieude">Thông tin người mua</div>
- 			<div class="row">
- 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 gioitinh">
- 					<select id="gioitinh" class="form-control">
-					<option value="1">Anh</option>
-					<option value="0">Chị</option>
-					</select>	
- 				</div>
- 				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
- 					<input type="text" class="form-control" placeholder="Họ tên (bắt buộc)" id="hoten">
+ 			<div class="row" style="margin-left: -7px;">
+ 		
+ 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+ 					<input type="text" disabled class="form-control" placeholder="Họ tên (bắt buộc)" id="hoten">
+ 					<input type="hidden" class="form-control" id="userId" value="<?php echo $this->session->userdata('id')  ?>">
  				</div>
  			</div>
  			<div class="row">
@@ -185,7 +181,7 @@
  					<input type="text" class="form-control"  placeholder="Số điện thoại (bắt buộc)" id="sdt">
  				</div>
  				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 email">
- 					<input  type="text" class="form-control" placeholder="Email (bắt buộc)" id="email">
+ 					<input type="text" class="form-control" placeholder="Email (bắt buộc)" id="emailreceive">
  				</div>
  			</div>
  			<div class="row diachi" >

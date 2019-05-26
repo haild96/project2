@@ -9,6 +9,7 @@ class Order extends CI_Controller {
 		$this->load->model('Order_model');
 		$this->load->model('User_model');
 		$this->load->model('OrderProduct_model');
+		$this->load->model('Product_model');
 
 	}
 
@@ -52,20 +53,39 @@ class Order extends CI_Controller {
 
 	}
 
-	// Add a new item
-	public function add()
-	{
-
-	}
-
 	//Update one item
 	public function update( $id = NULL )
 	{
 		$status = $this->input->post('status');
 		$id     = $this->input->post('id');
 		$sales  = $this->session->userdata('id');
+
+		// check level update status
+		$order = $this->Order_model->get($id);
+		$curentStatus =  $order->status;
+
+		if (($status == 3 && $curentStatus == 4) || ($status == 4 && $curentStatus == 3 )) {
+			echo "errorUpdateStatus";
+		} else {
 		$this->Order_model->update(array('status' => $status, 'sales_id' => $sales), array('id' => $id));
+		if ($status == 3) { // đã giao hàng -> cộng vào sp đã bán
+			$listOrder = $this->OrderProduct_model->getProductByOder($id);
+			foreach ($listOrder as $key => $value) {
+			$product  = $this->Product_model->get($value['product_id']);
+			$totalExp = $value['quantity'] + $product['quantity_exp'];
+			$this->Product_model->update(array('quantity_exp' => $totalExp), $value['product_id']);
+		}
+		} else if ($status == 4) { // hủy đơn hàng -> cộng vào kho
+			$listOrder = $this->OrderProduct_model->getProductByOder($id);
+			foreach ($listOrder as $key => $value) {
+			$product  = $this->Product_model->get($value['product_id']);
+			$totalExp = $value['quantity'] + $product['quantity'];
+			$this->Product_model->update(array('quantity' => $totalExp), $value['product_id']);
+		}
+		}
 	}
+
+}
 
 	//Delete one item
 	public function delete( $id = NULL )
@@ -87,6 +107,13 @@ class Order extends CI_Controller {
 	{
 		$listOrder    = $this->OrderProduct_model->getDetailOrder($id);
 		$this->load->view('admin/order/viewDetail', array('listOrder' => $listOrder));
+	}
+
+	public function checkStatusOrder()
+	{
+		$id    = $this->input->post('id');
+		$order = $this->Order_model->get($id);
+		echo $order->status;
 	}
 }
 
