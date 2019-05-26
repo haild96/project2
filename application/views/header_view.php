@@ -20,7 +20,7 @@ if ($cart == NULL) {
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand logo" href="/project2/Home"><img width="80px" src="/project2/uploads/logo/logo.png" alt=""></a>
+				<a class="navbar-brand logo" href="/project2/Home"><img width="80px" src="/project2/uploads/LogoCompany/logo.png" alt=""></a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -192,13 +192,15 @@ $('.confirm').click(function() {
 			data: {email:email,password:password,fullname:fullname,username:username,phone:phone}
 		})
 		.always(function(data) {
-			if (data=='isset') {
+			data = JSON.parse(data);
+			idUser = data.idAcc;
+			if (data.status=='isset') {
 			 alert('Tài khoản đã tồn tại !');
 			}else{
 				$.ajax({
 					url: '/project2/Home/createSession',
 					type: 'POST',
-					data: {email:email,password:password,fullname:fullname,username:username,phone:phone}
+					data: {idUser:idUser,email:email,password:password,fullname:fullname,username:username,phone:phone}
 				})
 				.always(function() {
 					location.href='/project2/Home';
@@ -236,6 +238,7 @@ $('.login').click(function() {
   		data: {username: username,password:password}
   	})
   	.always(function(data) {
+  		data = JSON.parse(data);
   		if (data=='notfound') {
   			alert('Tài khoản hoặc mật khẩu không đúng');
   		}else{
