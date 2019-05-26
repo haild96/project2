@@ -175,6 +175,7 @@ span.price {
 
 .viewMore {
     text-align:  center;
+    margin-left: 165px;
 }
 
 .viewMore a.btn.btn-danger {
@@ -511,4 +512,11 @@ a.tenkhuyenmai {
 .tintuc_khuyenmai li {
     position: relative;
     padding-bottom: 15px;
+}
+
+.titleNewProduct {
+    width: 259px;
+    text-align: center;
+    margin-left: 50px;
+    font-size: 18px;
 }
