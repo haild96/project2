@@ -48,7 +48,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="title">
-			 Điện thoại
+			 <?php echo $header[0]['name'] ?>
 			</div>
 		</div>
 		<div class="row">
@@ -82,7 +82,7 @@
       </div>
       <div class="row">
 		<div class="viewMore">
-			<a class="btn btn-danger" href="/project2/Home/showProduct/1">Xem thêm điện thoại</a>
+			<a class="btn btn-danger" href="/project2/Home/showProduct/<?php echo $header[0]['id'] ?>">Xem thêm <?php echo $header[0]['name'] ?></a>
 		</div>
 	</div>
 	</div>
@@ -92,7 +92,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="title">
-			 Máy tính bảng
+			 <?php echo $header[1]['name'] ?>
 			</div>
 		</div>
 		<div class="row">
@@ -124,7 +124,7 @@
       </div>
        <div class="row">
 			<div class="viewMore">
-				<a class="btn btn-danger" href="/project2/Home/showProduct/62">Xem thêm máy tính bảng</a>
+				<a class="btn btn-danger" href="/project2/Home/showProduct/<?php echo $header[1]['id'] ?>">Xem thêm <?php echo $header[1]['name'] ?></a>
 			</div>
 	   </div>
 	</div>
@@ -134,7 +134,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="title">
-			 Laptop
+			<?php echo $header[2]['name'] ?>
 			</div>
 		</div>
 		<div class="row">
@@ -166,7 +166,7 @@
       </div>
        <div class="row">
 		<div class="viewMore">
-			<a class="btn btn-danger" href="/project2/Home/showProduct/63">Xem thêm Laptop</a>
+			<a class="btn btn-danger" href="/project2/Home/showProduct/<?php echo $header[2]['id'] ?>">Xem thêm <?php echo $header[2]['name'] ?></a>
 		</div>
 	</div>
 	</div>
@@ -176,7 +176,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="title">
-			 Phụ kiện
+			 <?php echo $header[3]['name'] ?>
 			</div>
 		</div>
 		<div class="row">
@@ -210,7 +210,7 @@
       </div>
        <div class="row">
 		<div class="viewMore">
-			<a class="btn btn-danger" href="/project2/Home/showProduct/70">Xem thêm phụ kiện</a>
+			<a class="btn btn-danger" href="/project2/Home/showProduct/<?php echo $header[3]['id'] ?>">Xem thêm <?php echo $header[3]['name'] ?></a>
 		</div>
 	</div>
 	</div>

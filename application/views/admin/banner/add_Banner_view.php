@@ -10,7 +10,7 @@
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
-            <div class="col-lg-7" style="padding-bottom:120px">
+            <div class="col-lg-12" style="padding-bottom:120px">
 
                 <?php if (isset($status)): ?>
                     <div class="alert <?php echo $status ? 'alert-success' : 'alert-danger'?>">
@@ -22,19 +22,19 @@
                 <form action="<?php echo base_url() ?>admin/Banner/add" method="POST" enctype="multipart/form-data">  
                     <div class="form-group">
                         <label>Tên</label>
-                        <input class="form-control" value="" name="name" placeholder="Nhập tên" />
+                        <input class="form-control" name="name" placeholder="Tên quảng cáo" required />
                     </div>
                     <div class="form-group">
                         <label>Hình ảnh</label>
-                        <input type="file" name="image" class="form-control">
+                        <input type="file" name="image" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label>Nội dung</label>
-                        <textarea id="demo" name="content" class="form-control ckeditor" rows="5"></textarea>
+                        <input id="demo" name="content" class="form-control" placeholder="Nội dung" />
                     </div>
                     <div class="form-group">
-                        <label>Đường dẫn</label>
-                        <input class="form-control" value="" name="link" placeholder="Nhập đường dẫn" />
+                        <label>Đường dẫn tới sản phẩm</label>
+                        <input class="form-control" value="" name="link" placeholder="Nhập đường dẫn" required />
                     </div>
                     <div class="form-group">
                         <label>Kiểu quảng cáo</label>
@@ -55,8 +55,8 @@
                         </label>
                     </div>
                     
-                    <button type="submit" class="btn btn-default">Thêm</button>
-                    <button type="reset" class="btn btn-default">Làm mới</button>
+                    <button type="submit" class="btn btn-success">Thêm</button>
+                    <button type="reset" class="btn btn-danger">Làm mới</button>
                 <form>
             </div>
         </div>

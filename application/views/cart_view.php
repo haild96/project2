@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>Giỏ hàng</title>
     <?php include 'link.php'; ?>
 	<link rel="stylesheet" href="/project2/lib/home/cart.css">
 	<script src="/project2/lib/home/editQuantityCart.js"></script>

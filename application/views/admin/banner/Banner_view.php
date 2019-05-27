@@ -30,15 +30,15 @@
                         <?php foreach ($quangcao as $value): ?>                    
                             <tr class="odd gradeX" align="center">
                                 <th class="text-center"><?php echo $i ?></th>
-                                <th class="text-center"><?php echo $value['name']; ?></th>
-                                <th class="text-center"><img width="100px" src="<?php echo base_url() ?><?php echo $value['image']; ?>" alt=""></th>
-                                <th style="max-width: 150px;overflow: hidden;text-overflow: ellipsis;" class="text-center"><?php echo $value['content']; ?></th>
-                                <th style="max-width: 130px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="text-center">
+                                <th class="text-center" style="max-width: 200px;"><?php echo $value['name']; ?></th>
+                                <th class="text-center"><img width="150px" src="<?php echo base_url().'uploads/ImageBanner/'.$value['image'] ?>" alt=""></th>
+                                <th style="max-width: 200px;" class="text-center"><?php echo $value['content']; ?></th>
+                                <th class="text-center">
                                     <?php if($value['type'] == 0) echo "Slide"; ?>
                                     <?php if($value['type'] == 1) echo "Banner"; ?>
                                 </th>  
-                                <th style="max-width: 170px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="text-center"><?php echo date('m/d/Y', $value['time_created']); ?></th>
-                                <th style="max-width: 130px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="text-center">
+                                <th class="text-center"><?php echo date('d/m/Y', $value['time_created']); ?></th>
+                                <th class="text-center">
                                     <?php if($value['status'] == 0) echo "Không hiển thị"; ?>
                                     <?php if($value['status'] == 1) echo "Hiển thị"; ?>
                                 </th>                          

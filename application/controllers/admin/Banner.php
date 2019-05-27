@@ -6,7 +6,6 @@ class Banner extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		//Load Dependencies
 		$this->load->model('Banner_model');
 
 	}
@@ -28,69 +27,23 @@ class Banner extends CI_Controller {
 	// Add a new item
 	public function add()
 	{
-		$target_dir = "uploads/ImageBanner/";
-		$target_file = $target_dir . basename($_FILES["image"]["name"]);
-		$uploadOk = 1;
-		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-		// Check if image file is a actual image or fake image
-		if(isset($_POST["submit"])) {
-		    $check = getimagesize($_FILES["image"]["tmp_name"]);
-		    if($check !== false) {
-		        //echo "File is an image - " . $check["mime"] . ".";
-		        $uploadOk = 1;
-		    } else {
-		        //echo "File is not an image.";
-		        $uploadOk = 0;
-		    }
-		}
-		// Check if file already exists
-		if (file_exists($target_file)) {
-		    //echo "Sorry, file already exists.";
-		    $uploadOk = 0;
-		}
-		// Check file size
-		if ($_FILES["image"]["size"] > 500000) {
-		    //echo "Sorry, your file is too large.";
-		    $uploadOk = 0;
-		}
-		// Allow certain file formats
-		if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-		&& $imageFileType != "gif" ) {
-		    //echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-		    $uploadOk = 0;
-		}
-		// Check if $uploadOk is set to 0 by an error
-		if ($uploadOk == 0) {
-		    //echo "Sorry, your file was not uploaded.";
-		// if everything is ok, try to upload file
+		$dataInsert = $this->getDataInput();
+		$message    = 'Thêm mới quảng cáo ';
+
+		$config['upload_path']   = './uploads/ImageBanner/';
+		$config['allowed_types'] = 'gif|jpg|png|jpeg';
+		$config['max_size']      = '100000';
+		$this->load->library('upload', $config);
+
+		if ( ! $this->upload->do_upload('image')){
+			$error = array('error' => $this->upload->display_errors());
+			$this->load->view('admin/banner/add_Banner_view', array('status' => false , 'message' => $message.'không thành công'));
 		} else {
-		    if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-		        //echo "The file ". basename( $_FILES["logo"]["name"]). " has been uploaded.";
-		    } else {
-		        //echo "Sorry, there was an error uploading your file.";
-		    }
-		}
-
-		$image = 'uploads/ImageBanner/' . basename( $_FILES["image"]["name"]);
-
-		$quangcao = array(
-			'name' => $this->input->post('name'),
-			'image' => $image,
-			'content' => $this->input->post('content'),
-			'link' => $this->input->post('link'),
-			'type' => $this->input->post('type'),
-			'status' => $this->input->post('status'),
-			
-		);
-
-		$check = $this->Banner_model->insert($quangcao);
-		if($check) 
-		{
-			$this->load->view('admin/banner/add_Banner_view', array('status' => true, 'message' => 'Thêm quảng cáo thành công')); 
-		} 
-		else
-		{
-			$this->load->view('admin/banner/add_Banner_view', array('status' => false , 'message' => 'Thêm quảng cáo không thành công'));
+			$data  =  $this->upload->data();
+			$image = $data['file_name'];
+			$dataInsert['image'] = $image;
+			$this->Banner_model->insert($dataInsert);
+			$this->load->view('admin/banner/add_Banner_view', array('status' => true, 'message' => $message.'thành công'));
 		}
 	}
 
@@ -104,75 +57,37 @@ class Banner extends CI_Controller {
 	//Update one item
 	public function update( $id = NULL )
 	{
-		$target_dir = "uploads/ImageBanner/";
-		$target_file = $target_dir . basename($_FILES["image"]["name"]);
-		$uploadOk = 1;
-		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-		// Check if image file is a actual image or fake image
-		if(isset($_POST["submit"])) {
-		    $check = getimagesize($_FILES["image"]["tmp_name"]);
-		    if($check !== false) {
-		        //echo "File is an image - " . $check["mime"] . ".";
-		        $uploadOk = 1;
-		    } else {
-		        //echo "File is not an image.";
-		        $uploadOk = 0;
-		    }
-		}
-		// Check if file already exists
-		if (file_exists($target_file)) {
-		    //echo "Sorry, file already exists.";
-		    $uploadOk = 0;
-		}
-		// Check file size
-		if ($_FILES["image"]["size"] > 500000) {
-		    //echo "Sorry, your file is too large.";
-		    $uploadOk = 0;
-		}
-		// Allow certain file formats
-		if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-		&& $imageFileType != "gif" ) {
-		    //echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-		    $uploadOk = 0;
-		}
-		// Check if $uploadOk is set to 0 by an error
-		if ($uploadOk == 0) {
-		    //echo "Sorry, your file was not uploaded.";
-		// if everything is ok, try to upload file
+		$message    = 'Cập nhật quảng cáo ';
+		$dataUpdate = $this->getDataInput();
+		$image      = $_FILES['image']['name'];
+
+		if ($image != NULL) {
+			$config['upload_path']   = './uploads/ImageBanner/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$config['max_size']      = '100000';
+			$this->load->library('upload', $config);
+
+			$banner = $this->Banner_model->get($id);
+
+			if ( ! $this->upload->do_upload('image')){
+			$error = array('error' => $this->upload->display_errors());
+
+			$this->load->view('admin/banner/edit_Banner_view', array('status' => false, 'message' => $message.'không thành công',
+			 'quangcao' => $banner));
+			} else {
+			$data  =  $this->upload->data();
+			$dataUpdate['image'] = $data['file_name'];
+			$this->Banner_model->update($dataUpdate, $id);
+
+			$banner = $this->Banner_model->get($id);
+			$this->load->view('admin/banner/edit_Banner_view', array('status' => true, 'message' => $message.'thành công',
+			 'quangcao' => $banner));
+			}
 		} else {
-		    if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-		        //echo "The file ". basename( $_FILES["logo"]["name"]). " has been uploaded.";
-		    } else {
-		        //echo "Sorry, there was an error uploading your file.";
-		    }
-		}
-		if(basename( $_FILES["image"]["name"]) !="")
-		{
-			$image = 'uploads/ImageBanner/' . basename( $_FILES["image"]["name"]);
-		}
-		else
-		{
-			$image = $this->input->post('image2');
-		}
-
-		$quangcao = array(
-			'name' => $this->input->post('name'),
-			'image' => $image,
-			'content' => $this->input->post('content'),
-			'link' => $this->input->post('link'),
-			'type' => $this->input->post('type'),
-			'status' => $this->input->post('status'),
-			
-		);
-
-		$check = $this->Banner_model->update($quangcao, $id);
-		if($check) 
-		{
-			$this->load->view('admin/banner/add_Banner_view', array('status' => true, 'message' => 'Sửa quảng cáo thành công')); 
-		} 
-		else
-		{
-			$this->load->view('admin/banner/add_Banner_view', array('status' => false , 'message' => 'Sửa quảng cáo không thành công'));
+			$this->Banner_model->update($dataUpdate, $id);
+			$banner = $this->Banner_model->get($id);
+			$this->load->view('admin/banner/edit_Banner_view', array('status' => true, 'message' => $message.'thành công',
+			 'quangcao' => $banner));
 		}
 	}
 
@@ -185,6 +100,16 @@ class Banner extends CI_Controller {
 			$quangcao = (!$quangcao) ? array() : $quangcao;
 			$this->load->view('admin/banner/Banner_view', array('quangcao' => $quangcao), FALSE);
 		}
+	}
+
+	public function getDataInput()
+	{
+		$data = array('name'    => $this->input->post('name'),
+					  'content' => $this->input->post('content'),
+					  'link'    => $this->input->post('link'),
+					  'type'    => $this->input->post('type'),
+					  'status'  => $this->input->post('status'));
+		return $data;
 	}
 }
 

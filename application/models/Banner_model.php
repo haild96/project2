@@ -87,5 +87,12 @@ class Banner_model extends CI_Model {
         $this->db->delete(self::TABLE_NAME, $where);
         return $this->db->affected_rows();
     }
+
+    public function getBanner()
+    {
+        $this->db->select('*');
+        $this->db->where('status', 1);
+        return $this->db->get('banner')->result_array();
+    }
 }
-         ?>
+?>

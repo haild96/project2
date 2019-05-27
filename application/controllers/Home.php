@@ -3,6 +3,8 @@
 }
 
 class Home extends CI_Controller {
+	public $footer;
+	public $header;
 
 	public function __construct() {
 		parent::__construct();
@@ -10,11 +12,19 @@ class Home extends CI_Controller {
 		$this->load->model('Product_model');
 		$this->load->model('Order_model');
 		$this->load->model('User_model');
+		$this->load->model('Promotion_model');
+		$this->load->model('PromotionNews_model');
 		$this->load->model('OrderProduct_model');
 		$this->load->model('Comment_model');
+		$this->load->model('InforCompany_model');
+		$this->load->model('Banner_model');
+		$this->footer = $this->InforCompany_model->get();
+		$this->header = $this->Category_model->getAllCategory();
+		
 	}
 
-	public function index() {	
+	public function index() {
+		$banner = $this->Banner_model->getBanner();	
 		$category = $this->Category_model->getAllCategory();
 		$id = array();
 		for ($i = 0; $i < count($category); $i++) {
@@ -25,8 +35,63 @@ class Home extends CI_Controller {
 		$laptop  = $this->Product_model->getProductByCategory($id[2]);
 		$phukien = $this->Product_model->getProductByCategory($id[3]);
 		$new     = $this->Product_model->getProductByNew();
-		$data    = array('category'=> $category, 'phone' => $phone, 'tablet' => $tablet, 'laptop' => $laptop, 'phukien' => $phukien, 'new' => $new);
+		$data    = array('footer' => $this->footer,'header' =>$this->header, 'banner' => $banner, 'phone' => $phone, 'tablet' => $tablet, 'laptop' => $laptop, 'phukien' => $phukien, 'new' => $new);
 		$this->load->view('Home_view', $data, FALSE);
+	}
+
+	public function TinTuc()
+	{
+		$listNews   = $this->PromotionNews_model->getListNews();
+		$productNew = $this->Product_model->getProductByNew();
+		$listNews = (!$listNews) ? array() : $listNews;
+		$data = array(
+			'header' =>$this->header,
+			'footer' => $this->footer,
+			'listNews' => $listNews,
+			'product'  => $productNew);
+		$this->load->view('Tintuc_view',$data, FALSE);
+	}
+
+	public function TinTucDetail($id)
+	{
+		$tintuc = $this->PromotionNews_model->get($id);
+		$tintuc = array('tintuc' => $tintuc,'footer' => $this->footer,'header' =>$this->header);
+		$this->load->view('TintucDetail_view', $tintuc, FALSE);
+	}
+
+	public function loadMoreTintuc()
+	{
+		$offset = $this->input->post('offset');
+		$tintuc3 = $this->PromotionNews_model->getLoadMore($offset);
+		$res['status'] = '';
+		$res['data']   = '';
+		if (count($tintuc3) == 0) {
+			$res['status'] = 'NULL';
+		} else {
+			$res['status'] = 'success';
+			$htmlAdd = '';                    
+        			
+			foreach ($tintuc3 as $tintuc3) {
+				$htmlAdd.='<li>';
+				$htmlAdd.='<a href="/project2/Home/TinTucDetail/'.$tintuc3['id'] .'">';
+				$htmlAdd.='<span class="row">';
+				$htmlAdd.= '<div class="span-group">';
+				$htmlAdd.= ' <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">';
+				$htmlAdd.= '<img width="200px" src="'.base_url().'uploads/ImagePromotionNews/'.$tintuc3['image'].'" alt="" class="anhtintuccu">';
+				$htmlAdd.= ' </div>';
+				$htmlAdd.= '<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">';
+				$htmlAdd.=' <h3 class="title">'.$tintuc3['title'].'</h3>';
+				$htmlAdd.='<p class="tomtat">'.$tintuc3['summary'].'</p>';		
+				$htmlAdd.='<p class="time_created">'.date('d/m/Y H:i:s A', $tintuc3['time_created']).'</p>';
+				$htmlAdd.='</div>';
+				$htmlAdd.='</span>';
+				$htmlAdd.='</a>';
+				$htmlAdd.='<hr>';
+				$htmlAdd.='</li>';
+			}
+			$res['data']   = $htmlAdd;
+		}
+		echo json_encode($res);
 	}
 
 	public function singleProduct($id_category, $id) {
@@ -34,7 +99,7 @@ class Home extends CI_Controller {
 		$data    = $this->Product_model->getSingleProduct($id, $id_category);
 		$sp_same = $this->Product_model->getProductSame($id, $id_category);
 		$listCmt = $this->Comment_model->getCmtByProduct($id, 0);
-		$data    = array('data' => $data, 'spSame' => $sp_same, 'listCmt' => $listCmt);
+		$data    = array('footer' => $this->footer,'header' =>$this->header, 'data' => $data, 'spSame' => $sp_same, 'listCmt' => $listCmt);
 		$this->load->view('singleProduct_view', $data, FALSE);
 	}
 
@@ -73,11 +138,11 @@ class Home extends CI_Controller {
 				array_push($where, $key);
 			}
 			$data = $this->Product_model->getProductByCart($where);
-			$data = array('data' => $data);
+			$data = array('footer' => $this->footer,'header' =>$this->header,'data' => $data);
 			$this->load->view('cart_view', $data);
 		} else {
 			$data = NULL;
-			$data = array('data' => $data);
+			$data = array('footer' => $this->footer,'header' =>$this->header,'data' => $data);
 			$this->load->view('cart_view', $data, FALSE);
 		}
 	}
@@ -133,20 +198,20 @@ class Home extends CI_Controller {
 	public function TimkiemAjax() {
 		$key = $this->input->post('key');
 		$data = $this->Product_model->TimkiemAjax($key);
-		$data = array('data' => $data);
+		$data = array('footer' => $this->footer,'header' =>$this->header, 'data' => $data);
 		$this->load->view('seachAjax_view', $data, FALSE);
 	}
 
 	public function Timkiem() {
 		$keySearch = $this->input->post('keySearch');
 		$data = $this->Product_model->Timkiem($keySearch);
-		$data = array('data' => $data, 'keySearch' => $keySearch);
+		$data = array('footer' => $this->footer,'header' =>$this->header, 'data' => $data, 'keySearch' => $keySearch);
 		$this->load->view('resultSearch', $data);
 	}
 
 	public function showProduct($id) {
 		$data = $this->Product_model->getLoadMore($id, 0);
-		$data = array('products' => $data);
+		$data = array('footer' => $this->footer,'header' =>$this->header,'products' => $data);
 		$this->load->view('showProduct_view', $data);
 	}
 

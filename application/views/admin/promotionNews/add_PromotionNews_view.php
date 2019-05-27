@@ -10,7 +10,7 @@
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
-            <div class="col-lg-7" style="padding-bottom:120px">
+            <div class="col-lg-12" style="padding-bottom:100px">
 
                 <?php if (isset($status)): ?>
                     <div class="alert <?php echo $status ? 'alert-success' : 'alert-danger'?>">
@@ -22,19 +22,19 @@
                 <form action="<?php echo base_url() ?>admin/PromotionNews/add" method="POST" enctype="multipart/form-data">  
                     <div class="form-group">
                         <label>Tiêu đề</label>
-                        <input class="form-control" value="" name="title" placeholder="Nhập tiêu đề" />
+                        <input class="form-control" value="" name="title" placeholder="Nhập tiêu đề" required/>
                     </div>
                     <div class="form-group">
                         <label>Tóm tắt</label>
-                        <textarea id="demo" name="summary" class="form-control ckeditor" rows="3"></textarea>
+                        <textarea id="demo" name="summary" class="form-control ckeditor" rows="3" required></textarea>
                     </div>
                     <div class="form-group">
                         <label>Nội dung</label>
-                        <textarea id="demo" name="content" class="form-control ckeditor" rows="5"></textarea>
+                        <textarea id="demo" name="content" class="form-control ckeditor" rows="5" required></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Hình ảnh</label>
-                        <input type="file" name="image" class="form-control">
+                        <label>Ảnh tiêu biểu</label>
+                        <input type="file" name="image" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label>Trạng thái</label>
@@ -45,8 +45,7 @@
                             <input name="status" value="1" type="radio">Hiển thị
                         </label>
                     </div>
-                    <button type="submit" class="btn btn-default">Thêm</button>
-                    <button type="reset" class="btn btn-default">Làm mới</button>
+                    <button type="submit" class="btn btn-info">Thêm</button>
                 <form>
             </div>
         </div>
