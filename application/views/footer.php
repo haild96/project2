@@ -38,22 +38,23 @@
 				</div>
 			</div>
 		</div>
+		<?php foreach ($footer as $key => $value): ?>
+		
 		<div class="row">
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 middle addressCompany">
 			    <h4>Thông tin công ty</h4>
 				<ul>
-					<li>Address:Hai Bà Trưng,Hà Nội</li>
-					<li>Email:admin@example.com</li>
-					<li>Phone:0981706560</li>
+					<li>Address:<?php echo $value['address'] ?></li>
+					<li>Email:<?php echo $value['email'] ?></li>
+					<li>Phone:<?php echo $value['phone'] ?></li>
 				</ul>	
 			</div>
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 middle social">
 				<h4>Liên hệ</h4>
 				<ul>
-					<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-					<li><a href="#"><i class="fab fa-twitter"></i></a></li>
-					<li><a href="#"><i class="fab fa-instagram"></i></a></li>
-					<li><a href=""><i class="fab fa-youtube"></i></a></li>
+					<li><a href="<?php echo $value['link_fb'] ?>"><i class="fab fa-facebook-f"></i></a></li>
+					<li><a href="<?php echo $value['link_instagram'] ?>"><i class="fab fa-instagram"></i></a></li>
+					<li><a href="<?php echo $value['link_youtube'] ?>"><i class="fab fa-youtube"></i></a></li>
 				</ul>
 			</div>
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 middle sub">
@@ -67,9 +68,11 @@
 				</form>
 			</div>
 		</div>
+
+		<?php endforeach ?>
 		<div class="row">
 			<div class="bottom">
-			<p>© 2018 - Copyright by shopme</p>
+			<p>© 2019 - Copyright</p>
 		</div>
 		</div>
 	</div>

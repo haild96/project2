@@ -52,7 +52,7 @@
                         <div class="form-group">
                             <label>Logo</label>
                             <input type="hidden" name="logo2" value="<?php echo $value['logo'] ?>">
-                            <p><img src="<?php echo base_url() ?><?php echo $value['logo'] ?>" with="200px" height='200px' alt=""></p>
+                            <p><img src="<?php echo base_url() ?><?php echo $value['logo'] ?>" width="150px" alt="Error"></p>
                             <input type="file" name="logo" value="" class="form-control">
                         </div>
                         <button type="submit" class="btn btn-default">Sửa</button>
