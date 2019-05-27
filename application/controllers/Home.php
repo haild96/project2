@@ -17,11 +17,14 @@ class Home extends CI_Controller {
 		$this->load->model('OrderProduct_model');
 		$this->load->model('Comment_model');
 		$this->load->model('InforCompany_model');
+		$this->load->model('Banner_model');
 		$this->footer = $this->InforCompany_model->get();
 		$this->header = $this->Category_model->getAllCategory();
+		
 	}
 
-	public function index() {	
+	public function index() {
+		$banner = $this->Banner_model->getBanner();	
 		$category = $this->Category_model->getAllCategory();
 		$id = array();
 		for ($i = 0; $i < count($category); $i++) {
@@ -32,7 +35,7 @@ class Home extends CI_Controller {
 		$laptop  = $this->Product_model->getProductByCategory($id[2]);
 		$phukien = $this->Product_model->getProductByCategory($id[3]);
 		$new     = $this->Product_model->getProductByNew();
-		$data    = array('footer' => $this->footer, 'category'=> $category, 'phone' => $phone, 'tablet' => $tablet, 'laptop' => $laptop, 'phukien' => $phukien, 'new' => $new);
+		$data    = array('footer' => $this->footer,'header' =>$this->header, 'banner' => $banner, 'phone' => $phone, 'tablet' => $tablet, 'laptop' => $laptop, 'phukien' => $phukien, 'new' => $new);
 		$this->load->view('Home_view', $data, FALSE);
 	}
 
@@ -42,6 +45,8 @@ class Home extends CI_Controller {
 		$productNew = $this->Product_model->getProductByNew();
 		$listNews = (!$listNews) ? array() : $listNews;
 		$data = array(
+			'header' =>$this->header,
+			'footer' => $this->footer,
 			'listNews' => $listNews,
 			'product'  => $productNew);
 		$this->load->view('Tintuc_view',$data, FALSE);
@@ -50,7 +55,7 @@ class Home extends CI_Controller {
 	public function TinTucDetail($id)
 	{
 		$tintuc = $this->PromotionNews_model->get($id);
-		$tintuc = array('tintuc' => $tintuc);
+		$tintuc = array('tintuc' => $tintuc,'footer' => $this->footer,'header' =>$this->header);
 		$this->load->view('TintucDetail_view', $tintuc, FALSE);
 	}
 
@@ -94,7 +99,7 @@ class Home extends CI_Controller {
 		$data    = $this->Product_model->getSingleProduct($id, $id_category);
 		$sp_same = $this->Product_model->getProductSame($id, $id_category);
 		$listCmt = $this->Comment_model->getCmtByProduct($id, 0);
-		$data    = array('footer' => $this->footer, 'data' => $data, 'spSame' => $sp_same, 'listCmt' => $listCmt);
+		$data    = array('footer' => $this->footer,'header' =>$this->header, 'data' => $data, 'spSame' => $sp_same, 'listCmt' => $listCmt);
 		$this->load->view('singleProduct_view', $data, FALSE);
 	}
 
@@ -133,11 +138,11 @@ class Home extends CI_Controller {
 				array_push($where, $key);
 			}
 			$data = $this->Product_model->getProductByCart($where);
-			$data = array('footer' => $this->footer,'data' => $data);
+			$data = array('footer' => $this->footer,'header' =>$this->header,'data' => $data);
 			$this->load->view('cart_view', $data);
 		} else {
 			$data = NULL;
-			$data = array('footer' => $this->footer,'data' => $data);
+			$data = array('footer' => $this->footer,'header' =>$this->header,'data' => $data);
 			$this->load->view('cart_view', $data, FALSE);
 		}
 	}
@@ -193,20 +198,20 @@ class Home extends CI_Controller {
 	public function TimkiemAjax() {
 		$key = $this->input->post('key');
 		$data = $this->Product_model->TimkiemAjax($key);
-		$data = array('footer' => $this->footer, 'data' => $data);
+		$data = array('footer' => $this->footer,'header' =>$this->header, 'data' => $data);
 		$this->load->view('seachAjax_view', $data, FALSE);
 	}
 
 	public function Timkiem() {
 		$keySearch = $this->input->post('keySearch');
 		$data = $this->Product_model->Timkiem($keySearch);
-		$data = array('footer' => $this->footer, 'data' => $data, 'keySearch' => $keySearch);
+		$data = array('footer' => $this->footer,'header' =>$this->header, 'data' => $data, 'keySearch' => $keySearch);
 		$this->load->view('resultSearch', $data);
 	}
 
 	public function showProduct($id) {
 		$data = $this->Product_model->getLoadMore($id, 0);
-		$data = array('footer' => $this->footer,'products' => $data);
+		$data = array('footer' => $this->footer,'header' =>$this->header,'products' => $data);
 		$this->load->view('showProduct_view', $data);
 	}
 

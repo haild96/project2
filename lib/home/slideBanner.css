@@ -30,6 +30,9 @@
 }
 .banner {
     display:  block;
+    height: 102px;
+    margin-top: -6px;
+    margin-bottom: 1px;
 }
 .slide{
     margin-top: 10px;

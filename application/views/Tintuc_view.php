@@ -149,7 +149,7 @@
 				})
 				.always(function(data) {
                     data = JSON.parse(data)
-					if (data.status !="NULL") {
+					if (data.status !='NULL') {
 						$('.listTintuc').append(data.data);
 					}else{
 						$('.viewMore').html('<b></b>');
