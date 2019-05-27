@@ -12,6 +12,8 @@ class Home extends CI_Controller {
 		$this->load->model('Product_model');
 		$this->load->model('Order_model');
 		$this->load->model('User_model');
+		$this->load->model('Promotion_model');
+		$this->load->model('PromotionNews_model');
 		$this->load->model('OrderProduct_model');
 		$this->load->model('Comment_model');
 		$this->load->model('InforCompany_model');
@@ -32,6 +34,59 @@ class Home extends CI_Controller {
 		$new     = $this->Product_model->getProductByNew();
 		$data    = array('footer' => $this->footer, 'category'=> $category, 'phone' => $phone, 'tablet' => $tablet, 'laptop' => $laptop, 'phukien' => $phukien, 'new' => $new);
 		$this->load->view('Home_view', $data, FALSE);
+	}
+
+	public function TinTuc()
+	{
+		$listNews   = $this->PromotionNews_model->getListNews();
+		$productNew = $this->Product_model->getProductByNew();
+		$listNews = (!$listNews) ? array() : $listNews;
+		$data = array(
+			'listNews' => $listNews,
+			'product'  => $productNew);
+		$this->load->view('Tintuc_view',$data, FALSE);
+	}
+
+	public function TinTucDetail($id)
+	{
+		$tintuc = $this->PromotionNews_model->get($id);
+		$tintuc = array('tintuc' => $tintuc);
+		$this->load->view('TintucDetail_view', $tintuc, FALSE);
+	}
+
+	public function loadMoreTintuc()
+	{
+		$offset = $this->input->post('offset');
+		$tintuc3 = $this->PromotionNews_model->getLoadMore($offset);
+		$res['status'] = '';
+		$res['data']   = '';
+		if (count($tintuc3) == 0) {
+			$res['status'] = 'NULL';
+		} else {
+			$res['status'] = 'success';
+			$htmlAdd = '';                    
+        			
+			foreach ($tintuc3 as $tintuc3) {
+				$htmlAdd.='<li>';
+				$htmlAdd.='<a href="/project2/Home/TinTucDetail/'.$tintuc3['id'] .'">';
+				$htmlAdd.='<span class="row">';
+				$htmlAdd.= '<div class="span-group">';
+				$htmlAdd.= ' <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">';
+				$htmlAdd.= '<img width="200px" src="'.base_url().'uploads/ImagePromotionNews/'.$tintuc3['image'].'" alt="" class="anhtintuccu">';
+				$htmlAdd.= ' </div>';
+				$htmlAdd.= '<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">';
+				$htmlAdd.=' <h3 class="title">'.$tintuc3['title'].'</h3>';
+				$htmlAdd.='<p class="tomtat">'.$tintuc3['summary'].'</p>';		
+				$htmlAdd.='<p class="time_created">'.date('d/m/Y H:i:s A', $tintuc3['time_created']).'</p>';
+				$htmlAdd.='</div>';
+				$htmlAdd.='</span>';
+				$htmlAdd.='</a>';
+				$htmlAdd.='<hr>';
+				$htmlAdd.='</li>';
+			}
+			$res['data']   = $htmlAdd;
+		}
+		echo json_encode($res);
 	}
 
 	public function singleProduct($id_category, $id) {

@@ -86,5 +86,20 @@ class PromotionNews_model extends CI_Model {
         $this->db->delete(self::TABLE_NAME, $where);
         return $this->db->affected_rows();
     }
+
+    public function getLoadMore($offset)
+    {
+        $this->db->select('*');
+        $this->db->where('status', 1);
+        $data = $this->db->get('promotion_news', 5, $offset);
+        return $data->result_array();
+    }
+
+    public function getListNews()
+    {
+       $this->db->select('*');
+       $this->db->where('status', 1);
+     return  $this->db->get('promotion_news')->result_array();
+    }
 }
-         ?>
+?>
