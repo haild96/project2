@@ -64,6 +64,8 @@
 					.fail(function() {
 					})
 					.always(function(data) {
+						x = data.indexOf(">");
+						data = data.slice(x+1, data.length);
 						data = JSON.parse(data);
 						if (data.status =='NULL') {
 							$('.viewMore').html('<b class="endProduct" >Đã hết sản phẩm</b>');

@@ -152,7 +152,7 @@
                         </li>
 
                         <li>
-                            <a href="<?php echo base_url() ?>admin/User/userNhanVien">Tài khoản quản lý</a>
+                            <a href="<?php echo base_url() ?>admin/User/userNhanVien">Tài khoản quản trị viên</a>
                         </li>
 
                         <?php if ($this->session->userdata('level') >1): ?>

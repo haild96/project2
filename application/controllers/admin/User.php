@@ -10,17 +10,10 @@ class User extends CI_Controller {
 
 	}
 
-	// List all your items
-	public function index( $offset = 0 )
-	{
-
-	}
-
-
 	public function userKhachHang()
 	{
 		$khachhang = $this->User_model->getUserKhachHang();
-		$khachhang = array('user' => $khachhang);
+		$khachhang = array('user' => $khachhang,'type' => 'Khách hàng');
 		$this->load->view('admin/user/User_view', $khachhang, FALSE);
 		
 	}
@@ -28,198 +21,110 @@ class User extends CI_Controller {
 	public function userNhanVien()
 	{
 		$nhanvien = $this->User_model->getUserNhanVien();
-		$nhanvien = array('user' => $nhanvien);
+		$nhanvien = array('user' => $nhanvien,'type' => 'Quản trị viên');
 		$this->load->view('admin/user/User_view', $nhanvien, FALSE);
 		
 	}
+
+	public function editByID($id, $type)
+    {
+    	$title = $type == 0 ? 'khách hàng' : 'quản trị';
+     	$user = $this->User_model->get($id);
+     	$user = array('user' => $user, 'title' => $title);
+     	$this->load->view('admin/user/edit_StatusAcc', $user, FALSE);
+    }
+
+    public function updateStatusCustomer($id, $type)
+    {
+    	$message  = 'Cập nhật trạng thái ';
+    	$message .=  $type == 0 ? 'khách hàng' : 'quản trị';
+    	$title    = $type == 0 ? 'khách hàng' : 'quản trị';
+    	$status   = array('status' => $this->input->post('status'));
+    	$this->User_model->update($status, $id);
+    	$user =  $this->User_model->get($id);
+    	$this->load->view('admin/user/edit_StatusAcc', array('status' => true, 'message' => $message.' thành công', 'user' => $user, 'title' => $title)); 
+    }
+
+    public function delete( $id, $type )
+	{
+		$this->User_model->delete($id);
+		if ($type == 0 ) {
+			$this->userKhachHang();
+		} else {
+			$this->userNhanVien();
+		}
+ 	}
 
 	public function addUser()
 	{
 		$this->load->view('admin/user/create_User_view');
 	}
 
-	// Add a new item
 	public function add()
 	{
-		$numofUser = $this->User_model->checkExistAccount($this->input->post('username'));
-		if($numofUser != 0 )
-		{
+		$accountNew = $this->getInput();
+		$numofUser  = $this->User_model->checkExistAccount($accountNew['username']);
+		if($numofUser != 0 ) {
 			$this->load->view('admin/user/create_User_view', array('status' => false , 'message' => 'Tên tài khoản đã tồn tại'));
+		} else if(md5($this->input->post('password_again')) != $accountNew['password']) {
+			$this->load->view('admin/user/create_User_view', array('thongbao' => 'Mật khẩu không trùng khớp'));
+		} else {
+			$this->User_model->insert($accountNew);
+			$this->load->view('admin/user/create_User_view', array('status' => true, 'message' => 'Tạo tài khoản thành công')); 
 		}
-		else if($this->input->post('password_again') == $this->input->post('password'))
-		{
-			// $salt = substr(strtr(base64_encode(openssl_random_pseudo_bytes(22)), '+', '.'), 0, 22);
-			// $password = crypt($this->input->post('password'), '$2y$12$' . $salt);
-
-			$taikhoan = array(
-				'username' => $this->input->post('username'),
-				'password' => md5($this->input->post('password')),
-				'fullname' => $this->input->post('fullname'),
-				'email' => $this->input->post('email'),
-				'phone' => $this->input->post('phone'),
-				'address' => $this->input->post('address'),
-				'level' => $this->input->post('level'),
-				'status' => $this->input->post('status'),
-				// 'salt' => $this->input->post('status')
-			);
-
-			$check = $this->User_model->insert($taikhoan);
-			if($check) 
-			{
-				$this->load->view('admin/user/create_User_view', array('status' => true, 'message' => 'Tạo tài khoản thành công')); 
-			} 
-			else
-			{
-				$this->load->view('admin/user/create_User_view', array('status' => false , 'message' => 'Tạo tài khoản không thành công'));
-			}
-		}
-		else
-		{
-			$this->load->view('admin/user/create_User_view', array('thongbao' => 'Xác nhận mật khẩu không chính xác'));
-		}
-     }
+    }
 
     public function InfoUser()
     {
-    	$user = array(
-    		'id' => $this->session->userdata('id'),
-			'username' => $this->session->userdata('username'),
-			'password' => $this->session->userdata('password'),
-			'fullname' => $this->session->userdata('fullname'),
-			'email'    => $this->session->userdata('email'),
-			'phone' => $this->session->userdata('phone'),
-			'address' => $this->session->userdata('address'),
-			'level' => $this->session->userdata('level'),
-			'status' => $this->session->userdata('status')
-		);
+    	$user = $this->getInfoBySession();
 		$user = array('user' => $user);
     	$this->load->view('admin/user/InfoUser_view', $user, FALSE);
     }
 
     public function editInfoUser()
     {
-    	$user = array(
-    		'id' => $this->session->userdata('id'),
-			'username' => $this->session->userdata('username'),
-			'password' => $this->session->userdata('password'),
-			'fullname' => $this->session->userdata('fullname'),
-			'email' => $this->session->userdata('email'),
-			'phone' => $this->session->userdata('phone'),
-			'address' => $this->session->userdata('address'),
-			'level' => $this->session->userdata('level'),
-			'status' => $this->session->userdata('status')
-		);
+    	$user = $this->getInfoBySession();
 		$user = array('user' => $user);
     	$this->load->view('admin/user/edit_InfoUser_view', $user, FALSE);
     }
 
-    public function editByID($id)
-    {
-     	$user = $this->User_model->get($id);
-     	$user = array('user' => $user);
-     	$this->load->view('admin/user/edit_User_view', $user, FALSE);
-    }
+    
 
     public function updateInfoUser($id)
     {
-    	$taikhoan = array(
-			'username' => $this->input->post('username'),
-			'password' => $this->input->post('password'),
-			'fullname' => $this->input->post('fullname'),
-			'email' => $this->input->post('email'),
-			'phone' => $this->input->post('phone'),
-			'address' => $this->input->post('address'),
-			'level' => $this->input->post('level'),
-			'status' => $this->input->post('status')
-		);
+    	  $account = array('fullname' => $this->input->post('fullname'),
+							'email'   => $this->input->post('email'),
+							'phone'   => $this->input->post('phone'),
+							'address' => $this->input->post('address'));
 
-		$check = $this->User_model->update($taikhoan, $id);
-		if($check) 
-		{
-			$account = array('id','username','password','fullname','email','phone','address','level','status');
-			$this->session->unset_userdata($account); 
-			header('location:project2/admin/User/login');
-		} 
-		else
-		{
-			$this->load->view('admin/user/edit_InfoUser_view', array('status' => false , 'message' => 'Sửa tài khoản không thành công', 'user' => $this->User_model->get($id)));
-		}
+		$this->User_model->update($account, $id);
+		$user = $this->User_model->get($id);
+		$this->load->view('admin/user/edit_InfoUser_view', array('status' => true , 'message' => 'Cập nhật thông tin tài khoản thành công', 'user' => $user));
     }
 
     public function changePassword()
     {
-    	$user = array(
-    		'id' => $this->session->userdata('id'),
-			'username' => $this->session->userdata('username'));
+    	$user = array('id'       => $this->session->userdata('id'),
+			          'username' => $this->session->userdata('username'));
+    		
 		$user = array('user' => $user);
     	$this->load->view('admin/user/changePassword_User_view', $user, FALSE);
     }
 
     public function updateNewPassword($id)
     {
-    	if($this->input->post('password') == $this->input->post('password_again'))
-    	{
-    		$taikhoan = array(
-				'username' => $this->input->post('username'),
-				'password' => md5($this->input->post('password')));
-			$check = $this->User_model->update($taikhoan, $id);
-			if($check) 
-			{
-				$account = array('id','username','password','fullname','email','phone','address','level','status');
-				$this->session->unset_userdata($account); 
-				header('location:project2/admin/User/login');
-			} 
-			else
-			{
-				$this->load->view('admin/user/changePassword_User_view', array('status' => false , 'message' => 'Sửa tài khoản không thành công', 'user' => $this->User_model->get($id)));
-			}
+    	$password   = $this->input->post('password');
+    	$rePassword = $this->input->post('password_again');
+
+    	$user = $this->User_model->get($id);
+    	if ($password != $rePassword) {
+    		$this->load->view('admin/user/changePassword_User_view', array('status' => false , 'message' => 'Mật khẩu không trùng khớp', 'user' => $user));
+    	} else {
+    		$update = array('password' => md5($this->input->post('password')));
+    		$this->User_model->update($update, $id);
+    		$this->load->view('admin/user/changePassword_User_view', array('status' => true , 'message' => 'Thay đổi mật khẩu thành công', 'user' => $user)); 
     	}
-    	else
-		{
-			$this->load->view('admin/user/changePassword_User_view', array('thongbao' => 'Xác nhận mật khẩu không chính xác'));
-		}
-    	
-    }
-
-	//Update one item
-	public function update( $id = NULL )
-	{
-		$taikhoan = array(
-			'username' => $this->input->post('username'),
-			'password' => $this->input->post('password'),
-			'fullname' => $this->input->post('fullname'),
-			'email' => $this->input->post('email'),
-			'phone' => $this->input->post('phone'),
-			'address' => $this->input->post('address'),
-			'level' => $this->input->post('level'),
-			'status' => $this->input->post('status'),
-		);
-
-		$check = $this->User_model->update($taikhoan, $id);
-		if($check) 
-		{
-			$this->load->view('admin/user/edit_User_view', array('status' => true, 'message' => 'Sửa tài khoản thành công', 'user' => $this->User_model->get($id))); 
-		} 
-		else
-		{
-			$this->load->view('admin/user/edit_User_view', array('status' => false , 'message' => 'Sửa tài khoản không thành công', 'user' => $this->User_model->get($id)));
-		}
-	}
-
-	//Delete one item
-	public function delete( $id = NULL )
-	{
-		$this->User_model->delete($id);
-		$user = $this->User_model->get($id);
-		if($user['level'] == 0)
-		{
-			$this->load->view('admin/user/User_view', array('user' => $this->User_model->getUserNhanVien()));
-		}
-		else if($user['level'] == 1)
-		{
-			$this->load->view('admin/user/User_view', array('user' => $this->User_model->getUserKhachHang()));
-		}
- 	}
+    }	
 
  	public function login()
  	{
@@ -241,9 +146,6 @@ class User extends CI_Controller {
 
  	public function authenUser()
  	{
- 	// 	$salt = substr(strtr(base64_encode(openssl_random_pseudo_bytes(22)), '+', '.'), 0, 22);
-		// $password = crypt($this->input->post('password'), '$2y$12$' . $salt);
-
  		$username = $this->input->post('username');
 		$password = md5($this->input->post('password'));
 
@@ -274,6 +176,35 @@ class User extends CI_Controller {
 			header('location:/project2/admin/Product');
 		}
  	}
+
+ 	public function getInput()
+ 	{
+ 		$acc = array('username' => $this->input->post('username'),
+					 'password' => md5($this->input->post('password')),
+					 'fullname' => $this->input->post('fullname'),
+					 'email'    => $this->input->post('email'),
+					 'phone'    => $this->input->post('phone'),
+					 'address'  => $this->input->post('address'),
+					 'level'    => $this->input->post('level'),
+					 'status'   => $this->input->post('status'));
+ 		return $acc;
+	}
+
+	public function getInfoBySession()
+	{
+	    $user = array('id'       => $this->session->userdata('id'),
+					  'username' => $this->session->userdata('username'),
+					  'password' => $this->session->userdata('password'),
+					  'fullname' => $this->session->userdata('fullname'),
+					  'email'    => $this->session->userdata('email'),
+					  'phone'    => $this->session->userdata('phone'),
+					  'address'  => $this->session->userdata('address'),
+					  'level'    => $this->session->userdata('level'),
+					  'status'   => $this->session->userdata('status'));
+	    return $user;
+	}
+
+
 }
 
 /* End of file User.php */

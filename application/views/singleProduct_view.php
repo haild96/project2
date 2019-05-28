@@ -60,14 +60,14 @@
 				<div class="row">
 					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 cmtProduct">
 						<div class="title" style="font-size: 18px;">
-							Hỏi đáp của bạn về <?php echo $data[0]['name'] ?>
+							Nhận xét của bạn về <?php echo $data[0]['name'] ?>
 						</div>
 						<div class="contentCmtMe">
 							<textarea style="resize: vertical;" name="cmtMe" cols="106" rows="5"  style="resize:none" id="cmtMe" ></textarea>
 						</div>
 					
 						<div class="sendCmt pull-right" style="margin-bottom: 10px;">
-							<button class="btn btn-danger" id="sendCmt">Gửi câu hỏi</button>
+							<button class="btn btn-danger" id="sendCmt">Bình luận</button>
 						</div>
 						
 					</div>
@@ -77,7 +77,7 @@
 					<?php if (count($listCmt) == 0): ?>
 						<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 cmtProduct">
 							<div class="title" style="font-size: 16px;">
-								Chưa có bình luận nào về <?php echo $data['0']['name'] ?>
+								Chưa có nhận xét nào về <?php echo $data['0']['name'] ?>
 							</div>
 						</div>
 					<?php else: ?>
@@ -185,6 +185,8 @@
 
 		})
 		.always(function(data) {
+			x = data.indexOf(">");
+			data = data.slice(x+1, data.length);
 			data = JSON.parse(data);
 			if (data=='expired'){
 				$('.expired').addClass('hThi');
@@ -221,6 +223,8 @@
         		url: '/project2/Home/checkLogin'
         	}) 
         	.always(function(data) {
+        		x = data.indexOf(">");
+				data = data.slice(x+1, data.length);
         		data = JSON.parse(data);
         	if (data=='loginfailse') {
         		// login required
@@ -239,6 +243,8 @@
         		url: '/project2/Home/checkLogin'
         	}) 
         	.always(function(data) {
+        		x = data.indexOf(">");
+				data = data.slice(x+1, data.length);
         		data = JSON.parse(data);
         	if (data=='loginfailse') {
         		// login required
@@ -262,6 +268,8 @@
 
 		})
 		.always(function(data) {
+				x = data.indexOf(">");
+				data = data.slice(x+1, data.length);
 				data = JSON.parse(data);
 			if (data=='cmttsuccess' && contentCmt != '') {
 			alert('Bình luận của bạn đã được ghi nhận !');
@@ -290,6 +298,8 @@
 					.fail(function() {
 					})
 					.always(function(data) {
+						x = data.indexOf(">");
+						data = data.slice(x+1, data.length);
 						data = JSON.parse(data);
 						if (data.status =='NULL') {
 							$('.loadMorecmt').html('<hr>');
