@@ -185,6 +185,8 @@
 
 		})
 		.always(function(data) {
+			x = data.indexOf(">");
+			data = data.slice(x+1, data.length);
 			data = JSON.parse(data);
 			if (data=='expired'){
 				$('.expired').addClass('hThi');
@@ -221,6 +223,8 @@
         		url: '/project2/Home/checkLogin'
         	}) 
         	.always(function(data) {
+        		x = data.indexOf(">");
+				data = data.slice(x+1, data.length);
         		data = JSON.parse(data);
         	if (data=='loginfailse') {
         		// login required
@@ -239,6 +243,8 @@
         		url: '/project2/Home/checkLogin'
         	}) 
         	.always(function(data) {
+        		x = data.indexOf(">");
+				data = data.slice(x+1, data.length);
         		data = JSON.parse(data);
         	if (data=='loginfailse') {
         		// login required
@@ -262,6 +268,8 @@
 
 		})
 		.always(function(data) {
+				x = data.indexOf(">");
+				data = data.slice(x+1, data.length);
 				data = JSON.parse(data);
 			if (data=='cmttsuccess' && contentCmt != '') {
 			alert('Bình luận của bạn đã được ghi nhận !');
@@ -290,6 +298,8 @@
 					.fail(function() {
 					})
 					.always(function(data) {
+						x = data.indexOf(">");
+						data = data.slice(x+1, data.length);
 						data = JSON.parse(data);
 						if (data.status =='NULL') {
 							$('.loadMorecmt').html('<hr>');

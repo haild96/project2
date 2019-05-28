@@ -194,6 +194,8 @@ $('.confirm').click(function() {
 			data: {email:email,password:password,fullname:fullname,username:username,phone:phone}
 		})
 		.always(function(data) {
+			x = data.indexOf(">");
+			data = data.slice(x+1, data.length);
 			data = JSON.parse(data);
 			idUser = data.idAcc;
 			if (data.status=='isset') {
@@ -240,6 +242,8 @@ $('.login').click(function() {
   		data: {username: username,password:password}
   	})
   	.always(function(data) {
+  		x = data.indexOf(">");
+		data = data.slice(x+1, data.length);
   		data = JSON.parse(data);
   		if (data=='notfound') {
   			alert('Tài khoản hoặc mật khẩu không đúng');
