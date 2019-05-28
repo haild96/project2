@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Người dùng hệ thống
+                <h1 class="page-header"><?php echo $type ?>
                     <small>Danh sách</small>
                 </h1>
             </div>
@@ -19,11 +19,13 @@
                             <th class="text-center">Họ tên</th>
                             <th class="text-center">Email</th>
                             <th class="text-center">Điện thoại</th>
+                            <?php if ($type=='Quản trị viên'): ?>
                             <th class="text-center">Quyền</th>
+                            <?php endif ?>
                             <th class="text-center">Trạng thái</th>
                             <th class="text-center">Ngày tạo</th>
-                            <th>Sửa</th>
-                            <th>Xóa</th>
+                            <th class="text-center">Sửa</th>
+                            <th class="text-center">Xóa</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,30 +35,30 @@
                                 <th class="text-center"><?php echo $i; ?></th>
                                 <th class="text-center"><?php echo $value['username']; ?></th>
                                 <th class="text-center"><?php echo $value['fullname']; ?></th>
-                                <th style="max-width: 130px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="text-center"><?php echo $value['email']; ?></th>
-                                <th style="max-width: 130px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="text-center"><?php echo $value['phone']; ?></th>
-                                                                                       
-                                <th style="max-width: 130px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="text-center">
-                                    <?php if($value['level'] == 0) echo "Khách hàng"; ?>
+                                <th style="max-width: 150px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="text-center"><?php echo $value['email']; ?></th>
+                                <th style="max-width: 150px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="text-center"><?php echo $value['phone']; ?></th>
+                                <?php if ($type=='Quản trị viên'): ?>
+                                <th class="text-center">
                                     <?php if($value['level'] == 1) echo "Nhân viên"; ?>
                                     <?php if($value['level'] == 2) echo "Admin"; ?>
                                 </th>
-                                <th style="max-width: 100px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="text-center">
+                                <?php endif ?>
+                                <th class="text-center">
                                     <?php if($value['status'] == 1) echo "Đang hoạt động"; ?>
                                     <?php if($value['status'] == 0) echo "Tạm ngừng hoạt động"; ?>
                                 </th>
-                                <th style="max-width: 130px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="text-center"><?php echo date('d/m/Y', $value['time_created']); ?></th>
+                                <th class="text-center"><?php echo date('d/m/Y', $value['time_created']); ?></th>
                                 <td class="center"><i class="fa fa-pencil fa-fw"></i> <a 
                                     <?php if($this->session->userdata('level') != 2){?>
                                         style="pointer-events: none;"
                                     <?php } ?>
-                                     href="<?php echo base_url() ?>admin/User/editByID/<?php echo $value['id'] ?>">Edit</a>
+                                     href="<?php echo base_url() ?>admin/User/editByID/<?php echo $value['id'] ?>/<?php echo $value['level'] ?>">Edit</a>
                                 </td>
                                 <td class="center"><i class="fa fa-pencil fa-fw"></i> <a 
                                     <?php if($this->session->userdata('level') != 2){?>
                                         style="pointer-events: none;"
                                     <?php } ?>
-                                     href="<?php echo base_url() ?>admin/User/delete/<?php echo $value['id'] ?>">Delete</a>
+                                     href="<?php echo base_url() ?>admin/User/delete/<?php echo $value['id'] ?>/<?php echo $value['level'] ?>">Delete</a>
                                 </td>
                             </tr>
                             <?php $i++; ?>

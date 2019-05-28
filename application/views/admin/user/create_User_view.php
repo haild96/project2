@@ -31,27 +31,27 @@
                 <form action="<?php echo base_url() ?>admin/User/add" method="POST" enctype="multipart/form-data">  
                     <div class="form-group">
                         <label>Tên tài khoản</label>
-                        <input class="form-control" value="" name="username" placeholder="Nhập tên tài khoản" />
+                        <input class="form-control" value="" name="username" placeholder="Nhập tên tài khoản" required />
                     </div>
                     <div class="form-group">
                         <label>Mật khẩu</label>
-                        <input class="form-control" type="password" value="" name="password" placeholder="Nhập mật khẩu" />
+                        <input class="form-control" type="password" value="" name="password" placeholder="Nhập mật khẩu" required />
                     </div>
                     <div class="form-group">
                         <label>Xác nhận mật khẩu</label>
-                        <input class="form-control" type="password" value="" name="password_again" placeholder="Nhập lại mật khẩu" />
+                        <input class="form-control" type="password" value="" name="password_again" placeholder="Nhập lại mật khẩu" required />
                     </div>
                     <div class="form-group">
-                        <label>Tên người dùng</label>
-                        <input class="form-control" value="" name="fullname" placeholder="Nhập tên người dùng" />
+                        <label>Họ tên</label>
+                        <input class="form-control" value="" name="fullname" placeholder="Nhập tên người dùng" required />
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input class="form-control" type="email" value="" name="email" placeholder="Nhập email" />
+                        <input class="form-control" type="email" value="" name="email" placeholder="Nhập email" required />
                     </div>
                     <div class="form-group">
                         <label>Số điện thoại</label>
-                        <input class="form-control" type="text" value="" name="phone" placeholder="Nhập số điện thoại" />
+                        <input class="form-control" type="text" value="" name="phone" placeholder="Nhập số điện thoại" required />
                     </div>
                     <div class="form-group">
                         <label>Địa chỉ</label>
@@ -72,7 +72,7 @@
                     <div class="form-group">
                         <label>Trạng thái</label>
                         <label class="radio-inline">
-                            <input name="status" value="1" checked="" type="radio">Đang hoạt động
+                            <input name="status" value="1" checked type="radio">Đang hoạt động
                         </label>
                         <label class="radio-inline">
                             <input name="status" value="0" type="radio">Tạm ngừng hoạt động

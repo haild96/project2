@@ -60,13 +60,13 @@
         <table class="table table-hover table-bordered">
 			    <thead>
 					<tr>
-						<th>Mã đơn hàng</th>
-						<th>Thông tin khách hàng</th>
-						<th>Ngày đặt</th>
-						<th>Trạng thái</th>
-						<th>Người xử lý</th>
-						<th>Chi tiết đơn hàng</th>
-						<th>Hành động</th>
+						<th class="text-center">Mã đơn hàng</th>
+						<th class="text-center">Thông tin khách hàng</th>
+						<th class="text-center">Ngày đặt</th>
+						<th class="text-center">Trạng thái</th>
+						<th class="text-center">Người xử lý</th>
+						<th class="text-center">Chi tiết đơn hàng</th>
+						<th class="text-center">Hành động</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -194,7 +194,7 @@
 	    })
 	    .always(function(data) {
 	    	if (data == 'errorUpdateStatus') {
-	    		alert('Đơn hàng đã cập nhật trạng thái cuối, bạn không thể cập nhật lại!');
+	    		alert('Cập nhật trạng thái thất bại, bạn đang cập nhật sai trạng thái!');
 	    	}else{
 			addContent.html(content);
 	    	addUser.html(user);

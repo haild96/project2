@@ -27,11 +27,7 @@
                 <form action="<?php echo base_url() ?>admin/User/updateInfoUser/<?php echo $user['id'] ?>" method="POST" enctype="multipart/form-data">  
                     <div class="form-group">
                         <label>Tên tài khoản</label>
-                        <input style="pointer-events: none;" class="form-control" value="<?php echo $user['username'] ?>" name="username" placeholder="Nhập tên tài khoản" />
-                    </div>
-                    <div class="form-group hidden">
-                        <label>Mật khẩu</label>
-                        <input class="form-control" type="text" value="<?php echo $user['password'] ?>" name="password" />
+                        <input style="pointer-events: none;" disabled class="form-control" value="<?php echo $user['username'] ?>" name="username"/>
                     </div>
                     <div class="form-group">
                         <label>Tên người dùng</label>
@@ -48,25 +44,6 @@
                     <div class="form-group">
                         <label>Địa chỉ</label>
                         <input class="form-control" type="text" value="<?php echo $user['address'] ?>" name="address" placeholder="Nhập địa chỉ" />
-                    </div>
-                    <div class="form-group hidden">
-                        <label>Quyền</label>
-                        <input class="form-control" type="text" value="<?php echo $user['level'] ?>" name="level"/>
-                    </div>
-                    <div class="form-group hidden">
-                        <label>Trạng thái</label>
-                        <label class="radio-inline">
-                            <input name="status" value="1" 
-                                <?php if($user['status']==1){ ?>
-                                checked="" <?php } ?>
-                                type="radio">Đang hoạt động
-                        </label>
-                        <label class="radio-inline">
-                            <input name="status" value="0" 
-                                <?php if($user['status']==0){?> 
-                                    checked="" <?php } ?>
-                                type="radio">Tạm ngừng hoạt động                  
-                        </label>
                     </div>
                     <div class="row">
                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
