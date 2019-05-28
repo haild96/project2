@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header text-center">Tài khoản người dùng
-                    <small class="text-center">Sửa</small>
+                    <small class="text-center">Cập nhật mật khẩu</small>
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
@@ -28,7 +28,7 @@
                 <form action="<?php echo base_url() ?>admin/User/updateNewPassword/<?php echo $user['id'] ?>" method="POST">  
                     <div class="form-group">
                         <label>Tên tài khoản</label>
-                        <input style="pointer-events: none;" class="form-control" value="<?php echo $user['username'] ?>" name="username" placeholder="Nhập tên tài khoản" />
+                        <input disabled style="pointer-events: none;" class="form-control" value="<?php echo $user['username'] ?>" name="username" placeholder="Nhập tên tài khoản" />
                     </div>
                     <div class="form-group">
                         <label>Mật khẩu mới</label>

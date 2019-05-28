@@ -30,40 +30,25 @@
  
                 <div class="form-group">
                     <label>Tên tài khoản</label>
-                    <input style="pointer-events: none;" class="form-control" value="<?php echo $user['username'] ?>" name="username" placeholder="Nhập tên tài khoản" />
+                    <input disabled style="pointer-events: none;" class="form-control" value="<?php echo $user['username'] ?>" name="username" placeholder="Nhập tên tài khoản" />
                 </div>
                 <div class="form-group">
-                    <label>Tên người dùng</label>
-                    <input style="pointer-events: none;" class="form-control" value="<?php echo $user['fullname'] ?>" name="fullname" placeholder="Nhập tên người dùng" />
+                    <label>Họ tên</label>
+                    <input disabled style="pointer-events: none;" class="form-control" value="<?php echo $user['fullname'] ?>" name="fullname" placeholder="Nhập tên người dùng" />
                 </div>
                 <div class="form-group">
                     <label>Email</label>
-                    <input style="pointer-events: none;" class="form-control" type="email" value="<?php echo $user['email'] ?>" name="email" placeholder="Nhập email" />
+                    <input disabled style="pointer-events: none;" class="form-control" type="email" value="<?php echo $user['email'] ?>" name="email" placeholder="Nhập email" />
                 </div>
                 <div class="form-group">
                     <label>Số điện thoại</label>
-                    <input style="pointer-events: none;" class="form-control" type="text" value="<?php echo $user['phone'] ?>" name="phone" placeholder="Nhập số điện thoại" />
+                    <input disabled style="pointer-events: none;" class="form-control" type="text" value="<?php echo $user['phone'] ?>" name="phone" placeholder="Nhập số điện thoại" />
                 </div>
                 <div class="form-group">
                     <label>Địa chỉ</label>
-                    <input style="pointer-events: none;" class="form-control" type="text" value="<?php echo $user['address'] ?>" name="address" placeholder="Nhập địa chỉ" />
+                    <input disabled style="pointer-events: none;" class="form-control" type="text" value="<?php echo $user['address'] ?>" name="address" placeholder="Nhập địa chỉ" />
                 </div>
-
-                <div class="form-group hidden">
-                    <label>Trạng thái</label>
-                    <label class="radio-inline">
-                        <input name="status" value="1" 
-                            <?php if($user['status']==1){ ?>
-                            checked="" <?php } ?>
-                            type="radio">Đang hoạt động
-                    </label>
-                    <label class="radio-inline">
-                        <input name="status" value="0" 
-                            <?php if($user['status']==0){?> 
-                                checked="" <?php } ?>
-                            type="radio">Tạm ngừng hoạt động                  
-                    </label>
-                </div>                           
+                          
             </div>
         </div>
         <div class="row">

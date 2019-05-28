@@ -5,8 +5,8 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h1 class="page-header">Người dùng hệ thống
-                    <small>Sửa</small>
+                <h1 class="page-header">Tài khoản <?php echo $title ?>
+                    <small>Cập nhật</small>
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
@@ -25,34 +25,26 @@
                     <?php $this->session->unset_userdata($status); ?>
                 <?php endif ?>
 
-                <form action="<?php echo base_url() ?>admin/User/update/<?php echo $user['id'] ?>" method="POST" enctype="multipart/form-data">  
+                <form action="<?php echo base_url() ?>admin/User/updateStatusCustomer/<?php echo $user['id'] ?>/<?php echo $user['level'] ?>" method="POST" enctype="multipart/form-data">  
                     <div class="form-group">
                         <label>Tên tài khoản</label>
-                        <input style="pointer-events: none;" class="form-control" value="<?php echo $user['username'] ?>" name="username" placeholder="Nhập tên tài khoản" />
-                    </div>
-                    <div class="form-group hidden">
-                        <label>Mật khẩu</label>
-                        <input type="hidden" class="form-control" value="<?php echo $user['password'] ?>" name="password" placeholder="Nhập tên tài khoản" />
+                        <input style="pointer-events: none;" class="form-control" value="<?php echo $user['username'] ?>" name="username" placeholder="Nhập tên tài khoản" disabled/>
                     </div>
                     <div class="form-group">
                         <label>Tên người dùng</label>
-                        <input style="pointer-events: none;" class="form-control" value="<?php echo $user['fullname'] ?>" name="fullname" placeholder="Nhập tên người dùng" />
+                        <input style="pointer-events: none;" class="form-control" value="<?php echo $user['fullname'] ?>" name="fullname" placeholder="Nhập tên người dùng" disabled />
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input style="pointer-events: none;" class="form-control" type="email" value="<?php echo $user['email'] ?>" name="email" placeholder="Nhập email" />
+                        <input style="pointer-events: none;" class="form-control" type="email" value="<?php echo $user['email'] ?>" name="email" placeholder="Nhập email" disabled />
                     </div>
                     <div class="form-group">
                         <label>Số điện thoại</label>
-                        <input style="pointer-events: none;" class="form-control" type="text" value="<?php echo $user['phone'] ?>" name="phone" placeholder="Nhập số điện thoại" />
+                        <input style="pointer-events: none;" class="form-control" type="text" value="<?php echo $user['phone'] ?>" name="phone" placeholder="Nhập số điện thoại" disabled/>
                     </div>
                     <div class="form-group">
                         <label>Địa chỉ</label>
-                        <input style="pointer-events: none;" class="form-control" type="text" value="<?php echo $user['address'] ?>" name="address" placeholder="Nhập địa chỉ" />
-                    </div>
-                    <div class="form-group hidden">
-                        <label>Quyền</label>
-                        <input type="hidden" class="form-control" type="text" value="<?php echo $user['level'] ?>" name="level" placeholder="Nhập địa chỉ" />
+                        <input style="pointer-events: none;" class="form-control" type="text" value="<?php echo $user['address'] ?>" name="address" placeholder="Nhập địa chỉ" disabled />
                     </div>
 
                     <div class="form-group">

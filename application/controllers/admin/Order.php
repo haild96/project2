@@ -64,7 +64,7 @@ class Order extends CI_Controller {
 		$order = $this->Order_model->get($id);
 		$curentStatus =  $order->status;
 
-		if (($status == 3 && $curentStatus == 4) || ($status == 4 && $curentStatus == 3 )) {
+		if (($status == 3 && $curentStatus == 4) || ($status == 4 && $curentStatus == 3 ) || ($status <= $curentStatus)) {
 			echo "errorUpdateStatus";
 		} else {
 		$this->Order_model->update(array('status' => $status, 'sales_id' => $sales), array('id' => $id));

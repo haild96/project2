@@ -48,13 +48,15 @@
 			</div>
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 				<div class="row">
+					<?php $i=0; ?>
 					<?php foreach ($banner as $key => $value): ?>
-								<?php if ($value['type']==1): ?>
+								<?php if ($value['type']==1 && $i < 3): ?>
 								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 									<div class="banner">
 						 				<a href="<?php echo $value['link'] ?>"><img src="<?php echo base_url().'uploads/ImageBanner/'.$value['image'] ?>" alt="Lỗi"></a>
 									</div>
 								</div>
+								<?php $i++; ?>
 								<?php endif ?>
 								
 					<?php endforeach ?>
