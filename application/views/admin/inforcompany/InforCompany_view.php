@@ -27,7 +27,7 @@
                     <?php foreach ($dulieu as $value): ?>                    
                         <tr class="odd gradeX" align="center">
                             <th class="text-center"><?php echo $value['id']; ?></th>
-                            <th class="text-center"><?php echo $value['name']; ?></th>
+                            <th class="text-center" style="max-width: 100px;"><?php echo $value['name']; ?></th>
                             <th class="text-center" style="max-width: 100px;"><?php echo $value['address']; ?></th>
                             <th class="text-center"><?php echo $value['phone']; ?></th>
                             <th class="text-center"><img src="<?php echo base_url() ?><?php echo $value['logo'] ?>" width="100px" alt=""></th>

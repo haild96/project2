@@ -88,8 +88,13 @@ class Product extends CI_Controller {
 			$data  =  $this->upload->data();
 			$image = $data['file_name'];
 			$dataInsert['image'] = $image;
-			$this->Product_model->insert($dataInsert);
+			$check = $this->Product_model->insert($dataInsert);
+			if ($check) {
 			$this->load->view('admin/product/add', array('status' => true, 'message' => $message.' thành công', 'category' => $category, 'promotion' => $promotion));
+			} else {
+				$this->load->view('admin/product/add', array('status' => false, 'message' => $message.' thất bại', 'category' => $category, 'promotion' => $promotion));
+			}
+			
 		}
 	}
 
