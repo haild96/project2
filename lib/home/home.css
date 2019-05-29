@@ -387,7 +387,7 @@ span.price {
 }
 
 .footer .social h4 {
-    text-align:  center;
+    /*text-align:  center;*/
 }
 
 .footer .social ul > li a {
@@ -430,7 +430,7 @@ span.price {
 }
 
 .footer .social h4 {
-    margin-left: -84px;
+    /*margin-left: -84px;*/
 }
 
 .product {
@@ -444,7 +444,7 @@ span.price {
 *{}
 
 .footer .social h4 {
-    margin-left: -114px;
+    /*margin-left: -114px;*/
 }
 
 .addToCart {

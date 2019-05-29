@@ -12,16 +12,6 @@ class Home extends CI_Controller {
 	{
 		header("location:/project2/admin/Product");
 	}
-
-	public function DD()
-	{
-		$this->load->model('Product_model');
-		$data = $this->Product_model->get();
-		foreach ($data as $key => $value) {
-			$this->Product_model->update(array('quantity' =>100, 'quantity_exp' =>0), $value['id']);
-		}
-		
-	}
 }
 
 /* End of file Home.php */

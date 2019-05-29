@@ -34,38 +34,29 @@
 				</div>
 				<div class="content">
 					<h4>Miễn phí giao hàng</h4>
-					<p>Cho đơn hàng trên 500.00</p>
+					<p>Cho đơn hàng trên 500.000đ</p>
 				</div>
 			</div>
 		</div>
 		<?php foreach ($footer as $key => $value): ?>
 		
 		<div class="row">
-			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 middle addressCompany">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 middle addressCompany">
 			    <h4>Thông tin công ty</h4>
 				<ul>
-					<li>Address:<?php echo $value['address'] ?></li>
+					<li>© Bản quyền thuộc <?php echo $value['name'] ?></li>
+					<li>Địa chỉ:<?php echo $value['address'] ?></li>
+					<li>Điện thoại:<?php echo $value['phone'] ?></li>
 					<li>Email:<?php echo $value['email'] ?></li>
-					<li>Phone:<?php echo $value['phone'] ?></li>
 				</ul>	
 			</div>
-			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 middle social">
-				<h4>Liên hệ</h4>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 middle social">
+				<h4>Liên kết với chúng tôi</h4>
 				<ul>
 					<li><a href="<?php echo $value['link_fb'] ?>"><i class="fab fa-facebook-f"></i></a></li>
 					<li><a href="<?php echo $value['link_instagram'] ?>"><i class="fab fa-instagram"></i></a></li>
 					<li><a href="<?php echo $value['link_youtube'] ?>"><i class="fab fa-youtube"></i></a></li>
 				</ul>
-			</div>
-			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 middle sub">
-				<h4>Đăng ký nhận khuyến mãi</h4>
-				<form action="" method="POST" role="form">
-				
-					<div class="form-group">
-						<input type="text" class="form-control" id="" placeholder="Your email address">
-					</div>
-					<button type="submit" class="btn btn-primary">Subscribe</button>
-				</form>
 			</div>
 		</div>
 
