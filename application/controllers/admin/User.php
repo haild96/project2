@@ -204,6 +204,54 @@ class User extends CI_Controller {
 	    return $user;
 	}
 
+	public function getInfoUser()
+	{
+		$user = $this->getInfoBySession();
+		echo json_encode($user);
+	}
+
+	public function updateInfoCustomer()
+	{
+		$id       = $this->input->post('id');
+		$email    = $this->input->post('email');
+		$fullname = $this->input->post('fullname');
+		$phone    = $this->input->post('phone');
+		$update   = array('email' => $email, 'fullname' => $fullname, 'phone' => $phone);
+		$this->User_model->update($update, $id);
+		$data = $this->User_model->get($id);		
+		    $level    = $data['level'];
+			$fullname = $data['fullname'];
+			$email    = $data['email'];
+			$phone    = $data['phone'];
+			$address  = $data['address'];
+			$username = $data['username'];
+			$id       = $data['id'];
+			$password = $data['password'];
+			$status   = $data['status'];
+			$account  = array('username' => $username,
+							  'password' => $password,
+							  'level'    => $level,
+							  'fullname' => $fullname,
+							  'email'    => $email,
+							  'phone'    => $phone,
+							  'address'  => $address,
+							  'id'       => $id,
+							  'status'   => $status);
+			$this->session->set_userdata($account);
+			echo "done";
+
+	}
+
+	public function updatePassCustomer()
+	{
+		$id       = $this->input->post('id');
+		$password = $this->input->post('password');
+		$update = array('password' => md5($password));
+		$this->User_model->update($update, $id);
+		echo "done";
+
+	}
+
 
 }
 

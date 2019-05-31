@@ -1,12 +1,12 @@
 @media all and (min-width: 320px) {
 *{}
 
-.loginMember .form_content .form-group {
+.loginMember .form_content .form-group ,.changePassword .form_content .form-group{
     padding-left:  15px;
     padding-right: 12px;
 }
 
-.loginMember .form_content .closeDNhap {
+.loginMember .form_content .closeDNhap, .changePassword .form_content .closeDNhap{
     position:  absolute;
     top: 2px;
     right:  5px;
@@ -15,7 +15,7 @@
     cursor:  pointer;
 }
 
-.loginMember .form_content .title {
+.loginMember .form_content .title ,.changePassword .form_content .title {
     background: #C49A41;
     padding-left:  10px;
     height:  30px;
@@ -26,7 +26,7 @@
     margin-bottom:  10px;
 }
 
-.loginMember .form_content {
+.loginMember .form_content, .changePassword  .form_content{
     width: 422px;
     height: 239px;
     background: #fff;
@@ -36,7 +36,7 @@
     transition: 0.8s;
 }
 
-.loginMember {
+.loginMember, .changePassword  {
     position:  absolute;
     z-index:  25;
     background: #191111a6;
@@ -47,7 +47,7 @@
     transition: 0.2s;
 }
 
-.dkyMember .form_content .closeDky {
+.dkyMember .form_content .closeDky, .changeInfoUser .form_content .closeDky{
     position:  absolute;
     top: 5px;
     right: 5px;
@@ -56,7 +56,7 @@
     cursor:  pointer;
 }
 
-.dkyMember .form_content .title {
+.dkyMember .form_content .title , .changeInfoUser .form_content .title{
     background: #C59A3C;
     color: white;
     font-size:  16px;
@@ -69,7 +69,7 @@
     margin-bottom:  10px;
 }
 
-.dkyMember .form_content {
+.dkyMember .form_content, .changeInfoUser .form_content{
     background: white;
     width: 600px;
     padding-left:  15px;
@@ -81,7 +81,7 @@
     position:  relative;
 }
 
-.dkyMember {
+.dkyMember ,.changeInfoUser{
     background: #808080a3;
     width: 100%;
     height:  100%;
